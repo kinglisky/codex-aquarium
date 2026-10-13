@@ -41,10 +41,10 @@
 请直接完成以下步骤：
 1. 检查 Node.js 22.12+、tar 和 Codex CLI；运行 codex plugin add --help，确认 CLI 支持插件安装。
    若缺少依赖或版本不满足，说明具体缺项和解决方式；涉及安装系统软件或提升权限时，先征得我的同意。
-2. 确认最新 Release 的版本标签，在临时目录下载该版本的 install.mjs、codex-aquarium.tgz 和 SHA256SUMS。
-   三个附件必须来自同一 Release。先阅读 install.mjs，再按 SHA256SUMS 校验安装器；校验失败就停止。
-3. 在下载目录执行 node install.mjs --archive ./codex-aquarium.tgz。
-   安装器会校验发行包、注册 marketplace、安装插件并启动服务。遇到错误时报告原因，不跳过校验或改写信任记录。
+2. 确认最新 Release 的版本标签，在临时目录下载该版本的 install.mjs 和 SHA256SUMS。
+   两个附件必须来自同一 Release。先阅读 install.mjs，再按 SHA256SUMS 中 install.mjs 的条目校验安装器；下载或校验失败就停止。
+3. 执行 node install.mjs --version <第 2 步确认的版本标签>。
+   安装器会下载并校验对应版本的发行包、安装插件并启动服务。遇到错误时报告原因，不跳过校验或改写信任记录。
 4. 用 codex plugin list --json 确认 codex-aquarium@codex-aquarium-local 已安装。
    从安装器输出的安装目录运行 node server/cli.mjs status；若服务未运行，执行 node server/cli.mjs start。
    再检查实际服务地址的 /api/health。不要输出运行目录中的停止凭据。
@@ -58,36 +58,19 @@
 若 Release 尚未发布、附件下载失败或缺少必要权限，请清楚说明阻塞原因，不把未完成的安装报告为成功。
 ```
 
-### 自行运行安装器
+### curl 快捷安装
 
-从 [最新 Release](https://github.com/kinglisky/codex-aquarium/releases/latest) 下载 `install.mjs`，在下载目录执行：
-
-```bash
-node install.mjs
-```
-
-安装器自动下载最新版、校验 SHA-256、注册本地 marketplace、安装插件并启动鱼缸。固定版本使用 `node install.mjs --version v0.1.1`。
-
-macOS / Linux 也可先用终端下载安装器，再运行：
+在 macOS / Linux 终端复制执行：
 
 ```bash
-curl -fL https://github.com/kinglisky/codex-aquarium/releases/latest/download/install.mjs -o aquarium-install.mjs
-node aquarium-install.mjs
+curl -fL https://github.com/kinglisky/codex-aquarium/releases/latest/download/install.mjs -o aquarium-install.mjs && node aquarium-install.mjs
 ```
+
+命令从 [最新 Release](https://github.com/kinglisky/codex-aquarium/releases/latest) 下载安装器，只有下载成功才会执行。安装器自动下载最新版发行包、校验 SHA-256、注册本地 marketplace、安装插件并启动鱼缸。
 
 默认安装源位于 `~/.codex/aquarium-install/codex-aquarium`；设置 `CODEX_HOME` 时使用对应目录。请保留该目录，后续更新仍会使用它。
 
-### 使用已下载的安装包
-
-将同一 Release 的 `install.mjs`、`codex-aquarium.tgz` 和 `SHA256SUMS` 下载到同一个目录，然后运行：
-
-```bash
-node install.mjs --archive ./codex-aquarium.tgz
-```
-
-此方式不需要联网下载安装包。安装器仍会检查运行环境和 SHA-256。
-
-### 信任并打开
+## 信任并打开
 
 1. 安装后重启 Codex 桌面端，让新插件加载。
 2. 打开 **自定义 → 插件 → Codex Aquarium · 会话鱼缸**，确认 **Aquarium** 技能的开关已开启。
@@ -101,21 +84,9 @@ node install.mjs --archive ./codex-aquarium.tgz
 
 默认地址是 [http://127.0.0.1:43187](http://127.0.0.1:43187)。安装器不会替用户确认信任、修改信任记录或绕过审批。新增或改动 Hooks 后，Codex 可能再次要求审阅。
 
-### 手动安装
-
-也可以解压后使用 Codex CLI 安装：
-
-```bash
-tar -xzf codex-aquarium.tgz
-codex plugin marketplace add "$PWD/codex-aquarium"
-codex plugin add codex-aquarium@codex-aquarium-local
-```
-
-使用这种方式前，请先核对附件的 SHA-256。保留解压目录。若 Codex CLI 没有 `plugin add`，可在桌面端插件目录选择本地来源 **Codex Aquarium**，安装 **Codex Aquarium · 会话鱼缸**。
-
 ## 更新与卸载
 
-更新时重新运行安装器即可。安装源会更新，成功安装后本地鱼缸服务会重新启动；用户运行数据与 Hooks 信任记录不会被安装器删除。
+更新时再次发送上面的 [Codex 安装指引](#复制给-codex-安装)，或重新执行 [curl 快捷安装命令](#curl-快捷安装)。安装源会更新，成功安装后本地鱼缸服务会重新启动；用户运行数据与 Hooks 信任记录不会被安装器删除。
 
 卸载前先在 Codex 中让 Aquarium 停止本地服务，再运行：
 
@@ -145,9 +116,9 @@ codex plugin marketplace remove codex-aquarium-local
 | 鱼缸没有鱼 | 确认插件已启用、Hooks 已信任，并让一个会话继续工作；没有活跃会话时空缸是正常状态。 |
 | 安装后仍是旧页面 | 刷新浏览器；确认更新安装成功并已重启本地鱼缸服务。 |
 | 工作结束或服务重启后鱼消失 | 空闲和状态过期的会话会隐藏；继续对应会话，收到新的活跃事件后会恢复原来的鱼。 |
-| `codex` 命令不存在 | 安装或配置 Codex CLI，再运行安装器；也可按手动安装说明使用桌面端插件目录。 |
-| 下载 404 | 检查 Release 是否存在；私有仓库需登录 GitHub 下载附件后使用本地安装方式。 |
-| SHA-256 校验失败 | 重新下载同一 Release 的安装包和 `SHA256SUMS`，不要混用不同版本。 |
+| `codex` 命令不存在 | 安装或配置 Codex CLI，确认 `codex plugin add --help` 可用，再使用上述安装方式。 |
+| 下载 404 | 检查最新 Release 是否已发布并包含 `install.mjs`、`codex-aquarium.tgz` 和 `SHA256SUMS`；附件缺失时需由维护者修复发布，不能继续安装。 |
+| SHA-256 校验失败 | 重新执行上述安装流程；若仍失败，请向维护者反馈，不跳过校验。 |
 
 ## 开发与构建
 
@@ -158,7 +129,6 @@ git clone https://github.com/kinglisky/codex-aquarium.git
 cd codex-aquarium
 pnpm install --frozen-lockfile
 pnpm package
-node scripts/install.mjs --archive ./artifacts/codex-aquarium.tgz
 ```
 
 `pnpm package` 执行测试和生产构建，输出 `artifacts/codex-aquarium.tgz`、`artifacts/install.mjs`、`artifacts/SHA256SUMS`。发行包包含已构建界面、服务端、Hooks、skill、截图文档与许可证，不包含 `node_modules`。
@@ -171,7 +141,7 @@ node server/cli.mjs status
 node server/cli.mjs stop
 ```
 
-Git 仓库不包含 `dist`，不能把源码仓库直接当作免构建的远程 marketplace。请使用 Release 附件或先构建再注册本地 marketplace。
+以上命令用于开发和验证构建；日常安装和更新使用前述两种方式。
 
 ## 发布版本
 
@@ -192,7 +162,7 @@ GitHub Actions 会检查标签与两个版本号一致，安装锁定依赖、�
 
 默认数据目录为 `${CODEX_HOME:-~/.codex}/codex-aquarium`。如设置 `AQUARIUM_DATA_DIR`，Hooks 和服务必须使用同一目录。服务的停止凭据仅保存在本机运行目录。
 
-安装器联网仅用于下载指定 GitHub Release 的发行文件；选择 `--archive` 时不需要下载安装包。
+安装器联网仅用于下载指定 GitHub Release 的发行文件。
 
 ## 许可证
 
