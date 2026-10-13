@@ -17,12 +17,29 @@ function finishActivity(session, key, time) {
   session.completed.set(key, Math.max(session.completed.get(key) ?? 0, time));
 }
 
+function isEndedTurn(session, event) {
+  if (event.turnId) return session.endedTurns.has(event.turnId);
+  return (session.endedTurns.get("") ?? 0) >= event.timestamp;
+}
+
+function trackTurn(session, event) {
+  if (isEndedTurn(session, event)) return false;
+  if (!event.turnId || event.turnId === session.turnId) return true;
+  if (event.timestamp < session.phaseAt) return false;
+  if (session.turnId) session.endedTurns.set(session.turnId, event.timestamp);
+  session.turnId = event.turnId;
+  session.phaseAt = event.timestamp;
+  session.permissions.clear();
+  return true;
+}
+
 function startActivity(session, event, activity) {
-  if ((session.completed.get(activity.id) ?? 0) >= event.timestamp) return;
-  if ((session.endedTurns.get(event.turnId) ?? 0) >= event.timestamp) return;
+  if ((session.completed.get(activity.id) ?? 0) >= event.timestamp) return false;
   const existing = session.activities.get(activity.id);
-  if (existing?.startedAt > event.timestamp) return;
+  if (existing?.startedAt > event.timestamp) return false;
+  if (!trackTurn(session, event)) return false;
   session.activities.set(activity.id, { ...activity, turnId: event.turnId, startedAt: event.timestamp });
+  return true;
 }
 
 function endTurn(session, event, phase) {
@@ -35,6 +52,7 @@ function endTurn(session, event, phase) {
     finishActivity(session, key, event.timestamp);
   }
   if (event.timestamp < session.phaseAt) return;
+  if (event.turnId && session.turnId && event.turnId !== session.turnId) return;
   session.phase = phase;
   session.phaseAt = event.timestamp;
   session.permissions.clear();
@@ -47,17 +65,19 @@ const handlers = {
   },
   UserPromptSubmit(session, event) {
     if (event.timestamp < session.phaseAt) return;
+    if (!trackTurn(session, event)) return;
     session.phase = "thinking";
     session.phaseAt = event.timestamp;
     session.turnId = event.turnId;
-    session.permissions.clear();
+    if (!event.turnId) session.permissions.clear();
   },
   PreToolUse(session, event) {
     if (!event.toolId) return;
-    startActivity(session, event, {
+    const started = startActivity(session, event, {
       id: `tool:${event.toolId}`, kind: "tool", category: toolCategory(event.toolName),
       label: event.toolName || "工具", status: "running",
     });
+    if (!started) return;
     if (event.timestamp >= session.phaseAt) session.phase = "thinking";
   },
   PostToolUse(session, event) {
@@ -76,8 +96,11 @@ const handlers = {
   },
   PermissionRequest(session, event) {
     if (event.timestamp < session.phaseAt) return;
+    if (event.toolId && session.completed.has(`tool:${event.toolId}`)) return;
+    if (!trackTurn(session, event)) return;
     const key = event.toolId ? `tool:${event.toolId}` : `name:${event.toolName}`;
     session.permissions.set(key, event);
+    session.phase = "thinking";
     session.phaseAt = event.timestamp;
     const activity = session.activities.get(`tool:${event.toolId}`);
     if (activity) activity.status = "waiting";
@@ -122,6 +145,12 @@ export function createState(saved, now = Date.now()) {
       const handler = handlers[event.event];
       if (!handler) return;
       const session = existing ?? newSession(event);
+      if (session.phase === "stale" && event.timestamp < session.phaseAt) return;
+      if (event.timestamp - session.updatedAt > STALE_AFTER) {
+        session.activities.clear();
+        session.permissions.clear();
+        session.phase = "idle";
+      }
       if (session.phase === "stale" && event.timestamp >= session.phaseAt) session.phase = "idle";
       if (event.timestamp >= session.updatedAt) session.label = event.label;
       session.updatedAt = Math.max(session.updatedAt, event.timestamp);

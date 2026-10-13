@@ -1,6 +1,7 @@
 import "./style.css";
 import type { AquariumSnapshot, AquariumSession, SessionStatus } from "../shared/protocol";
-import { ACTIVITY_FISH, createAquarium, FISH_TYPES, speciesForSession } from "./aquarium";
+import { ACTIVITY_FISH, createAquarium } from "./aquarium";
+import { FISH_TYPES, isActiveSession, speciesForSession } from "./sessions";
 import { demoSnapshot } from "./demo";
 import type { FishSpecies } from "./fish";
 
@@ -11,6 +12,10 @@ const FISH_INFO: Record<FishSpecies, { name: string; color: string; role: string
   swordtail: { name: "剑尾鱼", color: "#f48b76", role: "写入与编辑" },
   rainbow: { name: "彩虹鱼", color: "#9cbdf3", role: "网页与浏览器" },
   golden: { name: "金丝鱼", color: "#e9ce7c", role: "终端与命令" },
+  blacktail: { name: "黑尾大勾", color: "#c4d6cb", role: "会话主鱼" },
+  cardinal: { name: "宝莲灯", color: "#20d8f6", role: "会话主鱼" },
+  tiger: { name: "虎皮", color: "#f5a552", role: "会话主鱼" },
+  zebra: { name: "斑马", color: "#83a9ec", role: "会话主鱼" },
 };
 const STATUS: Record<SessionStatus, string> = { thinking: "思考中", working: "执行中", waiting: "等待您", idle: "休息中", interrupted: "已中断", stale: "状态过期" };
 const icons = {
@@ -24,7 +29,7 @@ const icons = {
 };
 function icon(name: keyof typeof icons) { return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`; }
 function fishIcon(species: FishSpecies) {
-  const tails: Record<FishSpecies, string> = { neon: "M12 16 3 11 5 17 3 22Z", guppy: "M13 16 2 7 1 17 3 26Z", betta: "M15 17 6 5 1 7 3 14 0 19 5 28 14 23Z", swordtail: "M12 16 3 11 5 18 0 29 13 21Z", rainbow: "M12 16 3 10 6 18 3 25Z", golden: "M12 16 3 12 7 18 3 23Z" };
+  const tails: Record<FishSpecies, string> = { neon: "M12 16 3 11 5 17 3 22Z", guppy: "M13 16 2 7 1 17 3 26Z", betta: "M15 17 6 5 1 7 3 14 0 19 5 28 14 23Z", swordtail: "M12 16 3 11 5 18 0 29 13 21Z", rainbow: "M12 16 3 10 6 18 3 25Z", golden: "M12 16 3 12 7 18 3 23Z", blacktail: "M12 16 2 8 6 18 3 24Z", cardinal: "M12 16 3 12 6 18 3 23Z", tiger: "M12 16 3 10 7 18 3 26Z", zebra: "M12 16 2 11 6 18 2 24Z" };
   return `<svg class="fish-symbol fish-${species}" viewBox="0 0 44 34" aria-hidden="true" style="color:${FISH_INFO[species].color}"><path d="${tails[species]}" fill="currentColor" opacity=".6"/><path d="M9 18Q24 5 39 17Q25 29 9 18Z" fill="currentColor"/><path d="m19 13 6-8 4 8m-11 9 7 6 4-6" fill="currentColor" opacity=".65"/><circle cx="34" cy="16" r="1.2" fill="#0a2031"/></svg>`;
 }
 function escapeHtml(value: string) { return value.replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character] ?? character); }
@@ -42,19 +47,19 @@ required<HTMLDivElement>("#app").innerHTML = `
   </header>
   <main class="workspace">
     <section class="aquarium-panel" aria-label="实时鱼缸">
-      <div class="scene-title"><h1>让工作，游起来。</h1><p>一个会话，一只鱼。同行的小鱼，是它正在做的事。</p></div>
+      <div class="scene-title"><h1>让工作，游起来。</h1><p>一个活跃会话，一只鱼。同行的小鱼，是它正在做的事。</p></div>
       <div id="demo-notice" class="demo-notice" hidden>演示模式<span>鱼群为模拟数据</span></div>
       <div id="viewport"></div>
-      <div id="empty-state" class="empty-state" hidden><span class="empty-ripple">${icon("waves")}</span><h2>静候第一只鱼</h2><p>在已安装插件的 Codex 中开始工作，<br>会话产生事件后，鱼就会游进来。</p><button id="empty-demo" class="text-button">先看看演示鱼群 ${icon("arrow")}</button></div>
+      <div id="empty-state" class="empty-state" hidden><span class="empty-ripple">${icon("waves")}</span><h2>静候下一次工作</h2><p>在已安装插件的 Codex 中开始工作，<br>活跃时游进来，休息时暂时离开。</p><button id="empty-demo" class="text-button">先看看演示鱼群 ${icon("arrow")}</button></div>
       <div id="offline-note" class="offline-note" hidden>连接已断开，鱼群停留在最后收到的状态。请确认本地服务仍在运行。</div>
       <div class="scene-footer"><p class="gesture-hint">拖动环绕 · 滚轮缩放 · 点击鱼查看会话</p><div class="scene-controls"><button id="reset-view" title="恢复视角" aria-label="恢复视角">${icon("reset")}</button><button id="pause" title="暂停游动" aria-label="暂停游动" aria-pressed="false">${icon("pause")}</button><button id="immersive" title="沉浸模式" aria-label="沉浸模式" aria-pressed="false">${icon("expand")}</button></div></div>
       <div class="waterline"></div>
     </section>
     <aside class="sidebar" aria-label="会话与鱼群">
-      <section class="session-section"><div class="section-title"><h2>缸里的伙伴</h2><span id="session-total">0 个会话</span></div><div class="summary"><span><strong id="main-count">0</strong>只主鱼</span><span><strong id="activity-count">0</strong>只随行鱼</span></div><div id="session-list" class="session-list"></div><p id="session-empty" class="quiet-note">会话接入后会出现在这里。安装前已打开的会话，需要产生新的事件。</p></section>
+      <section class="session-section"><div class="section-title"><h2>缸里的伙伴</h2><span id="session-total">0 个会话</span></div><div class="summary"><span><strong id="main-count">0</strong>只主鱼</span><span><strong id="activity-count">0</strong>只随行鱼</span></div><div id="session-list" class="session-list"></div><p id="session-empty" class="quiet-note">这里只显示活跃会话。继续工作后，同一只鱼会再次游回来。</p></section>
       <section id="detail" class="detail" hidden aria-live="polite"></section>
       <section class="settings"><div class="section-title"><h2>水下光景</h2></div><label for="light">灯光<span id="light-value">100%</span></label><input id="light" type="range" min="45" max="140" value="100"><label for="flow">水流<span id="flow-value">轻柔</span></label><input id="flow" type="range" min="0" max="180" value="80"></section>
-      <section class="field-guide"><div class="section-title"><h2>随行鱼图鉴</h2><span>6 种鱼</span></div><div class="fish-guide">${FISH_TYPES.map((species) => `<div class="guide-entry">${fishIcon(species)}<span>${FISH_INFO[species].name}<small>${FISH_INFO[species].role}</small></span></div>`).join("")}</div><p class="quiet-note">大鱼代表会话；小鱼代表正在执行的工具或子 Agent，完成后离开鱼群。</p></section>
+      <section class="field-guide"><div class="section-title"><h2>鱼群图鉴</h2><span>${FISH_TYPES.length} 种鱼</span></div><div class="fish-guide">${FISH_TYPES.map((species) => `<div class="guide-entry">${fishIcon(species)}<span>${FISH_INFO[species].name}<small>${FISH_INFO[species].role}</small></span></div>`).join("")}</div><p class="quiet-note">大鱼代表会话；小鱼代表正在执行的工具或子 Agent，完成后离开鱼群。</p></section>
       <footer class="sidebar-footer"><span class="privacy-dot"></span>只在本机，安静地陪您工作</footer>
     </aside>
   </main>`;
@@ -102,17 +107,18 @@ function renderConnection() {
 }
 
 function renderSnapshot(value: AquariumSnapshot) {
-  shownSnapshot = value;
-  aquarium?.setSessions(value.sessions);
-  const activities = value.sessions.reduce((total, session) => total + session.activities.length, 0);
-  required<HTMLElement>("#main-count").textContent = String(value.sessions.length);
+  const sessions = value.sessions.filter(isActiveSession);
+  shownSnapshot = { ...value, sessions };
+  aquarium?.setSessions(sessions);
+  const activities = sessions.reduce((total, session) => total + session.activities.length, 0);
+  required<HTMLElement>("#main-count").textContent = String(sessions.length);
   required<HTMLElement>("#activity-count").textContent = String(activities);
-  required<HTMLElement>("#session-total").textContent = `${value.sessions.length} 个已连接会话`;
-  required<HTMLElement>("#session-empty").hidden = value.sessions.length > 0;
-  required<HTMLElement>("#empty-state").hidden = value.sessions.length > 0;
+  required<HTMLElement>("#session-total").textContent = `${sessions.length} 个活跃会话`;
+  required<HTMLElement>("#session-empty").hidden = sessions.length > 0;
+  required<HTMLElement>("#empty-state").hidden = sessions.length > 0;
   const list = required<HTMLElement>("#session-list");
   const focusedId = document.activeElement instanceof HTMLButtonElement ? document.activeElement.dataset.session : undefined;
-  list.innerHTML = value.sessions.map((session) => `<button class="session-row" data-session="${escapeHtml(session.id)}" aria-pressed="${session.id === selectedId}">${fishIcon(speciesForSession(session.id))}<span class="session-copy"><strong>${escapeHtml(session.label)}</strong><span><i class="status-dot status-${session.status}"></i>${STATUS[session.status]}${session.activities.length ? `<span class="follower-count">+${session.activities.length} 随行</span>` : ""}</span></span>${icon("arrow")}</button>`).join("");
+  list.innerHTML = sessions.map((session) => `<button class="session-row" data-session="${escapeHtml(session.id)}" aria-pressed="${session.id === selectedId}">${fishIcon(speciesForSession(session.id))}<span class="session-copy"><strong>${escapeHtml(session.label)}</strong><span><i class="status-dot status-${session.status}"></i>${STATUS[session.status]}${session.activities.length ? `<span class="follower-count">+${session.activities.length} 随行</span>` : ""}</span></span>${icon("arrow")}</button>`).join("");
   for (const button of list.querySelectorAll<HTMLButtonElement>(".session-row")) button.addEventListener("click", () => selectSession(button.dataset.session ?? null));
   if (focusedId) [...list.querySelectorAll<HTMLButtonElement>(".session-row")].find((button) => button.dataset.session === focusedId)?.focus({ preventScroll: true });
   if (selectedId && !selectedSession()) selectSession(null);

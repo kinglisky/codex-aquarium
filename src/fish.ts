@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export type FishSpecies = 'neon' | 'guppy' | 'betta' | 'swordtail' | 'rainbow' | 'golden';
+export type FishSpecies = 'neon' | 'guppy' | 'betta' | 'swordtail' | 'rainbow' | 'golden' | 'blacktail' | 'cardinal' | 'tiger' | 'zebra';
 
 export const SPECIES: Record<FishSpecies, { name: string; color: string; description: string }> = {
   neon: { name: '霓虹灯鱼', color: '#32dfff', description: '修长的电蓝光带，划过一抹宝石红。' },
@@ -9,6 +9,10 @@ export const SPECIES: Record<FishSpecies, { name: string; color: string; descrip
   swordtail: { name: '红剑尾', color: '#ff674b', description: '橙红的细长身形，尾端伸出一柄漂亮的长剑。' },
   rainbow: { name: '蓝鳍虹鱼', color: '#6bafff', description: '钴蓝与柠檬金交织，透明的双背鳍迎光闪烁。' },
   golden: { name: '金色长鳍', color: '#f9d570', description: '香槟金的纤细身体，带着柔软飘逸的长尾。' },
+  blacktail: { name: '黑尾大勾', color: '#d8e3bc', description: '银绿的修长身体，墨黑勾纹延伸到轻盈的上尾叶。' },
+  cardinal: { name: '宝莲灯', color: '#2bdcff', description: '一道连续的宝蓝光带，映着从头到尾的鲜红腹侧。' },
+  tiger: { name: '虎皮', color: '#ffb548', description: '金橙身体披着四道黑纹，尖小的头部配上橙红鳍尖。' },
+  zebra: { name: '斑马', color: '#8dbcec', description: '蓝金相间的细密横纹，流线身形拖着轻巧的透明叉尾。' },
 };
 
 type Point = readonly [number, number];
@@ -67,6 +71,34 @@ const SHAPES: Record<FishSpecies, FishShape> = {
     dorsal: [[0.09, 0.079], [-0.06, 0.29], [-0.27, 0.31], [-0.45, 0.18], [-0.31, 0.05]],
     anal: [[0.14, -0.074], [-0.06, -0.22], [-0.41, -0.24], [-0.3, -0.05]],
   },
+  blacktail: {
+    length: 1.12, height: 0.098, width: 0.043,
+    body: ['#64794d', '#c8dbc4', '#eff4dc'], fin: ['#adbd77', '#dce6b0', '#f2f7d5'],
+    tail: [[-0.02, 0.031], [-0.27, 0.2], [-0.4, 0.28], [-0.31, 0.115], [-0.16, 0.005], [-0.3, -0.19], [-0.2, -0.155], [-0.018, -0.032]],
+    dorsal: [[0.065, 0.089], [-0.08, 0.26], [-0.16, 0.205], [-0.27, 0.07]],
+    anal: [[0.085, -0.085], [-0.075, -0.205], [-0.31, -0.12], [-0.39, -0.045]],
+  },
+  cardinal: {
+    length: 0.98, height: 0.086, width: 0.039,
+    body: ['#173f64', '#4ba8c9', '#fa2745'], fin: ['#608aab', '#addfe7', '#e0f4ee'],
+    tail: [[-0.02, 0.031], [-0.24, 0.15], [-0.15, 0.005], [-0.25, -0.15], [-0.018, -0.03]],
+    dorsal: [[0.025, 0.079], [-0.1, 0.205], [-0.19, 0.185], [-0.26, 0.06]],
+    anal: [[0.07, -0.075], [-0.13, -0.165], [-0.31, -0.07]],
+  },
+  tiger: {
+    length: 0.95, height: 0.158, width: 0.046,
+    body: ['#b98336', '#f3c267', '#ffe1a6'], fin: ['#e95c23', '#ff9936', '#ffd381'],
+    tail: [[-0.018, 0.034], [-0.3, 0.2], [-0.185, 0.008], [-0.3, -0.2], [-0.017, -0.032]],
+    dorsal: [[0.07, 0.145], [-0.06, 0.345], [-0.19, 0.29], [-0.29, 0.083]],
+    anal: [[0.055, -0.14], [-0.12, -0.27], [-0.25, -0.085]],
+  },
+  zebra: {
+    length: 1.18, height: 0.074, width: 0.036,
+    body: ['#627f99', '#edddb0', '#f1f0d9'], fin: ['#929d81', '#dfddb2', '#f2efcf'],
+    tail: [[-0.018, 0.026], [-0.3, 0.175], [-0.23, 0.045], [-0.15, 0], [-0.24, -0.08], [-0.31, -0.175], [-0.016, -0.027]],
+    dorsal: [[-0.055, 0.069], [-0.18, 0.18], [-0.28, 0.15], [-0.37, 0.045]],
+    anal: [[0.075, -0.066], [-0.105, -0.17], [-0.32, -0.09], [-0.37, -0.04]],
+  },
 };
 
 const BODY_RINGS = 40;
@@ -110,6 +142,28 @@ function bodyColor(species: FishSpecies, palette: THREE.Color[], position: numbe
       return color.lerp(new THREE.Color('#36bfc5'), Math.max(0, Math.sin(position * 28 + angle * 7)) * 0.2);
     case 'golden':
       return color.lerp(new THREE.Color('#fff1c3'), Math.pow(lateral, 10) * 0.27);
+    case 'blacktail': {
+      const hook = Math.exp(-Math.pow((height - 0.16 + position * 1.8) / 0.2, 4));
+      const rear = 1 - THREE.MathUtils.smoothstep(position, 0.33, 0.53);
+      return color.lerp(new THREE.Color('#111c22'), hook * rear * lateral * 0.98);
+    }
+    case 'cardinal': {
+      const red = THREE.MathUtils.smoothstep(-height, -0.08, 0.28) * lateral;
+      color.lerp(new THREE.Color('#fa1638'), red * 0.98);
+      const blue = Math.exp(-Math.pow((height - 0.21) / 0.23, 4)) * lateral;
+      return color.lerp(new THREE.Color('#04cfff'), blue);
+    }
+    case 'tiger': {
+      const bars = [0.13, 0.4, 0.64, 0.85];
+      const stripe = Math.max(...bars.map(center => Math.exp(-Math.pow((position - center + height * 0.017) / 0.043, 6))));
+      color.lerp(new THREE.Color('#ff722c'), THREE.MathUtils.smoothstep(position, 0.89, 1) * 0.8);
+      return color.lerp(new THREE.Color('#142122'), stripe * 0.98);
+    }
+    case 'zebra': {
+      const bands = Math.cos((height + position * 0.025) * Math.PI * 5);
+      const stripe = THREE.MathUtils.smoothstep(bands, -0.1, 0.55) * Math.pow(lateral, 0.3);
+      return color.lerp(new THREE.Color('#19448e'), stripe * 0.98);
+    }
   }
 }
 
@@ -118,18 +172,19 @@ function createBody(species: FishSpecies, shape: FishShape): THREE.Mesh {
   const colors: number[] = [];
   const indices: number[] = [];
   const palette = shape.body.map(color => new THREE.Color(color));
+  const sides = species === 'zebra' ? 48 : BODY_SIDES;
 
   for (let ring = 0; ring <= BODY_RINGS; ring++) {
     const progress = ring / BODY_RINGS;
     const radius = bodyRadius(progress);
-    for (let side = 0; side <= BODY_SIDES; side++) {
-      const angle = side / BODY_SIDES * Math.PI * 2;
+    for (let side = 0; side <= sides; side++) {
+      const angle = side / sides * Math.PI * 2;
       positions.push((progress - 0.43) * shape.length, Math.cos(angle) * radius * shape.height, Math.sin(angle) * radius * shape.width);
       const color = bodyColor(species, palette, progress, angle);
       colors.push(color.r, color.g, color.b);
-      if (ring === BODY_RINGS || side === BODY_SIDES) continue;
-      const index = ring * (BODY_SIDES + 1) + side;
-      indices.push(index, index + 1, index + BODY_SIDES + 1, index + 1, index + BODY_SIDES + 2, index + BODY_SIDES + 1);
+      if (ring === BODY_RINGS || side === sides) continue;
+      const index = ring * (sides + 1) + side;
+      indices.push(index, index + 1, index + sides + 1, index + 1, index + sides + 2, index + sides + 1);
     }
   }
 
@@ -148,8 +203,9 @@ function createBody(species: FishSpecies, shape: FishShape): THREE.Mesh {
 }
 
 type AnimatedFin = { mesh: THREE.Mesh; original: Float32Array; phase: number; flex: number };
+type FinOptions = { flex?: number; part?: 'tail' | 'dorsal' };
 
-function createFin(outline: readonly Point[], origin: Point, palette: Palette, species: FishSpecies, flex = 0.024): AnimatedFin {
+function createFin(outline: readonly Point[], origin: Point, palette: Palette, species: FishSpecies, { flex = 0.024, part }: FinOptions = {}): AnimatedFin {
   const curve = new THREE.CatmullRomCurve3(outline.map(([x, y]) => new THREE.Vector3(x, y, 0)), false, 'centripetal');
   const positions: number[] = [];
   const colors: number[] = [];
@@ -162,16 +218,42 @@ function createFin(outline: readonly Point[], origin: Point, palette: Palette, s
     for (let step = 0; step <= FIN_STEPS; step++) {
       const reach = step / FIN_STEPS;
       const ripple = Math.sin(rayPosition * Math.PI * 22) * Math.pow(reach, 3) * 0.006;
-      positions.push(THREE.MathUtils.lerp(origin[0], edge.x, reach), THREE.MathUtils.lerp(origin[1], edge.y, reach) + ripple, Math.sin(rayPosition * 22) * reach * reach * 0.009);
+      const x = THREE.MathUtils.lerp(origin[0], edge.x, reach);
+      const y = THREE.MathUtils.lerp(origin[1], edge.y, reach) + ripple;
+      positions.push(x, y, Math.sin(rayPosition * 22) * reach * reach * 0.009);
       const band = THREE.MathUtils.smoothstep(reach, 0.28, 0.87);
       const color = tones[0].clone().lerp(tones[1], band).lerp(tones[2], THREE.MathUtils.smoothstep(reach, 0.83, 1) * 0.8);
       const vein = ray % 3 === 0;
       color.multiplyScalar(vein ? 0.78 : 1.12);
-      if (species === 'guppy') {
-        const spot = Math.sin(rayPosition * 34 + Math.sin(reach * 13)) * Math.cos(reach * 24 + rayPosition * 9);
-        color.lerp(new THREE.Color('#183b80'), THREE.MathUtils.smoothstep(spot, 0.36, 0.85) * band * 0.88);
+      let opacity = vein ? 0.87 : 0.66 - reach * 0.18;
+      switch (species) {
+        case 'guppy': {
+          const spot = Math.sin(rayPosition * 34 + Math.sin(reach * 13)) * Math.cos(reach * 24 + rayPosition * 9);
+          color.lerp(new THREE.Color('#183b80'), THREE.MathUtils.smoothstep(spot, 0.36, 0.85) * band * 0.88);
+          break;
+        }
+        case 'blacktail': {
+          if (part !== 'tail') break;
+          const hook = Math.exp(-Math.pow((y + x * 0.6 - 0.012) / 0.034, 4));
+          color.lerp(new THREE.Color('#09151d'), hook * 0.99);
+          opacity = Math.max(opacity, hook * 0.96);
+          break;
+        }
+        case 'tiger': {
+          if (part !== 'dorsal') break;
+          const black = 1 - THREE.MathUtils.smoothstep(reach, 0.65, 0.9);
+          color.lerp(new THREE.Color('#172222'), black * 0.97);
+          opacity = Math.max(opacity, black * 0.94);
+          break;
+        }
+        case 'zebra': {
+          if (part !== 'tail') break;
+          const stripe = THREE.MathUtils.smoothstep(Math.cos(y * 96), 0, 0.65);
+          color.lerp(new THREE.Color('#285a99'), stripe * 0.8);
+          break;
+        }
       }
-      colors.push(color.r, color.g, color.b, vein ? 0.87 : 0.66 - reach * 0.18);
+      colors.push(color.r, color.g, color.b, opacity);
       if (ray === FIN_RAYS || step === FIN_STEPS) continue;
       const index = ray * (FIN_STEPS + 1) + step;
       indices.push(index, index + 1, index + FIN_STEPS + 1, index + 1, index + FIN_STEPS + 2, index + FIN_STEPS + 1);
@@ -221,19 +303,19 @@ export function createFishModel(species: FishSpecies): { group: THREE.Group; ani
   group.add(body);
   addEyes(group, shape);
 
-  const tail = createFin(shape.tail, [0, 0], shape.fin, species, species === 'betta' ? 0.045 : 0.025);
+  const tail = createFin(shape.tail, [0, 0], shape.fin, species, { part: 'tail', flex: species === 'betta' ? 0.045 : 0.025 });
   const tailPivot = new THREE.Group();
   tailPivot.position.x = -0.41 * shape.length;
   tailPivot.add(tail.mesh);
   group.add(tailPivot);
-  const dorsal = createFin(shape.dorsal, [-0.09, shape.height * 0.67], shape.fin, species);
+  const dorsal = createFin(shape.dorsal, [-0.09, shape.height * 0.67], shape.fin, species, { part: 'dorsal' });
   const anal = createFin(shape.anal, [-0.08, -shape.height * 0.65], shape.fin, species);
   group.add(dorsal.mesh, anal.mesh);
   const fins = [tail, dorsal, anal];
   const pectorals: THREE.Group[] = [];
 
   for (const side of [-1, 1]) {
-    const pectoral = createFin([[0, 0], [-0.08, 0.035], [-0.17, -0.035], [-0.13, -0.085], [-0.03, -0.02]], [0, 0], shape.fin, species, 0.008);
+    const pectoral = createFin([[0, 0], [-0.08, 0.035], [-0.17, -0.035], [-0.13, -0.085], [-0.03, -0.02]], [0, 0], shape.fin, species, { flex: 0.008 });
     const pivot = new THREE.Group();
     pivot.position.set(0.19 * shape.length, -shape.height * 0.27, side * shape.width * 0.8);
     pivot.rotation.x = side * 0.65;
@@ -252,7 +334,7 @@ export function createFishModel(species: FishSpecies): { group: THREE.Group; ani
 
   if (species === 'betta') {
     for (const side of [-1, 1]) {
-      const filament = createFin([[0.21, -0.07], [0.14, -0.18], [-0.01, -0.35], [0.075, -0.13]], [0.2, -0.08], shape.fin, species, 0.035);
+      const filament = createFin([[0.21, -0.07], [0.14, -0.18], [-0.01, -0.35], [0.075, -0.13]], [0.2, -0.08], shape.fin, species, { flex: 0.035 });
       filament.mesh.position.z = side * 0.022;
       group.add(filament.mesh);
       fins.push(filament);

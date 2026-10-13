@@ -21,6 +21,10 @@ export function demoSnapshot(tick: number): AquariumSnapshot {
       { id: "demo-interface", label: "打磨购物车界面", status: "working", activities: [0, 1, 2].map((offset) => ({ ...examples[(phase + offset) % examples.length], id: `demo-a-${offset}`, startedAt: now - 14000 })), startedAt: now - 360000, updatedAt: now },
       { id: "demo-service", label: "检查库存服务", status: tick % 8 < 6 ? "working" : "thinking", activities: tick % 8 < 6 ? [1, 3].map((offset) => ({ ...examples[(phase + offset) % examples.length], id: `demo-b-${offset}`, startedAt: now - 8000 })) : [], startedAt: now - 220000, updatedAt: now },
       { id: "demo-review", label: "审阅新的变更", status: tick % 10 < 7 ? "waiting" : "working", activities: tick % 10 < 7 ? [] : [{ ...examples[4], id: "demo-c-1", startedAt: now }], startedAt: now - 130000, updatedAt: now },
+      { id: "demo-blacktail-1", label: "整理任务边界", status: "thinking", activities: [], startedAt: now - 120000, updatedAt: now },
+      { id: "demo-cardinal-7", label: "设计新的交互", status: "thinking", activities: [], startedAt: now - 110000, updatedAt: now },
+      { id: "demo-tiger-1", label: "核对测试结果", status: "thinking", activities: [], startedAt: now - 100000, updatedAt: now },
+      { id: "demo-zebra-1", label: "梳理代码结构", status: "thinking", activities: [], startedAt: now - 90000, updatedAt: now },
     ],
   };
 }

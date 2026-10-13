@@ -4,21 +4,11 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import type { ActivityCategory, AquariumSession, SessionStatus } from "../shared/protocol";
 import { createFishModel, type FishSpecies } from "./fish";
 import { createPlants } from "./plants";
+import { hashSeed, speciesForSession } from "./sessions";
 
-export const FISH_TYPES: FishSpecies[] = ["neon", "guppy", "betta", "swordtail", "rainbow", "golden"];
 export const ACTIVITY_FISH: Record<ActivityCategory, FishSpecies> = { read: "neon", write: "swordtail", terminal: "golden", web: "rainbow", agent: "betta", tool: "guppy" };
 const STATUS_SPEED: Record<SessionStatus, number> = { thinking: 0.65, working: 1, waiting: 0.2, idle: 0.3, interrupted: 0.15, stale: 0.08 };
 const STATUS_COLOR: Record<SessionStatus, string> = { thinking: "#93c5ec", working: "#86d6ca", waiting: "#f1b875", idle: "#6c95b0", interrupted: "#ee8894", stale: "#647c8a" };
-
-function hash(value: string): number {
-  let result = 2166136261;
-  for (const character of value) result = Math.imul(result ^ character.charCodeAt(0), 16777619);
-  return result >>> 0;
-}
-
-export function speciesForSession(id: string): FishSpecies {
-  return FISH_TYPES[hash(id) % FISH_TYPES.length];
-}
 
 type FishModel = ReturnType<typeof createFishModel>;
 interface Follower { model: FishModel; species: FishSpecies; }
@@ -97,7 +87,7 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   const gravel = new THREE.InstancedMesh(gravelGeometry, gravelMaterial, 1500);
   const dummy = new THREE.Object3D();
   for (let index = 0; index < gravel.count; index += 1) {
-    const value = hash(`gravel-${index}`);
+    const value = hashSeed(`gravel-${index}`);
     dummy.position.set(((value % 1000) / 1000 - 0.5) * 10.6, 0.18, (((value >>> 12) % 1000) / 1000 - 0.5) * 4.8);
     dummy.rotation.set(value % 6, value % 4, value % 3);
     dummy.scale.setScalar(0.55 + ((value >>> 8) % 100) / 100);
@@ -240,7 +230,7 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   const particleGeometry = new THREE.BufferGeometry();
   const particlePositions = new Float32Array(75 * 3);
   for (let index = 0; index < 75; index += 1) {
-    const seed = hash(`water-${index}`);
+    const seed = hashSeed(`water-${index}`);
     particlePositions[index * 3] = (seed % 1000 / 1000 - 0.5) * 10;
     particlePositions[index * 3 + 1] = (seed >>> 8) % 1000 / 1000 * 5.2 + 0.3;
     particlePositions[index * 3 + 2] = ((seed >>> 16) % 1000 / 1000 - 0.5) * 4;
@@ -282,7 +272,7 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
       let school = schools.get(session.id);
       if (!school) {
         const model = createFishModel(speciesForSession(session.id));
-        const seed = hash(session.id);
+        const seed = hashSeed(session.id);
         model.group.userData.sessionId = session.id;
         const halo = new THREE.Mesh(new THREE.RingGeometry(0.45, 0.475, 48), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.18, side: THREE.DoubleSide, depthWrite: false }));
         halo.rotation.x = -Math.PI / 2;
