@@ -27,6 +27,10 @@ function trackTurn(session, event) {
   if (!event.turnId || event.turnId === session.turnId) return true;
   if (event.timestamp < session.phaseAt) return false;
   if (session.turnId) session.endedTurns.set(session.turnId, event.timestamp);
+  for (const [key, activity] of session.activities) {
+    if (activity.kind !== "tool" || activity.startedAt > event.timestamp) continue;
+    finishActivity(session, key, event.timestamp);
+  }
   session.turnId = event.turnId;
   session.phaseAt = event.timestamp;
   session.permissions.clear();
@@ -44,8 +48,10 @@ function startActivity(session, event, activity) {
 
 function endTurn(session, event, phase) {
   session.endedTurns.set(event.turnId, Math.max(session.endedTurns.get(event.turnId) ?? 0, event.timestamp));
+  const interruptsSession = phase === "interrupted" && event.timestamp >= session.phaseAt
+    && (!event.turnId || !session.turnId || event.turnId === session.turnId);
   for (const [key, activity] of session.activities) {
-    if (event.turnId && activity.turnId !== event.turnId) continue;
+    if (!interruptsSession && event.turnId && activity.turnId !== event.turnId) continue;
     if (activity.startedAt > event.timestamp) continue;
     // A completed parent turn can leave an independently running subagent.
     if (phase === "idle" && activity.kind === "agent") continue;

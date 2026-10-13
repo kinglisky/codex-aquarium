@@ -10,6 +10,18 @@ test("only thinking, working and waiting sessions enter the aquarium", () => {
   assert.deepEqual(sessions.filter(isActiveSession).map(session => session.id), ["thinking", "working", "waiting"]);
 });
 
+test("a stopped turn hides its fish even when an earlier turn lost a tool completion", () => {
+  const state = createState();
+  const apply = (name, turnId, timestamp, extra = {}) => state.apply(sanitizeHook({
+    hook_event_name: name, session_id: "repeat-session", turn_id: turnId, ...extra,
+  }, timestamp));
+  apply("PreToolUse", "turn-a", 1100, { tool_use_id: "abandoned-call" });
+  apply("UserPromptSubmit", "turn-b", 1200);
+  apply("Stop", "turn-b", 1300);
+  assert.equal(state.snapshot(1300).sessions.filter(isActiveSession).length, 0);
+  assert.deepEqual(state.snapshot(1300).sessions[0].activities, []);
+});
+
 test("a fish keeps its species and appearance seed across hiding, resuming and service restarts", () => {
   let state = createState();
   const apply = (name, timestamp, extra = {}) => state.apply(sanitizeHook({

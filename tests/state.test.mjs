@@ -47,6 +47,29 @@ test("interrupt clears followers, session end removes its leader", () => {
   assert.equal(state.snapshot(2000).sessions.length, 0);
 });
 
+test("a new turn clears abandoned tools but keeps independently running agents", () => {
+  const state = createState();
+  state.apply(event("PreToolUse", { tool_use_id: "abandoned" }));
+  state.apply(event("SubagentStart", { agent_id: "child" }, 1100));
+  state.apply(event("UserPromptSubmit", { turn_id: "turn-2" }, 1200));
+  assert.deepEqual(first(state).activities.map(activity => activity.id), ["agent:child"]);
+  state.apply(event("PostToolUse", { tool_use_id: "abandoned" }, 1300));
+  assert.equal(first(state).status, "working");
+  state.apply(event("Stop", { turn_id: "turn-2" }, 1400));
+  state.apply(event("SubagentStop", { agent_id: "child" }, 1500));
+  assert.equal(first(state).status, "idle");
+});
+
+test("interrupting the current turn also clears agents retained from previous turns", () => {
+  const state = createState();
+  state.apply(event("SubagentStart", { agent_id: "child" }));
+  state.apply(event("Stop", {}, 1100));
+  state.apply(event("UserPromptSubmit", { turn_id: "turn-2" }, 1200));
+  state.apply(event("Interrupt", { turn_id: "turn-2" }, 1300));
+  assert.equal(first(state).status, "interrupted");
+  assert.deepEqual(first(state).activities, []);
+});
+
 test("late start after a matching finish cannot resurrect a tool", () => {
   const state = createState();
   state.apply(event("PostToolUse", { tool_use_id: "call" }, 1200));

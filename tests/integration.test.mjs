@@ -166,6 +166,35 @@ test("real concurrent hooks reach HTTP and SSE without mixing sessions or persis
   }
 });
 
+test("HTTP and SSE hide stopped sessions after a missing tool completion and restore them on resume", { timeout: 10_000 }, async () => {
+  const directory = await mkdtemp(path.join(tmpdir(), "codex-aquarium-idle-"));
+  let server;
+  let stream;
+  try {
+    server = await startServer({ directory, port: 0 });
+    const base = `http://127.0.0.1:${server.port}`;
+    stream = await stateStream(base);
+    await stream.next();
+    await observe(directory, "PreToolUse", "a", { tool_use_id: "abandoned" });
+    const initial = await stream.next(snapshot => session(snapshot, "a")?.status === "working");
+    await observe(directory, "UserPromptSubmit", "a", { turn_id: "next-turn" });
+    await observe(directory, "Stop", "a", { turn_id: "next-turn" });
+    const stopped = await stream.next(snapshot => session(snapshot, "a")?.status === "idle");
+    assert.deepEqual(activityIds(stopped, "a"), []);
+    const current = await waitForState(base, snapshot => session(snapshot, "a")?.status === "idle");
+    assert.deepEqual(current.sessions, stopped.sessions);
+    await observe(directory, "UserPromptSubmit", "a", { turn_id: "resumed-turn" });
+    const resumed = await stream.next(snapshot => session(snapshot, "a")?.status === "thinking");
+    assert.equal(session(resumed, "a").id, session(initial, "a").id);
+    assert.equal(session(resumed, "a").startedAt, session(initial, "a").startedAt);
+    assert.deepEqual(activityIds(resumed, "a"), []);
+  } finally {
+    stream?.close();
+    try { await server?.close(); }
+    finally { await rm(directory, { recursive: true, force: true }); }
+  }
+});
+
 test("the local HTTP service rejects foreign origins, hostile hosts, and unauthenticated shutdown", { timeout: 10_000 }, async () => {
   const directory = await mkdtemp(path.join(tmpdir(), "codex-aquarium-http-"));
   let server;
