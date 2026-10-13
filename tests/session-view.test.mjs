@@ -22,6 +22,24 @@ test("a stopped turn hides its fish even when an earlier turn lost a tool comple
   assert.deepEqual(state.snapshot(1300).sessions[0].activities, []);
 });
 
+test("subagent tool turns cannot replace the parent turn or keep its fish alive after completion", () => {
+  const state = createState();
+  const apply = (name, timestamp, extra = {}) => state.apply(sanitizeHook({
+    hook_event_name: name, session_id: "parent", turn_id: "parent-turn", ...extra,
+  }, timestamp));
+  apply("UserPromptSubmit", 1000);
+  apply("SubagentStart", 1100, { agent_id: "child" });
+  const child = { agent_id: "child", turn_id: "child-turn", tool_use_id: "child-tool" };
+  apply("PreToolUse", 1200, child);
+  apply("PostToolUse", 1300, child);
+  apply("SubagentStop", 1400, { agent_id: "child" });
+  apply("Stop", 1500);
+  const snapshot = state.snapshot(1500);
+  assert.equal(snapshot.sessions.filter(isActiveSession).length, 0);
+  assert.equal(snapshot.sessions[0].status, "idle");
+  assert.deepEqual(snapshot.sessions[0].activities, []);
+});
+
 test("a fish keeps its species and appearance seed across hiding, resuming and service restarts", () => {
   let state = createState();
   const apply = (name, timestamp, extra = {}) => state.apply(sanitizeHook({

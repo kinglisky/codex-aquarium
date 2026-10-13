@@ -1,6 +1,6 @@
 {
   "name": "codex-aquarium",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "把已连接的 Codex 会话、子 agent 和工具状态变成一缸实时群游的鱼。",
   "author": { "name": "kinglisky" },
   "license": "MIT",

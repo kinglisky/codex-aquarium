@@ -12,7 +12,7 @@ After automatic startup is configured on macOS, opening Codex starts the aquariu
 
 ![Live aquarium: feathery plants, a low foreground carpet and fish from active sessions](docs/screenshots/aquarium-live.png)
 
-Each active session gets a fish; concurrent tools and subagents become smaller followers. When work ends, the fish hides; resume that session and the same fish returns. There are ten fish styles, including cardinal tetras, tiger barbs and zebra danios. No active sessions means an empty tank.
+Each active session gets a fish; concurrent tools and subagents become smaller followers. When work ends, the fish hides; resume that session and the same fish returns. Opening a chat, switching tabs or focusing its input does not count as activity. There are ten fish styles, including cardinal tetras, tiger barbs and zebra danios. No active sessions means an empty tank.
 
 Drag to look around, scroll to zoom and click a fish to see its session. You can adjust the light and current, pause the fish, or enter native fullscreen.
 

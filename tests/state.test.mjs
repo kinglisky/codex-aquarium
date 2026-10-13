@@ -35,6 +35,40 @@ test("child agents stay with the parent and may outlive the parent response", ()
   assert.equal(first(state).status, "idle");
 });
 
+test("child tool events preserve the parent's tools and allow its turn to finish", () => {
+  const state = createState();
+  state.apply(event("PreToolUse", { tool_use_id: "parent-tool" }));
+  state.apply(event("SubagentStart", { agent_id: "child" }, 1100));
+  const child = { agent_id: "child", turn_id: "child-turn", tool_use_id: "child-tool" };
+  state.apply(event("PreToolUse", child, 1200));
+  assert.deepEqual(first(state).activities.map(activity => activity.id), ["tool:parent-tool", "agent:child", "tool:child-tool"]);
+  state.apply(event("Stop", {}, 1300));
+  assert.equal(first(state).status, "working");
+  assert.deepEqual(first(state).activities.map(activity => activity.id), ["agent:child", "tool:child-tool"]);
+  state.apply(event("SubagentStop", { agent_id: "child", turn_id: "child-turn" }, 1400));
+  assert.equal(first(state).status, "idle");
+  assert.deepEqual(first(state).activities, []);
+  state.apply(event("PreToolUse", { ...child, tool_use_id: "late-child-tool" }, 1500));
+  assert.equal(first(state).status, "idle");
+});
+
+test("child tools and approvals survive a new parent turn but end with their own agent", () => {
+  const state = createState();
+  state.apply(event("UserPromptSubmit"));
+  state.apply(event("SubagentStart", { agent_id: "child" }, 1100));
+  const child = { agent_id: "child", turn_id: "child-turn", tool_use_id: "child-tool" };
+  state.apply(event("PreToolUse", child, 1200));
+  state.apply(event("PermissionRequest", child, 1300));
+  state.apply(event("UserPromptSubmit", { turn_id: "turn-2" }, 1400));
+  assert.equal(first(state).status, "waiting");
+  assert.deepEqual(first(state).activities.map(activity => activity.id), ["agent:child", "tool:child-tool"]);
+  state.apply(event("Stop", { turn_id: "turn-2" }, 1500));
+  assert.equal(first(state).status, "waiting");
+  state.apply(event("SubagentStop", { agent_id: "child", turn_id: "child-turn" }, 1600));
+  assert.equal(first(state).status, "idle");
+  assert.deepEqual(first(state).activities, []);
+});
+
 test("interrupt clears followers, session end removes its leader", () => {
   const state = createState();
   state.apply(event("SubagentStart", { agent_id: "child" }));

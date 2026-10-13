@@ -22,18 +22,29 @@ function isEndedTurn(session, event) {
   return (session.endedTurns.get("") ?? 0) >= event.timestamp;
 }
 
+function clearParentPermissions(session) {
+  for (const [key, permission] of session.permissions) {
+    if (!permission.agentId) session.permissions.delete(key);
+  }
+}
+
 function trackTurn(session, event) {
   if (isEndedTurn(session, event)) return false;
+  if (event.agentId) {
+    if (event.event === "SubagentStart") return true;
+    const key = `agent:${event.agentId}`;
+    return session.activities.has(key) || !session.completed.has(key);
+  }
   if (!event.turnId || event.turnId === session.turnId) return true;
   if (event.timestamp < session.phaseAt) return false;
   if (session.turnId) session.endedTurns.set(session.turnId, event.timestamp);
   for (const [key, activity] of session.activities) {
-    if (activity.kind !== "tool" || activity.startedAt > event.timestamp) continue;
+    if (activity.kind !== "tool" || activity.agentId || activity.startedAt > event.timestamp) continue;
     finishActivity(session, key, event.timestamp);
   }
   session.turnId = event.turnId;
   session.phaseAt = event.timestamp;
-  session.permissions.clear();
+  clearParentPermissions(session);
   return true;
 }
 
@@ -42,11 +53,27 @@ function startActivity(session, event, activity) {
   const existing = session.activities.get(activity.id);
   if (existing?.startedAt > event.timestamp) return false;
   if (!trackTurn(session, event)) return false;
-  session.activities.set(activity.id, { ...activity, turnId: event.turnId, startedAt: event.timestamp });
+  session.activities.set(activity.id, {
+    ...activity, agentId: event.agentId, turnId: event.turnId, startedAt: event.timestamp,
+  });
   return true;
 }
 
+function finishAgent(session, event) {
+  if (!event.agentId) return;
+  finishActivity(session, `agent:${event.agentId}`, event.timestamp);
+  for (const [key, activity] of session.activities) {
+    if (activity.kind !== "tool" || activity.agentId !== event.agentId) continue;
+    finishActivity(session, key, event.timestamp);
+  }
+  for (const [key, permission] of session.permissions) {
+    if (permission.agentId !== event.agentId || permission.timestamp > event.timestamp) continue;
+    session.permissions.delete(key);
+  }
+}
+
 function endTurn(session, event, phase) {
+  if (event.agentId) { finishAgent(session, event); return; }
   session.endedTurns.set(event.turnId, Math.max(session.endedTurns.get(event.turnId) ?? 0, event.timestamp));
   const interruptsSession = phase === "interrupted" && event.timestamp >= session.phaseAt
     && (!event.turnId || !session.turnId || event.turnId === session.turnId);
@@ -61,7 +88,8 @@ function endTurn(session, event, phase) {
   if (event.turnId && session.turnId && event.turnId !== session.turnId) return;
   session.phase = phase;
   session.phaseAt = event.timestamp;
-  session.permissions.clear();
+  if (interruptsSession) { session.permissions.clear(); return; }
+  clearParentPermissions(session);
 }
 
 const handlers = {
@@ -70,12 +98,13 @@ const handlers = {
     if (session.phase === "stale") session.phase = "idle";
   },
   UserPromptSubmit(session, event) {
+    if (event.agentId) return;
     if (event.timestamp < session.phaseAt) return;
     if (!trackTurn(session, event)) return;
     session.phase = "thinking";
     session.phaseAt = event.timestamp;
     session.turnId = event.turnId;
-    if (!event.turnId) session.permissions.clear();
+    if (!event.turnId) clearParentPermissions(session);
   },
   PreToolUse(session, event) {
     if (!event.toolId) return;
@@ -84,7 +113,7 @@ const handlers = {
       label: event.toolName || "工具", status: "running",
     });
     if (!started) return;
-    if (event.timestamp >= session.phaseAt) session.phase = "thinking";
+    if (!event.agentId && event.timestamp >= session.phaseAt) session.phase = "thinking";
   },
   PostToolUse(session, event) {
     if (event.toolId) finishActivity(session, `tool:${event.toolId}`, event.timestamp);
@@ -101,13 +130,15 @@ const handlers = {
     }
   },
   PermissionRequest(session, event) {
-    if (event.timestamp < session.phaseAt) return;
+    if (!event.agentId && event.timestamp < session.phaseAt) return;
     if (event.toolId && session.completed.has(`tool:${event.toolId}`)) return;
     if (!trackTurn(session, event)) return;
     const key = event.toolId ? `tool:${event.toolId}` : `name:${event.toolName}`;
     session.permissions.set(key, event);
-    session.phase = "thinking";
-    session.phaseAt = event.timestamp;
+    if (!event.agentId) {
+      session.phase = "thinking";
+      session.phaseAt = event.timestamp;
+    }
     const activity = session.activities.get(`tool:${event.toolId}`);
     if (activity) activity.status = "waiting";
   },
@@ -119,7 +150,7 @@ const handlers = {
     });
   },
   SubagentStop(session, event) {
-    if (event.agentId) finishActivity(session, `agent:${event.agentId}`, event.timestamp);
+    finishAgent(session, event);
   },
   Stop: (session, event) => endTurn(session, event, "idle"),
   Interrupt: (session, event) => endTurn(session, event, "interrupted"),
@@ -174,7 +205,7 @@ export function createState(saved, now = Date.now()) {
       return {
         version: 1, source: "hooks", updatedAt: time, lastEventAt,
         sessions: [...sessions.values()].sort((a, b) => a.startedAt - b.startedAt).map(session => {
-          const activities = [...session.activities.values()].map(({ turnId, ...activity }) => activity);
+          const activities = [...session.activities.values()].map(({ turnId, agentId, ...activity }) => activity);
           const stale = time - session.updatedAt > STALE_AFTER || session.phase === "stale";
           const status = stale ? "stale" : session.permissions.size ? "waiting" : activities.length ? "working" : session.phase;
           return {

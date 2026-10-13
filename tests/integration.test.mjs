@@ -159,6 +159,19 @@ test("real concurrent hooks reach HTTP and SSE without mixing sessions or persis
     const current = await waitForState(base, snapshot => session(snapshot, "a")?.activities.length === 2);
     assert.deepEqual(current.sessions, completed.sessions, "HTTP and SSE expose the same projection");
     assert.equal((await allPersistedText(directory)).includes(secret), false, "persisted state contains no private hook fields");
+
+    const child = { agent_id: "child-1", turn_id: "child-turn", tool_use_id: "child-call" };
+    await observe(directory, "PreToolUse", "a", child);
+    await stream.next(snapshot => activityIds(snapshot, "a").includes("tool:child-call"));
+    await observe(directory, "Stop", "a");
+    const parentStopped = await stream.next(snapshot => session(snapshot, "a")?.activities.length === 2);
+    assert.deepEqual(activityIds(parentStopped, "a"), ["agent:child-1", "tool:child-call"]);
+    await observe(directory, "SubagentStop", "a", child);
+    const idle = await stream.next(snapshot => session(snapshot, "a")?.status === "idle");
+    assert.deepEqual(activityIds(idle, "a"), []);
+    assert.equal(session(idle, "b").status, "working", "another working session keeps its fish");
+    const final = await waitForState(base, snapshot => session(snapshot, "a")?.status === "idle");
+    assert.deepEqual(final.sessions, idle.sessions);
   } finally {
     stream?.close();
     try { await server?.close(); }
