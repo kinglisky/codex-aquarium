@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { access, lstat, mkdir, mkdtemp, readFile, realpath, rename, rm, writeFile } from "node:fs/promises";
+import { access, lstat, mkdir, mkdtemp, readFile, realpath, rename, rm } from "node:fs/promises";
 import { homedir } from "node:os";
 import path from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -9,12 +9,8 @@ import { fileURLToPath } from "node:url";
 const plugin = "codex-aquarium";
 const marketplace = "codex-aquarium-local";
 const selector = `${plugin}@${marketplace}`;
-const archiveName = `${plugin}.tgz`;
-const repository = "https://github.com/kinglisky/codex-aquarium";
-const usage = `Codex Aquarium 安装器（Node.js 22.12+、Codex CLI、tar）
+const usage = `Codex Aquarium 本地包安装器（由 install.sh 调用）
 
-  node install.mjs                         下载最新公开 Release 并安装
-  node install.mjs --version v0.1.0        安装指定 Release
   node install.mjs --archive ./codex-aquarium.tgz
                                           安装本地包；同目录需有 SHA256SUMS
   node install.mjs --help                  显示帮助
@@ -28,16 +24,13 @@ function options(arguments_) {
   for (let index = 0; index < arguments_.length; index++) {
     const option = arguments_[index];
     if (option === "--help" || option === "-h") return { help: true };
-    if (!["--archive", "--version"].includes(option)) throw new Error(`未知参数：${option}\n${usage}`);
+    if (option !== "--archive") throw new Error(`未知参数：${option}\n${usage}`);
     const value = arguments_[++index];
     if (!value || value.startsWith("--") || result[option]) throw new Error(`参数错误：${option}\n${usage}`);
     result[option] = value;
   }
-  if (result["--archive"] && result["--version"]) throw new Error("--archive 和 --version 不能同时使用。");
-  if (result["--version"] && !/^v\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(result["--version"])) {
-    throw new Error("版本格式应为 v0.1.0 或 v0.1.0-beta.1。");
-  }
-  return { archive: result["--archive"], version: result["--version"] };
+  if (!result["--archive"]) throw new Error(`缺少 --archive 参数，请通过 install.sh 安装。\n${usage}`);
+  return { archive: path.resolve(result["--archive"]) };
 }
 
 function command(program, arguments_) {
@@ -56,32 +49,13 @@ async function exists(file) {
   catch (error) { if (error.code === "ENOENT") return false; throw error; }
 }
 
-async function download(url, destination) {
-  const response = await fetch(url, { signal: AbortSignal.timeout(60_000) }).catch(error => {
-    throw new Error(`无法下载发行附件：${error.message}。请检查网络，或下载发行包与 SHA256SUMS 后使用 --archive。`);
-  });
-  if (response.status === 404) throw new Error("找不到发行附件：Release 可能尚未发布，或仓库为私有。请从有访问权限的 GitHub 页面下载发行包与 SHA256SUMS，再使用 --archive 安装。");
-  if (!response.ok) throw new Error(`下载失败：HTTP ${response.status}（${url}）。请稍后重试或使用 --archive。`);
-  await writeFile(destination, Buffer.from(await response.arrayBuffer()));
-}
-
-async function prepareArchive(configuration, temporary) {
-  if (configuration.archive) return path.resolve(configuration.archive);
-  const release = configuration.version ? `download/${configuration.version}` : "latest/download";
-  console.log(`正在下载 ${configuration.version || "最新"} Release…`);
-  for (const name of [archiveName, "SHA256SUMS"]) {
-    await download(`${repository}/releases/${release}/${name}`, path.join(temporary, name));
-  }
-  return path.join(temporary, archiveName);
-}
-
 async function verifyArchive(archive) {
   const sums = await readFile(path.join(path.dirname(archive), "SHA256SUMS"), "utf8").catch(() => {
-    throw new Error("发行包旁缺少 SHA256SUMS。请从同一个 Release 下载该文件，避免安装不完整或被修改的包。");
+    throw new Error("发行包旁缺少 SHA256SUMS。请重新运行 install.sh 下载完整安装文件。");
   });
   const entry = sums.split(/\r?\n/).find(line => /^[a-f\d]{64} [ *]codex-aquarium\.tgz$/i.test(line));
   const digest = createHash("sha256").update(await readFile(archive)).digest("hex");
-  if (!entry || entry.slice(0, 64).toLowerCase() !== digest) throw new Error("SHA-256 校验失败，未安装任何文件。请重新下载同一 Release 的发行包与 SHA256SUMS。");
+  if (!entry || entry.slice(0, 64).toLowerCase() !== digest) throw new Error("SHA-256 校验失败，未安装任何文件。请重新运行 install.sh 下载同一版本的发行包与 SHA256SUMS。");
 
   const entries = command("tar", ["-tzf", archive]).split(/\r?\n/);
   for (const entryName of entries) {
@@ -94,12 +68,11 @@ async function verifyArchive(archive) {
   if (detailed.some(line => !/^[d-]/.test(line))) throw new Error("发行包只能包含普通文件和目录，不允许链接或设备文件。");
 }
 
-async function validatePackage(directory, version) {
+async function validatePackage(directory) {
   const manifest = await json(path.join(directory, ".codex-plugin", "plugin.json"));
   const catalog = await json(path.join(directory, ".agents", "plugins", "marketplace.json"));
   const entry = catalog.plugins?.[0];
   if (manifest.name !== plugin || !/^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(manifest.version)) throw new Error("发行包的插件名称或版本无效。");
-  if (version && `v${manifest.version}` !== version) throw new Error("发行包内版本与请求的 Release 不一致。");
   if (catalog.name !== marketplace || catalog.plugins.length !== 1 || entry?.name !== plugin || entry.source?.source !== "local" || entry.source.path !== "./") {
     throw new Error("发行包的本地 marketplace 配置无效。");
   }
@@ -129,11 +102,11 @@ async function install(configuration) {
   const backup = path.join(temporary, "previous");
   let preserveBackup = false;
   try {
-    const archive = await prepareArchive(configuration, temporary);
+    const archive = configuration.archive;
     await verifyArchive(archive);
     command("tar", ["-xzf", archive, "--no-same-owner", "--no-same-permissions", "-C", temporary]);
     const extracted = path.join(temporary, plugin);
-    const version = await validatePackage(extracted, configuration.version);
+    const version = await validatePackage(extracted);
     const hadDirectory = await exists(destination);
     if (hadDirectory && ((await lstat(destination)).isSymbolicLink() || (await json(path.join(destination, ".codex-plugin", "plugin.json"))).name !== plugin)) {
       throw new Error(`拒绝覆盖非鱼缸安装目录：${destination}`);
@@ -192,7 +165,7 @@ async function install(configuration) {
   }
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] && await realpath(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const configuration = options(process.argv.slice(2));
     if (configuration.help) console.log(usage);

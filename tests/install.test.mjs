@@ -80,8 +80,8 @@ if (command === 'start') {
     const digest = createHash("sha256").update(await readFile(archive)).digest("hex");
     await writeFile(path.join(directory, "SHA256SUMS"), `${digest}  codex-aquarium.tgz\n`);
   }
-  function run(extraEnv = {}, args = ["--archive", archive]) {
-    return spawnSync(process.execPath, [installer, ...args], { env: { ...env, ...extraEnv }, encoding: "utf8", timeout: 20_000 });
+  function run(extraEnv = {}, args = ["--archive", archive], entrypoint = installer) {
+    return spawnSync(process.execPath, [entrypoint, ...args], { env: { ...env, ...extraEnv }, encoding: "utf8", timeout: 20_000 });
   }
   return { home, directory, destination, source, archive, pack, checksum, run };
 }
@@ -191,7 +191,7 @@ test("拒绝指向包外的符号链接，不覆盖外部文件", async t => {
   assert.equal(await readFile(outside, "utf8"), "unchanged");
 });
 
-test("拒绝错误顶级路径与 Release 版本参数", async t => {
+test("拒绝错误顶级路径与已移除的远程版本参数", async t => {
   const f = await fixture(t);
   await writeFile(path.join(f.directory, "outside.txt"), "content");
   assert.equal(spawnSync("tar", ["-czf", f.archive, "-C", f.directory, "outside.txt"]).status, 0);
@@ -201,8 +201,38 @@ test("拒绝错误顶级路径与 Release 版本参数", async t => {
   assert.match(invalidArchive.stderr, /不安全路径/);
   const invalidVersion = f.run({}, ["--version", "../../escape"]);
   assert.equal(invalidVersion.status, 1);
-  assert.match(invalidVersion.stderr, /版本格式/);
+  assert.match(invalidVersion.stderr, /未知参数：--version/);
   const help = f.run({}, ["--help"]);
   assert.equal(help.status, 0);
   assert.match(help.stdout, /SHA256SUMS/);
+});
+
+test("缺少 --archive 时立即退出，不访问网络或修改安装目录", async t => {
+  const f = await fixture(t);
+  const preload = "globalThis.fetch = () => { throw new Error('unexpected network request'); };";
+  const result = f.run({ NODE_OPTIONS: `--import=data:text/javascript,${encodeURIComponent(preload)}` }, []);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /缺少 --archive/);
+  assert.deepEqual(await readdir(f.home), []);
+});
+
+test("通过符号链接启动安装器时实际完成安装", async t => {
+  const f = await fixture(t);
+  await f.pack();
+  const entrypoint = path.join(f.directory, "install.mjs");
+  await symlink(installer, entrypoint);
+  const result = f.run({}, ["--archive", f.archive], entrypoint);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /已安装 Codex Aquarium 0\.1\.0/);
+  assert.equal(await readFile(path.join(f.destination, "dist/index.html"), "utf8"), "version 0.1.0");
+});
+
+test("作为模块导入时不自动执行安装", async t => {
+  const f = await fixture(t);
+  const entrypoint = path.join(f.directory, "importer.mjs");
+  await writeFile(entrypoint, `import ${JSON.stringify(new URL("../scripts/install.mjs", import.meta.url).href)};`);
+  const result = f.run({}, [], entrypoint);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, "");
+  assert.deepEqual(await readdir(f.home), []);
 });

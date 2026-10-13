@@ -21,7 +21,7 @@
 ## 安装条件
 
 - 支持插件及生命周期 Hooks 的 **Codex 桌面端**。
-- 命令行可用的 **Node.js 22.12+**、`codex` 和 `tar`。
+- 命令行可用的 **Node.js 22.12+**、`codex`、`curl`、`tar` 和 Bash。
 - 浏览器支持 WebGL 2。
 
 使用发行包无需安装 pnpm、克隆源码或自行编译。当前桌面实测平台是 macOS；Windows 和 Linux 尚未完成真实 Codex 桌面安装验证。
@@ -36,16 +36,18 @@
 请帮我在这台电脑安装或更新 Codex Aquarium，并验证安装成功。
 
 官方仓库：https://github.com/kinglisky/codex-aquarium
-最新发行版：https://github.com/kinglisky/codex-aquarium/releases/latest
+安装脚本：https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master
 
 请直接完成以下步骤：
-1. 检查 Node.js 22.12+、tar 和 Codex CLI；运行 codex plugin add --help，确认 CLI 支持插件安装。
-   若缺少依赖或版本不满足，说明具体缺项和解决方式；涉及安装系统软件或提升权限时，先征得我的同意。
-2. 确认最新 Release 的版本标签，在临时目录下载该版本的 install.mjs 和 SHA256SUMS。
-   两个附件必须来自同一 Release。先阅读 install.mjs，再按 SHA256SUMS 中 install.mjs 的条目校验安装器；下载或校验失败就停止。
-   若附件服务器 TLS 连接失败，检查终端是否使用了已有代理；参考下方代理配置，让 curl 和 Node 安装器都通过代理下载。
-3. 执行 node install.mjs --version <第 2 步确认的版本标签>。
-   安装器会下载并校验对应版本的发行包、安装插件并启动服务。遇到错误时报告原因，不跳过校验或改写信任记录。
+1. 检查 Bash、curl、tar、Codex CLI 和 Node.js 22.12+；运行 codex plugin add --help，确认 CLI 支持插件安装。
+   若没有 Node.js 或版本过低，提示我从 https://nodejs.org/ 安装 Node.js 22.12+，然后停止，不自动安装系统软件。
+   其他依赖缺失时，说明具体缺项。
+2. 在临时目录运行：
+   curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh
+   下载成功后先阅读 aquarium-install.sh，确认来自上述官方仓库。
+3. 执行 bash aquarium-install.sh。
+   脚本从 GitHub raw 文件下载同版本的预构建包并校验 SHA-256，随后安装插件并启动服务。
+   遇到错误时报告原因，不跳过校验或改写信任记录。
 4. 用 codex plugin list --json 确认 codex-aquarium@codex-aquarium-local 已安装。
    从安装器输出的安装目录运行 node server/cli.mjs status；若服务未运行，执行 node server/cli.mjs start。
    再检查实际服务地址的 /api/health。不要输出运行目录中的停止凭据。
@@ -56,7 +58,7 @@
    完成后，让我继续一个会话触发工具调用，验证活跃主鱼和工具跟随鱼；全部活动结束后主鱼隐藏。
    继续同一会话应恢复原来的鱼。不要用演示鱼群冒充真实验证。
 
-若 Release 尚未发布、附件下载失败或缺少必要权限，请清楚说明阻塞原因，不把未完成的安装报告为成功。
+若 raw 文件下载失败或缺少必要权限，请清楚说明阻塞原因，不把未完成的安装报告为成功。
 ```
 
 ### curl 快捷安装
@@ -64,22 +66,12 @@
 在 macOS / Linux 终端复制执行：
 
 ```bash
-curl -fL https://github.com/kinglisky/codex-aquarium/releases/latest/download/install.mjs -o aquarium-install.mjs && node aquarium-install.mjs
+curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh && bash aquarium-install.sh
 ```
 
-命令从 [最新 Release](https://github.com/kinglisky/codex-aquarium/releases/latest) 下载安装器，只有下载成功才会执行。安装器自动下载最新版发行包、校验 SHA-256、注册本地 marketplace、安装插件并启动鱼缸。
+命令通过 GitHub 官方 raw API 读取仓库中的 [install.sh](install.sh)，只有下载成功才会执行。脚本从同一仓库的 `distribution` 分支下载预构建插件，校验 SHA-256 后安装并启动鱼缸，整个流程无需访问 Release 附件服务器。
 
-如果网络需要代理，系统或浏览器里的代理设置不一定会被终端继承。出现 `SSL_ERROR_SYSCALL`、`ECONNRESET` 等连接错误时，可使用已有的 HTTP 代理重试。将下面的 `127.0.0.1:7897` 替换为自己的代理地址：
-
-```bash
-(
-  export HTTPS_PROXY=http://127.0.0.1:7897
-  export NO_PROXY=localhost,127.0.0.1
-  curl -fL --connect-timeout 10 --max-time 60 https://github.com/kinglisky/codex-aquarium/releases/latest/download/install.mjs -o aquarium-install.mjs && node --use-env-proxy aquarium-install.mjs
-)
-```
-
-这段配置只在括号内生效。`HTTPS_PROXY` 用于远程下载，`--use-env-proxy` 让 Node 安装器也使用该代理，`NO_PROXY` 让本地鱼缸请求直连。代理用法已在 Node.js 24.11.1 验证；运行前可用 `node --help` 确认当前版本支持 `--use-env-proxy`，不支持时需更新 Node.js。无需关闭 HTTPS 证书校验。
+缺少 Node.js 或版本低于 22.12 时，脚本会提示前往 [Node.js 官网](https://nodejs.org/) 安装，并退出。安装完成后重新执行上述命令即可。
 
 默认安装源位于 `~/.codex/aquarium-install/codex-aquarium`；设置 `CODEX_HOME` 时使用对应目录。请保留该目录，后续更新仍会使用它。
 
@@ -130,8 +122,8 @@ codex plugin marketplace remove codex-aquarium-local
 | 安装后仍是旧页面 | 刷新浏览器；确认更新安装成功并已重启本地鱼缸服务。 |
 | 工作结束或服务重启后鱼消失 | 空闲和状态过期的会话会隐藏；继续对应会话，收到新的活跃事件后会恢复原来的鱼。 |
 | `codex` 命令不存在 | 安装或配置 Codex CLI，确认 `codex plugin add --help` 可用，再使用上述安装方式。 |
-| 下载 404 | 检查最新 Release 是否已发布并包含 `install.mjs`、`codex-aquarium.tgz` 和 `SHA256SUMS`；附件缺失时需由维护者修复发布，不能继续安装。 |
-| 附件下载出现 `SSL_ERROR_SYSCALL` / `ECONNRESET` | 检查终端能否连接 GitHub 附件服务器；需要代理时使用 [curl 快捷安装](#curl-快捷安装) 中的代理配置，同时覆盖 curl 和 Node 下载。 |
+| 缺少 Node.js 或版本过低 | 按脚本提示安装 Node.js 22.12+，确认 `node --version` 可用后重新执行安装命令。 |
+| raw 下载失败 | 确认终端能访问 `api.github.com`；404 表示对应版本的 raw 文件尚未发布，需由维护者修复。GitHub API 限流时稍后重试。 |
 | SHA-256 校验失败 | 重新执行上述安装流程；若仍失败，请向维护者反馈，不跳过校验。 |
 
 ## 开发与构建
@@ -145,7 +137,7 @@ pnpm install --frozen-lockfile
 pnpm package
 ```
 
-`pnpm package` 执行测试和生产构建，输出 `artifacts/codex-aquarium.tgz`、`artifacts/install.mjs`、`artifacts/SHA256SUMS`。发行包包含已构建界面、服务端、Hooks、skill、截图文档与许可证，不包含 `node_modules`。
+`pnpm package` 执行测试和生产构建，输出预构建包、`install.sh`、内部安装组件和 `SHA256SUMS`。发行包包含已构建界面、服务端、Hooks、skill、截图文档与许可证，不包含 `node_modules`。
 
 ```bash
 pnpm dev                    # 前端开发预览
@@ -159,14 +151,16 @@ node server/cli.mjs stop
 
 ## 发布版本
 
-同步修改 `package.json` 与 `.codex-plugin/plugin.json` 中的版本，更新 [CHANGELOG.md](CHANGELOG.md)，然后提交并推送对应标签：
+同步修改 `package.json`、`.codex-plugin/plugin.json` 与 `install.sh` 中的版本，更新 [CHANGELOG.md](CHANGELOG.md)。构建并将 raw 文件发布到 `distribution` 分支后，再推送源码和对应标签：
 
 ```bash
-git tag v0.1.1
-git push origin v0.1.1
+pnpm package
+pnpm publish:distribution
+git tag v0.1.3
+git push origin master v0.1.3
 ```
 
-GitHub Actions 会检查标签与两个版本号一致，安装锁定依赖、测试、构建、打包，最后创建带三个附件的 GitHub Release。
+发布命令需要已登录且具有仓库写入权限的 GitHub CLI。每个版本发布到独立目录，已发布的同版本文件不能被覆盖。
 
 含生命周期 Hooks 的插件目前适合 Codex 桌面端手动安装或 marketplace 分发，不能提交到官方公共插件目录。[官方打包说明](https://developers.openai.com/plugins/build/plugins) · [Hooks 与信任](https://learn.chatgpt.com/docs/hooks)
 
@@ -176,7 +170,7 @@ GitHub Actions 会检查标签与两个版本号一致，安装锁定依赖、�
 
 默认数据目录为 `${CODEX_HOME:-~/.codex}/codex-aquarium`。如设置 `AQUARIUM_DATA_DIR`，Hooks 和服务必须使用同一目录。服务的停止凭据仅保存在本机运行目录。
 
-安装器联网仅用于下载指定 GitHub Release 的发行文件。
+安装脚本联网仅用于读取官方仓库的 GitHub raw 文件。
 
 ## 许可证
 

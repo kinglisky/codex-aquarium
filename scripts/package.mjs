@@ -10,6 +10,7 @@ const outputDirectory = join(root, 'artifacts');
 const temporary = await mkdtemp(join(tmpdir(), 'codex-aquarium-package-'));
 const packageRoot = join(temporary, 'codex-aquarium');
 const files = [
+  'install.sh',
   'hooks/hooks.json',
   '.codex-plugin/plugin.json',
   '.agents/plugins/marketplace.json',
@@ -24,6 +25,12 @@ const files = [
 ];
 
 try {
+  const project = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
+  const manifest = JSON.parse(await readFile(join(root, '.codex-plugin/plugin.json'), 'utf8'));
+  const shell = await readFile(join(root, 'install.sh'), 'utf8');
+  if (project.version !== manifest.version || !shell.includes(`VERSION='v${project.version}'`)) {
+    throw new Error('项目、插件和 install.sh 版本不一致。');
+  }
   const required = ['dist/index.html', 'server/cli.mjs', 'hooks/observe.mjs', ...files];
   await Promise.all(required.map((file) => stat(join(root, file))));
   await mkdir(packageRoot);
@@ -55,12 +62,13 @@ try {
   await mkdir(outputDirectory, { recursive: true });
   await cp(archive, join(outputDirectory, 'codex-aquarium.tgz'));
   await cp(join(root, 'scripts/install.mjs'), join(outputDirectory, 'install.mjs'));
-  const checksums = await Promise.all(['codex-aquarium.tgz', 'install.mjs'].map(async (file) => {
+  await cp(join(root, 'install.sh'), join(outputDirectory, 'install.sh'));
+  const checksums = await Promise.all(['codex-aquarium.tgz', 'install.mjs', 'install.sh'].map(async (file) => {
     const content = await readFile(join(outputDirectory, file));
     return `${createHash('sha256').update(content).digest('hex')}  ${file}`;
   }));
   await writeFile(join(outputDirectory, 'SHA256SUMS'), `${checksums.join('\n')}\n`);
-  console.log(`插件发行包、安装脚本和 SHA-256 校验文件：${outputDirectory}`);
+  console.log(`插件发行包、Shell 安装入口、内部安装组件和 SHA-256 校验文件：${outputDirectory}`);
 } finally {
   await rm(temporary, { recursive: true, force: true });
 }
