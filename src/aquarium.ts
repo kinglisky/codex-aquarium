@@ -5,22 +5,23 @@ import type { ActivityCategory, AquariumSession, SessionStatus } from "../shared
 import type { FishSpecies } from "./fish";
 import { createMuseumFish } from "./museum-fish";
 import { createMuseum } from "./museum";
+import type { loadMuseumAssets } from "./museum-assets";
 import { hashSeed, speciesForSession } from "./sessions";
+import { createSwimmingWorld } from "./swimming";
+import type { SwimmingFish } from "./swimming";
 
 export const ACTIVITY_FISH: Record<ActivityCategory, FishSpecies> = { read: "neon", write: "swordtail", terminal: "golden", web: "rainbow", agent: "betta", tool: "guppy" };
 const STATUS_SPEED: Record<SessionStatus, number> = { thinking: 0.65, working: 1, waiting: 0.2, idle: 0.3, interrupted: 0.15, stale: 0.08 };
 type FishModel = ReturnType<typeof createMuseumFish>;
-interface Follower { model: FishModel; species: FishSpecies; }
+interface Follower { model: FishModel; species: FishSpecies; motion: SwimmingFish; slot: number; }
 interface School {
   session: AquariumSession;
   model: FishModel;
   followers: Map<string, Follower>;
-  phase: number;
-  speed: number;
-  seed: number;
+  motion: SwimmingFish;
 }
 
-export function createAquarium(container: HTMLElement, onSelect: (id: string) => void) {
+export function createAquarium(container: HTMLElement, onSelect: (id: string) => void, assets: Awaited<ReturnType<typeof loadMuseumAssets>>) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -56,7 +57,8 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   const rim = new THREE.DirectionalLight("#6384ff", 1.2);
   rim.position.set(4, 6, -5);
   scene.add(rim);
-  const museum = createMuseum();
+  const museum = createMuseum(assets.visitor);
+  const swimming = createSwimmingWorld(museum.obstacles);
   scene.add(museum.group);
   const schools = new Map<string, School>();
   const keys = new Set<string>();
@@ -74,9 +76,11 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   let cameraAnchor = 0;
 
   function removeSchool(school: School) {
+    swimming.removeFish(school.motion.id);
     scene.remove(school.model.group);
     school.model.dispose();
-    for (const { model } of school.followers.values()) {
+    for (const { model, motion } of school.followers.values()) {
+      swimming.removeFish(motion.id);
       scene.remove(model.group);
       model.dispose();
     }
@@ -92,11 +96,14 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
     for (const session of sessions) {
       let school = schools.get(session.id);
       if (!school) {
-        const model = createMuseumFish(speciesForSession(session.id));
+        const species = speciesForSession(session.id);
+        const model = createMuseumFish(species, assets.fish[species]);
         const seed = hashSeed(session.id);
+        const motion = swimming.addFish(session.id, model.size.clone().multiplyScalar(1.15), seed);
+        if (!motion) { model.dispose(); continue; }
         model.group.userData.sessionId = session.id;
         scene.add(model.group);
-        school = { model, followers: new Map(), session, phase: seed % 1000 / 1000 * Math.PI * 2, speed: STATUS_SPEED[session.status], seed };
+        school = { model, followers: new Map(), session, motion };
         schools.set(session.id, school);
       }
       school.session = session;
@@ -105,43 +112,33 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
         const activity = activities.get(id);
         if (activity && ACTIVITY_FISH[activity.category] === follower.species) continue;
         scene.remove(follower.model.group);
+        swimming.removeFish(follower.motion.id);
         follower.model.dispose();
         school.followers.delete(id);
       }
       for (const activity of session.activities) {
         if (school.followers.has(activity.id)) continue;
         const species = ACTIVITY_FISH[activity.category];
-        const model = createMuseumFish(species);
-        model.group.scale.setScalar(activity.kind === "agent" ? 0.45 : 0.3);
+        const model = createMuseumFish(species, assets.fish[species]);
+        const scale = activity.kind === "agent" ? 0.45 : 0.3;
+        model.group.scale.setScalar(scale);
+        const id = `${session.id}:${activity.id}`;
+        const occupied = new Set([...school.followers.values()].map(follower => follower.slot));
+        let slot = 0;
+        while (occupied.has(slot)) slot += 1;
+        const motion = swimming.addFish(id, model.size.clone().multiplyScalar(scale), hashSeed(id), { leader: school.motion, slot });
+        if (!motion) { model.dispose(); continue; }
         model.group.userData.sessionId = session.id;
         scene.add(model.group);
-        school.followers.set(activity.id, { model, species });
+        school.followers.set(activity.id, { model, species, motion, slot });
       }
     }
   }
 
-  const position = new THREE.Vector3();
-  const next = new THREE.Vector3();
-  const heading = new THREE.Vector3();
-  const fishRotation = new THREE.Euler(0, 0, 0, "YZX");
-  const orientation = new THREE.Quaternion();
-  function route(school: School, phase: number, out: THREE.Vector3) {
-    const height = 2 + (school.seed >>> 6) % 100 / 100 * 4.1;
-    const width = 5.7 + school.seed % 100 / 90;
-    const depth = 0.55 + (school.seed >>> 12) % 100 / 120;
-    out.set(Math.sin(phase) * width, height + Math.sin(phase * 1.7 + school.seed % 8) * 0.35, -3 + Math.cos(phase) * depth);
-  }
-  function swim(model: FishModel, school: School, phase: number, lateral: number, delta: number) {
-    route(school, phase, position);
-    route(school, phase + 0.015, next);
-    heading.subVectors(next, position).normalize();
-    position.x -= heading.z * lateral;
-    position.z += heading.x * lateral;
-    model.group.position.copy(position);
-    orientation.setFromEuler(fishRotation.set(0, Math.atan2(-heading.z, heading.x), Math.asin(heading.y), "YZX"));
-    model.group.quaternion.slerp(orientation, model.group.userData.oriented ? Math.min(1, delta * 3) : 1);
-    model.group.userData.oriented = true;
-    model.animate(time, school.speed);
+  function swim(model: FishModel, motion: SwimmingFish) {
+    model.group.position.copy(motion.position);
+    model.group.quaternion.copy(motion.quaternion);
+    model.animate(time, motion.speed, motion.turnRate);
   }
 
   function resetView(near = false) {
@@ -212,16 +209,15 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
     visitorX = THREE.MathUtils.damp(visitorX, visitorTarget, 6, delta);
     museum.setVisitorPosition(visitorX, Math.abs(visitorX - visitorTarget) > 0.025, delta);
     for (const school of schools.values()) {
-      school.speed = THREE.MathUtils.damp(school.speed, STATUS_SPEED[school.session.status], 2.5, movement);
-      school.phase += movement * school.speed * 0.12;
-      swim(school.model, school, school.phase, 0, movement);
+      school.motion.activity = STATUS_SPEED[school.session.status];
+      for (const follower of school.followers.values()) follower.motion.activity = school.motion.activity;
+    }
+    swimming.update(movement);
+    for (const school of schools.values()) {
+      swim(school.model, school.motion);
       school.model.group.scale.setScalar(school.session.id === selectedId ? 1.15 : 1.05);
-      let index = 0;
       for (const follower of school.followers.values()) {
-        const row = Math.floor(index / 2) + 1;
-        const lateral = (index % 2 === 0 ? -1 : 1) * (0.15 + row * 0.09);
-        swim(follower.model, school, school.phase - 0.15 - row * 0.12, lateral, movement);
-        index += 1;
+        swim(follower.model, follower.motion);
       }
     }
     const anchor = visitorX * (camera.aspect < 1 ? 0.9 : 0.15);
@@ -253,7 +249,9 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
       controls.dispose();
       for (const school of schools.values()) removeSchool(school);
       schools.clear();
+      swimming.dispose();
       museum.dispose();
+      assets.dispose();
       environment.dispose();
       renderer.dispose();
       renderer.domElement.remove();

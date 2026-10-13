@@ -5,6 +5,8 @@ import { FISH_TYPES, isActiveSession, speciesForSession } from "./sessions";
 import { demoSnapshot } from "./demo";
 import type { FishSpecies } from "./fish";
 import { MUSEUM_SPECIES } from "./museum-fish";
+import { loadMuseumAssets } from "./museum-assets";
+import { initSwimming } from "./swimming";
 
 const FISH_ROLE: Record<FishSpecies, string> = {
   neon: "阅读与检索", guppy: "其他工具", betta: "子 Agent", swordtail: "写入与编辑",
@@ -61,7 +63,7 @@ required<HTMLDivElement>("#app").innerHTML = `
         <section id="detail" class="detail" hidden aria-live="polite"></section>
         <section class="session-section"><div class="section-title"><h2>此刻的来客</h2><span id="session-total">0 个活跃会话</span></div><div class="summary"><span><strong id="main-count">0</strong>只主鱼</span><span><strong id="activity-count">0</strong>只随行鱼</span></div><div id="session-list" class="session-list"></div><p id="session-empty" class="quiet-note">只展示正在执行或等待审批的会话。任务结束后离开，再次开始时还是原来那只鱼。</p></section>
         <section class="settings"><div class="section-title"><h2>展厅光景</h2></div><label for="light">灯光<span id="light-value">100%</span></label><input id="light" type="range" min="45" max="140" value="100"><label for="flow">水流<span id="flow-value">轻柔</span></label><input id="flow" type="range" min="0" max="180" value="80"></section>
-        <section class="field-guide"><div class="section-title"><h2>海洋图鉴</h2><span>${FISH_TYPES.length} 种鱼</span></div><div class="fish-guide">${FISH_TYPES.map(species => `<div class="guide-entry" title="${MUSEUM_SPECIES[species].description}">${fishIcon(species)}<span>${MUSEUM_SPECIES[species].name}<small>${FISH_ROLE[species]}</small></span></div>`).join("")}</div><p class="quiet-note">原创 3D 模型，以海洋鱼类的轮廓重新绘制。大鱼代表会话，小鱼代表工具或子 Agent。</p></section>
+        <section class="field-guide"><div class="section-title"><h2>海洋图鉴</h2><span>${FISH_TYPES.length} 种鱼</span></div><div class="fish-guide">${FISH_TYPES.map(species => `<div class="guide-entry" title="${MUSEUM_SPECIES[species].description}">${fishIcon(species)}<span>${MUSEUM_SPECIES[species].name}<small>${FISH_ROLE[species]}</small></span></div>`).join("")}</div><p class="quiet-note">《集合啦！动物森友会》鱼类模型与贴图，配合程序化游动。大鱼代表会话，小鱼代表工具或子 Agent。</p></section>
         <footer class="sidebar-footer"><span class="privacy-dot"></span>只在本机，安静地陪您工作</footer>
       </aside>
     </section>
@@ -169,9 +171,18 @@ function renderPause() {
 }
 
 try {
-  aquarium = createAquarium(required<HTMLElement>("#viewport"), selectSession);
+  required<HTMLElement>("#viewport").innerHTML = '<div class="render-error" role="status"><p>正在迎接海洋来客…</p></div>';
+  await initSwimming();
+  const assets = await loadMuseumAssets();
+  required<HTMLElement>("#viewport").replaceChildren();
+  try {
+    aquarium = createAquarium(required<HTMLElement>("#viewport"), selectSession, assets);
+  } catch (error) {
+    assets.dispose();
+    throw error;
+  }
 } catch (error) {
-  required<HTMLElement>("#viewport").innerHTML = '<div class="render-error"><h2>暂时无法绘制 3D 鱼缸</h2><p>请启用浏览器硬件加速，并使用支持 WebGL 2 的浏览器。右侧仍可查看实时会话。</p></div>';
+  required<HTMLElement>("#viewport").innerHTML = '<div class="render-error"><h2>暂时无法绘制 3D 鱼缸</h2><p>请刷新页面重试，并确认浏览器支持 WebGL 2、已启用硬件加速。展厅手册仍可查看实时会话。</p></div>';
   console.error("鱼缸初始化失败", error);
 }
 

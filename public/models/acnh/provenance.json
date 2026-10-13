@@ -1,0 +1,127 @@
+{
+  "game": "Animal Crossing: New Horizons",
+  "rights": "Nintendo and respective owners; not covered by the project MIT license.",
+  "fish": [
+    {
+      "file": "fish/anchovy.glb",
+      "sha256": "73055fb2cb0f5e6fbfac68ef9cbd8bec3b787b59ad68ba0f9af734054c73ea99",
+      "name": "Anchovy",
+      "modelId": 319453,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/319453/",
+      "download": "https://models.spriters-resource.com/media/assets/316/319453.zip?updated=1755505137",
+      "sourceSha256": "80b2363407ac6b9f52a7b014bab65cd7319c1f43d34e68eb5de385a6b17a9434"
+    },
+    {
+      "file": "fish/barreleye.glb",
+      "sha256": "7af02bd641738a7f187f0c0c5867db208851535d6a1a0b9f289752cbcbe096e0",
+      "name": "Barreleye",
+      "modelId": 465567,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/465567/",
+      "download": "https://models.spriters-resource.com/media/assets/475/465567.zip?updated=1762832702",
+      "sourceSha256": "0897cc62ad7b81b4c34bca4a717a28bd7010b7c613723cc5cae6d467adcffaf4"
+    },
+    {
+      "file": "fish/goldfish.glb",
+      "sha256": "5df4fcabbc764d2704af8e11c0f2b2697d9f5b3b275351b948fb9eaabe6d05ca",
+      "name": "Goldfish",
+      "modelId": 330561,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/330561/",
+      "download": "https://models.spriters-resource.com/media/assets/327/330561.zip?updated=1755508328",
+      "sourceSha256": "3de55d4d88e0302f0fed8fdaa9de048200ed810bfdb5c6df32a782058d3ff6c7"
+    },
+    {
+      "file": "fish/great-white-shark.glb",
+      "sha256": "b0bd5941bdb80e07200d419d9c2ca684318f4e1a51930ee175fea84cd3e7b7da",
+      "name": "Great White Shark",
+      "modelId": 325320,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/325320/",
+      "download": "https://models.spriters-resource.com/media/assets/322/325320.zip?updated=1755506817",
+      "sourceSha256": "26148943fbe1852d6a6138578943858a16e96041ad154f4da9b1484293e7a4f7"
+    },
+    {
+      "file": "fish/horse-mackerel.glb",
+      "sha256": "e1a0f129a6ea17899fecc13c1d99fc9db0b75e82562fbcbfb772c7975906ef2d",
+      "name": "Horse Mackerel",
+      "modelId": 319489,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/319489/",
+      "download": "https://models.spriters-resource.com/media/assets/316/319489.zip?updated=1755505146",
+      "sourceSha256": "c4a8f440ed2e2521b9e665d7be10143c5179a25507c18b6d88eeb396f623cf87"
+    },
+    {
+      "file": "fish/koi.glb",
+      "sha256": "af4428af24b7fa23cb899eff1f40d75626b8d48b47b7213a059010742e496eeb",
+      "name": "Koi",
+      "modelId": 319492,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/319492/",
+      "download": "https://models.spriters-resource.com/media/assets/316/319492.zip?updated=1755505146",
+      "sourceSha256": "25e0b07620306419abe0639d2cb7d1cafb62138ec6df1b2d8e6409996d76582c"
+    },
+    {
+      "file": "fish/oarfish.glb",
+      "sha256": "8a03a5ad0807723001f719ed209760b72b4dc6d020b0165b474a867e41b7be66",
+      "name": "Oarfish",
+      "modelId": 319498,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/319498/",
+      "download": "https://models.spriters-resource.com/media/assets/316/319498.zip?updated=1755505148",
+      "sourceSha256": "50854e6f835b85c710b8c61af19fce0ffc19ef3f81b524ccb5fd98a24ca10d33"
+    },
+    {
+      "file": "fish/ocean-sunfish.glb",
+      "sha256": "089ae3d5f2ba8b1cbe373c382928b473e8820191c6c91f967f9868c09a512864",
+      "name": "Ocean Sunfish",
+      "modelId": 325322,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/325322/",
+      "download": "https://models.spriters-resource.com/media/assets/322/325322.zip?updated=1755506818",
+      "sourceSha256": "8256497dc47f0ead56c9cd0f2699719fbe1625a1c661cb7fc731301c4de3a704"
+    },
+    {
+      "file": "fish/red-snapper.glb",
+      "sha256": "d5dfd2e1560f252d7425c651a0ae40c3d1206fdbaf111ea5d18c63e58d4f72c9",
+      "name": "Red Snapper",
+      "modelId": 319507,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/319507/",
+      "download": "https://models.spriters-resource.com/media/assets/316/319507.zip?updated=1755505150",
+      "sourceSha256": "f6f8753460e479ceef14e03df99a8986b69745677d5f882aa963fee79bb64dfd"
+    },
+    {
+      "file": "fish/whale-shark.glb",
+      "sha256": "02f365f60a8974edc175ab9bf227c286a36ecfb347d1e4016d3dc8e013af981b",
+      "name": "Whale Shark",
+      "modelId": 325321,
+      "source": "https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/asset/325321/",
+      "download": "https://models.spriters-resource.com/media/assets/322/325321.zip?updated=1755506817",
+      "sourceSha256": "6c26612baad52a153ec36f170b81eb23aac5d51765c713bb6b1c8574f19da1d8"
+    }
+  ],
+  "character": {
+    "file": "character.glb",
+    "sha256": "3331ee7a18e95f0709018d347d02661937d0f1be3ac6c8fee028a6091bf76b5c",
+    "meshSource": "https://drive.google.com/drive/folders/1LrMZhtm5gdCf-LQesMfEgTvmxDwlkgyo",
+    "textureSources": [
+      {
+        "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/PlayerBody.Nin_NX_NVN.zs",
+        "source_sha256": "99ce2741d8cbe47f51ba1a645ae7becb020d67688ea44eba637a1c2ab3e2e6c3"
+      },
+      {
+        "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/PlayerHair07.Nin_NX_NVN.zs",
+        "source_sha256": "ace8bc98678f70a17eccaf82d5e4159cf97018c3ab563195b8c2a9c2e5f56cc3"
+      },
+      {
+        "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/TopsTexOnepieceBoxmydesignNBox.Nin_NX_NVN.zs",
+        "source_sha256": "ff8bb40ec027147ae4fc2ddad5595a7abee89f81c42f36e3eb353408eb9feefb"
+      },
+      {
+        "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/PlayerEye00.Nin_NX_NVN.zs",
+        "source_sha256": "86b48f2e3cfe8b5b3a4df39eb305a35ac5f286c209e13708291ae47e8c71f78e"
+      },
+      {
+        "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/PlayerMouth00.Nin_NX_NVN.zs",
+        "source_sha256": "6aa833d251f90f660f7ed555f945934f742a62d2ff5e39db6046e801d276f0ea"
+      },
+      {
+        "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/TopsTexOnepieceBoxNStandard0.Nin_NX_NVN.zs",
+        "source_sha256": "714f30e7e9d6d2dc2802efff9c7a557df898c5532a4da3b3d10341e40be58eba"
+      }
+    ]
+  }
+}

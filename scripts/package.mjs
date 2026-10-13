@@ -16,6 +16,7 @@ const files = [
   '.agents/plugins/marketplace.json',
   'skills/aquarium/SKILL.md',
   'scripts/install.mjs',
+  'docs/screenshots/museum-gallery.jpg',
   'docs/screenshots/aquarium-live.png',
   'docs/screenshots/aquarium-glass.png',
   'docs/screenshots/plugin-configuration.png',

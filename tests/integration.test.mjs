@@ -12,6 +12,28 @@ import { startServer } from "../server/index.mjs";
 const observer = fileURLToPath(new URL("../hooks/observe.mjs", import.meta.url));
 const secret = "AQUARIUM_PRIVATE_TEST_SENTINEL";
 
+test("正式服务提供完整 GLB，允许内嵌贴图与 WebAssembly，保持 JavaScript 动态执行限制", async () => {
+  const directory = await mkdtemp(path.join(tmpdir(), "aquarium-assets-"));
+  const assets = fileURLToPath(new URL("../public", import.meta.url));
+  const model = "/models/acnh/fish/whale-shark.glb";
+  const server = await startServer({ directory, port: 0, assets });
+  try {
+    const response = await fetch(`http://127.0.0.1:${server.port}${model}`);
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("content-type"), "model/gltf-binary");
+    assert.deepEqual(Buffer.from(await response.arrayBuffer()), await readFile(path.join(assets, model)));
+    const policy = response.headers.get("content-security-policy");
+    const scripts = policy.split(";").map(directive => directive.trim()).find(directive => directive.startsWith("script-src "));
+    assert.deepEqual(scripts.split(/\s+/), ["script-src", "'self'", "'wasm-unsafe-eval'"]);
+    const connections = policy.split(";").map(directive => directive.trim()).find(directive => directive.startsWith("connect-src "));
+    assert.deepEqual(connections.split(/\s+/), ["connect-src", "'self'", "blob:"]);
+    assert.match(policy, /object-src 'none'/);
+  } finally {
+    await server.close();
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 async function observe(directory, event, sessionId, fields = {}) {
   const child = spawn(process.execPath, [observer], {
     env: { ...process.env, AQUARIUM_DATA_DIR: directory },

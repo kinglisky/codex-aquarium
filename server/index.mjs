@@ -7,7 +7,7 @@ import { createState } from "./state.mjs";
 import { dataDirectory, readJson, atomicJson, consumeEvents } from "./storage.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png", ".ico": "image/x-icon" };
+const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png", ".ico": "image/x-icon", ".glb": "model/gltf-binary" };
 const LOOPBACK = new Set(["localhost", "127.0.0.1", "[::1]"]);
 
 function localRequest(request) {
@@ -97,7 +97,7 @@ export async function startServer({ directory = dataDirectory(), port = 43187, a
       const type = MIME[path.extname(file)];
       if (!file.startsWith(`${path.resolve(assets)}${path.sep}`) || !type) { json(404, { error: "页面不存在。" }); return; }
       const content = await readFile(file);
-      response.writeHead(200, { "Content-Type": type, "Cache-Control": "no-cache", "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'" });
+      response.writeHead(200, { "Content-Type": type, "Cache-Control": "no-cache", "Content-Security-Policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'" });
       response.end(request.method === "HEAD" ? undefined : content);
     } catch (error) {
       if (response.headersSent) { response.destroy(); return; }

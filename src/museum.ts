@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { mergeVertices } from "three/addons/utils/BufferGeometryUtils.js";
+import { createMuseumVisitor } from "./museum-visitor";
 
 const worldVertex = `
   varying vec2 vUv;
@@ -30,10 +31,11 @@ function random(seed: number) {
   return value - Math.floor(value);
 }
 
-export function createMuseum() {
+export function createMuseum(visitorTemplate: THREE.Group) {
   const group = new THREE.Group();
   group.name = "Moonlit aquarium hall";
   const resources = new Set<{ dispose(): void }>();
+  const obstacles: THREE.Mesh[] = [];
   const uniforms = { time: { value: 0 }, light: { value: 1 } };
   function mesh<G extends THREE.BufferGeometry, M extends THREE.Material>(geometry: G, material: M, parent: THREE.Object3D = group) {
     resources.add(geometry);
@@ -159,6 +161,7 @@ export function createMuseum() {
     original.dispose();
     geometry.computeVertexNormals();
     const rock = mesh(geometry, rockMaterial);
+    obstacles.push(rock);
     rock.position.set(layout[0], layout[1], layout[2]);
     rock.scale.set(layout[3], layout[4], layout[5]);
     rock.rotation.set(.06 * index, index * 1.2, Math.sin(index) * .16);
@@ -322,110 +325,10 @@ export function createMuseum() {
   particles.renderOrder = 3;
   group.add(particles);
 
-  const visitor = new THREE.Group();
-  visitor.name = "The aquarium visitor";
-  visitor.scale.setScalar(1.12);
+  const visitorRig = createMuseumVisitor(visitorTemplate);
+  const visitor = visitorRig.group;
   visitor.position.set(0, -.2, 2.4);
   group.add(visitor);
-  function canvasTexture(draw: (context: CanvasRenderingContext2D) => void) {
-    const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 256;
-    const context = canvas.getContext("2d");
-    if (context) draw(context);
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    resources.add(texture);
-    return texture;
-  }
-  const stripeTexture = canvasTexture((context) => {
-    context.fillStyle = "#e2e4dd";
-    context.fillRect(0, 0, 256, 256);
-    context.fillStyle = "#344b76";
-    for (let y = 16; y < 256; y += 40) context.fillRect(0, y, 256, 17);
-  });
-  const strawTexture = canvasTexture((context) => {
-    context.fillStyle = "#c3a16a";
-    context.fillRect(0, 0, 256, 256);
-    for (let y = 0; y < 256; y += 4) {
-      context.strokeStyle = y % 8 === 0 ? "#ad8c5c" : "#d2b47b";
-      context.lineWidth = 1;
-      context.beginPath();
-      for (let x = 0; x <= 256; x += 4) context.lineTo(x, y + Math.sin(x * .3 + y) * .7);
-      context.stroke();
-    }
-    context.fillStyle = "#b59561";
-    for (let index = 0; index < 850; index += 1) context.fillRect(random(index) * 256, random(index + 900) * 256, .7, 2);
-  });
-  const skin = standard("#e5b49a", .85);
-  const hair = standard("#3b2928", .92);
-  const shirt = new THREE.MeshStandardMaterial({ map: stripeTexture, roughness: .95 });
-  const pants = standard("#34476b", .95);
-  const shoes = standard("#644c44", .88);
-  const sole = standard("#c5c8c6", .85);
-  const socks = standard("#d1d8df", .95);
-  const bagMaterial = standard("#c8b993", .95);
-  const straw = new THREE.MeshStandardMaterial({ map: strawTexture, roughness: .9 });
-  const hatBand = standard("#283b5c", .9);
-
-  const body = mesh(new THREE.CylinderGeometry(.235, .265, .45, 24), shirt, visitor);
-  body.position.y = .805;
-  orb([0, .58, 0], [.256, .135, .175], pants, visitor);
-  const head = new THREE.Group();
-  head.position.y = 1.145;
-  visitor.add(head);
-  orb([0, .025, -.018], [.315, .32, .29], skin, head);
-  for (const side of [-1, 1]) orb([side * .306, 0, -.008], [.057, .083, .06], skin, head);
-  const hairCap = mesh(new THREE.SphereGeometry(.337, 24, 16, 0, Math.PI * 2, 0, Math.PI * .63), hair, head);
-  hairCap.position.set(0, .033, .015);
-  for (let index = 0; index < 5; index += 1) {
-    orb([(index - 2) * .105, -.005 + Math.abs(index - 2) * .02, .21], [.105, .17, .096], hair, head);
-  }
-  orb([0, .005, -.306], [.045, .043, .045], skin, head);
-  const brim = mesh(new THREE.CylinderGeometry(.575, .585, .045, 48), straw, head);
-  brim.position.set(0, .287, .005);
-  brim.rotation.x = -.035;
-  const crown = mesh(new THREE.CylinderGeometry(.345, .405, .235, 40), straw, head);
-  crown.position.y = .415;
-  const band = mesh(new THREE.CylinderGeometry(.396, .408, .066, 40), hatBand, head);
-  band.position.y = .328;
-  const brimRim = mesh(new THREE.TorusGeometry(.579, .012, 6, 48), straw, head);
-  brimRim.rotation.x = Math.PI / 2 - .035;
-  brimRim.position.set(0, .286, .005);
-
-  const legs: THREE.Group[] = [];
-  const arms: THREE.Group[] = [];
-  for (const side of [-1, 1]) {
-    const leg = new THREE.Group();
-    leg.position.set(side * .125, .49, 0);
-    visitor.add(leg);
-    const short = mesh(new THREE.CylinderGeometry(.115, .12, .17, 16), pants, leg);
-    short.position.y = -.015;
-    const calf = mesh(new THREE.CapsuleGeometry(.071, .14, 4, 12), skin, leg);
-    calf.position.y = -.205;
-    const sock = mesh(new THREE.CylinderGeometry(.076, .078, .095, 12), socks, leg);
-    sock.position.set(0, -.327, -.003);
-    orb([0, -.413, -.045], [.1, .066, .157], shoes, leg);
-    orb([0, -.452, -.045], [.102, .022, .158], sole, leg);
-    legs.push(leg);
-    const arm = new THREE.Group();
-    arm.position.set(side * .26, .965, 0);
-    arm.rotation.z = side * .11;
-    visitor.add(arm);
-    const sleeve = mesh(new THREE.CapsuleGeometry(.105, .055, 4, 12), shirt, arm);
-    sleeve.position.y = -.07;
-    const forearm = mesh(new THREE.CapsuleGeometry(.066, .12, 4, 12), skin, arm);
-    forearm.position.y = -.21;
-    orb([0, -.302, -.006], [.074, .078, .071], skin, arm);
-    arms.push(arm);
-  }
-  const strap = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-.21, 1.015, .12), new THREE.Vector3(-.13, .94, .192),
-    new THREE.Vector3(.08, .77, .2), new THREE.Vector3(.262, .63, .12),
-  ]);
-  mesh(new THREE.TubeGeometry(strap, 20, .017, 6, false), standard("#6b5947", .9), visitor);
-  orb([.264, .62, .126], [.135, .145, .075], bagMaterial, visitor);
-  box([.18, .035, .018], [.27, .665, .2], straw, visitor);
 
   const shadow = mesh(new THREE.PlaneGeometry(1.8, 1.2), new THREE.ShaderMaterial({
     transparent: true, depthWrite: false,
@@ -454,12 +357,12 @@ export function createMuseum() {
   let walkPhase = 0;
   let previousTime: number | undefined;
   return {
-    group,
+    group, obstacles,
     update(time: number, flow: number) {
       const delta = previousTime === undefined ? 0 : Math.max(0, time - previousTime);
       previousTime = time;
       uniforms.time.value += delta * flow;
-      head.rotation.y = Math.sin(time * .23) * .035;
+      visitorRig.look(time);
     },
     setLight(value: number) {
       uniforms.light.value = THREE.MathUtils.clamp(value, .15, 2);
@@ -473,11 +376,11 @@ export function createMuseum() {
       walkPhase += walking ? delta * 8 : 0;
       const step = walking ? Math.sin(walkPhase) : 0;
       visitor.position.y = -.2 + Math.abs(step) * .026;
-      for (const [index, leg] of legs.entries()) leg.rotation.x = THREE.MathUtils.damp(leg.rotation.x, step * (index === 0 ? .35 : -.35), 16, delta);
-      for (const [index, arm] of arms.entries()) arm.rotation.x = THREE.MathUtils.damp(arm.rotation.x, step * (index === 0 ? -.22 : .22), 16, delta);
+      visitorRig.walk(step, delta);
       shadow.position.x = visitor.position.x;
     },
     dispose() {
+      visitorRig.dispose();
       for (const resource of resources) resource.dispose();
       resources.clear();
       group.clear();

@@ -4,7 +4,7 @@
 
 I've been tinkering with aquariums lately. Waiting for an agent to finish gets boring, so I turned those sessions into a little fish tank. The agent works; I get to slack off and watch fish. Works for me.
 
-The tank now lives in an ocean gallery: one visitor stands before a huge aquarium, watching fish swim through deep blue water as the agent works. The viewing angle takes inspiration from Animal Crossing's museum; the visitor, fish and gallery are original 3D work.
+The tank now lives in an ocean gallery: one visitor stands before a huge aquarium, watching fish swim through deep blue water as the agent works. The viewing angle follows Animal Crossing's museum. Fish and the visitor now use original Animal Crossing: New Horizons meshes and textures, alongside this project's gallery, glass and water lighting.
 
 **Local aquarium: [http://127.0.0.1:43187/](http://127.0.0.1:43187/)**
 
@@ -14,7 +14,7 @@ After automatic startup is configured on macOS, opening Codex starts the aquariu
 
 The screenshot uses demo fish, not live session data.
 
-Each active session gets a fish; concurrent tools and subagents become smaller followers. When work ends, the fish hides; resume that session and the same fish returns. Opening a chat, switching tabs or focusing its input does not count as activity. There are 10 original, procedurally modeled 3D marine fish. With no active sessions, the live gallery has no fish.
+Each active session gets a fish; concurrent tools and subagents become smaller followers. When work ends, the fish hides; resume that session and the same fish returns. Opening a chat, switching tabs or focusing its input does not count as activity. There are 10 fish converted from original Animal Crossing assets. With no active sessions, the live gallery has no fish.
 
 Press A / D, the arrow keys or the on-screen left and right buttons to walk along the glass. Use the approach button for a closer view. Drag to look around, scroll to zoom and click a fish to see its session. The gallery handbook shows live status and a fish guide, with controls for lighting and current. Deep blue water, overhead light beams and floor caustics move slowly around the tank. You can also pause the fish or enter native fullscreen.
 
@@ -31,7 +31,11 @@ Earlier demo at 4× speed, about 23 seconds · [Higher-resolution WebM video](do
 
 </details>
 
-During model research, [Models Resource's Animal Crossing category](https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/) listed 28 fish entries. [Archive's 5.2 GB bundle](https://archive.org/download/acnh-1.6.0-models) contains DAE / PNG assets without the original animations. Neither is a complete glTF fish library ready to load. This version contains no Nintendo models or textures.
+The gallery includes great white shark, whale shark, ocean sunfish, oarfish, red snapper, anchovy, barreleye, koi, goldfish and horse mackerel. Converted GLB files retain original meshes, UVs, skeletons and embedded textures. Swimming, turning and walking are procedural, rather than original game animation clips. The visitor uses an original clothing mesh and texture with a custom blue tint. Assets load locally with the page; no asset website connection is needed at runtime.
+
+Fish anticipate relative motion, slow down and steer around one another, the glass and the rocks. In tight spaces, they briefly move aside or back up to make room before turning. Followers keep space according to their size. Rapier handles collisions, with each fish and its collider turning together. Species have distinct tail and fin movements, and their bodies bend gently through turns.
+
+Sources include [Models Resource](https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/) and public Animal Crossing asset mirrors. See the [asset notice](public/models/acnh/NOTICE.md) for provenance and conversion details. Game models and textures belong to Nintendo and their respective owners; the code's MIT license does not cover them.
 
 ## Get a tank
 
@@ -98,4 +102,4 @@ You can then delete the installation directory. Runtime data is not removed auto
 
 </details>
 
-[Changelog](CHANGELOG.md) · [MIT](LICENSE)
+[Changelog](CHANGELOG.md) · [Code license: MIT](LICENSE) · [Game asset notice](public/models/acnh/NOTICE.md)
