@@ -24,6 +24,7 @@ const icons = {
   play: '<path d="m8 5 11 7-11 7Z"/>',
   reset: '<path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/>',
   expand: '<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',
+  collapse: '<path d="M3 8h5V3m8 0v5h5M8 21v-5H3m18 0h-5v5"/>',
   arrow: '<path d="m9 5 7 7-7 7"/>',
   close: '<path d="m6 6 12 12M6 18 18 6"/>',
 };
@@ -52,7 +53,8 @@ required<HTMLDivElement>("#app").innerHTML = `
       <div id="viewport"></div>
       <div id="empty-state" class="empty-state" hidden><span class="empty-ripple">${icon("waves")}</span><h2>静候下一次工作</h2><p>在已安装插件的 Codex 中开始工作，<br>活跃时游进来，休息时暂时离开。</p><button id="empty-demo" class="text-button">先看看演示鱼群 ${icon("arrow")}</button></div>
       <div id="offline-note" class="offline-note" hidden>连接已断开，鱼群停留在最后收到的状态。请确认本地服务仍在运行。</div>
-      <div class="scene-footer"><p class="gesture-hint">拖动环绕 · 滚轮缩放 · 点击鱼查看会话</p><div class="scene-controls"><button id="reset-view" title="恢复视角" aria-label="恢复视角">${icon("reset")}</button><button id="pause" title="暂停游动" aria-label="暂停游动" aria-pressed="false">${icon("pause")}</button><button id="immersive" title="沉浸模式" aria-label="沉浸模式" aria-pressed="false">${icon("expand")}</button></div></div>
+      <div class="scene-footer"><p class="gesture-hint">拖动环绕 · 滚轮缩放 · 点击鱼查看会话</p><div class="scene-controls"><button id="reset-view" title="恢复视角" aria-label="恢复视角">${icon("reset")}</button><button id="pause" title="暂停游动" aria-label="暂停游动" aria-pressed="false">${icon("pause")}</button><button id="immersive" title="进入全屏" aria-label="进入全屏" aria-pressed="false">${icon("expand")}</button></div></div>
+      <p id="fullscreen-notice" class="fullscreen-notice" role="status" hidden></p>
       <div class="waterline"></div>
     </section>
     <aside class="sidebar" aria-label="会话与鱼群">
@@ -180,12 +182,46 @@ required<HTMLInputElement>("#flow").addEventListener("input", (event) => {
   aquarium?.setFlow(value / 100);
   required<HTMLElement>("#flow-value").textContent = value === 0 ? "静水" : value < 100 ? "轻柔" : "活泼";
 });
-function setImmersive(value: boolean) {
-  document.body.classList.toggle("immersive", value);
-  required<HTMLButtonElement>("#immersive").setAttribute("aria-pressed", String(value));
+const fullscreenPanel = required<HTMLElement>(".aquarium-panel");
+const fullscreenButton = required<HTMLButtonElement>("#immersive");
+const fullscreenNotice = required<HTMLElement>("#fullscreen-notice");
+function renderFullscreen() {
+  const active = document.fullscreenElement === fullscreenPanel;
+  document.body.classList.toggle("immersive", active);
+  fullscreenButton.setAttribute("aria-pressed", String(active));
+  fullscreenButton.setAttribute("aria-label", active ? "退出全屏" : "进入全屏");
+  fullscreenButton.title = active ? "退出全屏（Esc）" : "进入全屏";
+  fullscreenButton.innerHTML = icon(active ? "collapse" : "expand");
 }
-required<HTMLButtonElement>("#immersive").addEventListener("click", () => setImmersive(!document.body.classList.contains("immersive")));
-document.addEventListener("keydown", (event) => { if (event.key === "Escape") { setImmersive(false); selectSession(null); } });
+function showFullscreenNotice(message: string) {
+  fullscreenNotice.textContent = message;
+  fullscreenNotice.hidden = false;
+}
+async function toggleFullscreen() {
+  if (fullscreenButton.disabled) return;
+  const active = document.fullscreenElement === fullscreenPanel;
+  if (!fullscreenPanel.requestFullscreen || !document.exitFullscreen || document.fullscreenEnabled === false) {
+    showFullscreenNotice("当前窗口不支持全屏，请在独立浏览器中打开鱼缸。");
+    return;
+  }
+  fullscreenNotice.hidden = true;
+  fullscreenButton.disabled = true;
+  try {
+    if (active) {
+      await document.exitFullscreen();
+      return;
+    }
+    await fullscreenPanel.requestFullscreen({ navigationUI: "hide" });
+  } catch {
+    showFullscreenNotice(active ? "未能退出全屏，请按 Esc 返回。" : "未能进入全屏，请在浏览器中打开鱼缸后重试。");
+  } finally {
+    fullscreenButton.disabled = false;
+    renderFullscreen();
+  }
+}
+fullscreenButton.addEventListener("click", toggleFullscreen);
+document.addEventListener("fullscreenchange", renderFullscreen);
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") selectSession(null); });
 function motionPreferenceChanged(event: MediaQueryListEvent) { paused = event.matches; renderPause(); }
 reducedMotion.addEventListener("change", motionPreferenceChanged);
 renderPause();
@@ -220,6 +256,7 @@ window.addEventListener("pagehide", () => {
   clearInterval(demoTimer);
   initialFetch.abort();
   eventSource.close();
+  document.removeEventListener("fullscreenchange", renderFullscreen);
   reducedMotion.removeEventListener("change", motionPreferenceChanged);
   aquarium?.dispose();
 }, { once: true });

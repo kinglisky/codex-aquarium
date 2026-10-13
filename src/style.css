@@ -49,6 +49,7 @@ h1, h2, h3, p { margin: 0; }
 .scene-controls { display: flex; gap: 8px; }
 .scene-controls button, .icon-button { width: 37px; height: 37px; display: grid; place-items: center; background: #0e2118; border: 1px solid #294438; border-radius: 50%; color: #b1ccd6; }
 .scene-controls button:hover { background: #213a2d; }
+.scene-controls button:disabled { cursor: progress; opacity: .55; }
 .scene-controls button[aria-pressed="true"] { color: #f5f0dd; border-color: #abbcaf; }
 .scene-controls svg { width: 17px; height: 17px; }
 .waterline { position: absolute; bottom: 0; left: 38px; right: 30px; height: 1px; background: #24372c; }
@@ -61,6 +62,7 @@ h1, h2, h3, p { margin: 0; }
 .text-button { display: inline-flex; align-items: center; gap: 4px; background: transparent; padding: 8px 0 0; color: #d5e3dd; font-size: 12px; margin-top: 13px; }
 .text-button svg { width: 14px; height: 14px; }
 .offline-note { position: absolute; bottom: 96px; left: 50%; width: max-content; max-width: calc(100% - 48px); transform: translateX(-50%); padding: 11px 16px; border-radius: 5px; background: #392e30; color: #ecd1c5; font-size: 11px; line-height: 1.6; }
+.fullscreen-notice { position: absolute; bottom: 82px; right: 30px; max-width: calc(100% - 48px); padding: 11px 16px; border: 1px solid var(--line); border-radius: 5px; background: #0e2118; color: #d5e3dd; font-size: 12px; line-height: 1.6; z-index: 5; }
 .sidebar { background: #0a1410; border-left: 1px solid #22392d; padding: 30px 25px 20px; max-height: calc(100dvh - 86px); min-height: 650px; overflow: auto; scrollbar-width: thin; scrollbar-color: #3a5668 transparent; }
 .section-title { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
 .section-title h2 { font-weight: 500; font-size: 13px; }
@@ -111,7 +113,7 @@ input[type="range"]::-moz-range-thumb { width: 9px; height: 9px; background: #b1
 .render-error p { margin-top: 12px; line-height: 1.7; font-size: 12px; color: #b1c3ce; }
 .immersive .app-header, .immersive .sidebar, .immersive .scene-title, .immersive .gesture-hint { display: none; }
 .immersive .workspace { display: block; }
-.immersive .aquarium-panel { height: 100dvh; min-height: 400px; }
+.immersive .aquarium-panel { width: 100vw; height: 100dvh; min-height: 0; max-height: none; background: #020504; }
 .immersive #viewport { inset: 0; }
 .immersive .scene-footer { justify-content: flex-end; }
 @media (min-width: 1600px) {
