@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-VERSION='v0.2.1'
+VERSION='v0.2.2'
 RAW_BASE="https://api.github.com/repos/kinglisky/codex-aquarium/contents/$VERSION"
 
 fail() {
@@ -33,7 +33,7 @@ trap 'exit 143' TERM
 
 printf '正在下载 Codex Aquarium %s…\n' "$VERSION"
 for file in SHA256SUMS install.mjs codex-aquarium.tgz; do
-  curl --fail --location --silent --show-error --connect-timeout 10 --max-time 60 \
+  curl --fail --location --silent --show-error --connect-timeout 10 --max-time 180 --retry 2 \
     -H 'Accept: application/vnd.github.raw+json' -o "$DOWNLOAD_DIR/$file" \
     "$RAW_BASE/$file?ref=distribution" || fail "$file 下载失败，请检查网络后重试。"
 done

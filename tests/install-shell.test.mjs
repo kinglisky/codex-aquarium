@@ -141,6 +141,8 @@ test("直接从固定版本 raw 下载并校验后调用内部安装器", async 
   for (const args of downloads) {
     assert.ok(args.includes("--fail"));
     assert.ok(args.includes("Accept: application/vnd.github.raw+json"));
+    assert.ok(Number(args[args.indexOf("--max-time") + 1]) >= 180);
+    assert.ok(Number(args[args.indexOf("--retry") + 1]) >= 2);
     assert.ok(!args.includes("--insecure"));
   }
   const installed = JSON.parse(await readFile(path.join(f.directory, "installed.json"), "utf8"));

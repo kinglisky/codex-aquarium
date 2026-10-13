@@ -1,6 +1,6 @@
 {
   "name": "codex-aquarium",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "在 3D 海洋馆里，观看 Codex 活跃会话、子 agent 和工具组成的实时鱼群。",
   "author": { "name": "kinglisky" },
   "license": "MIT",
