@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawn, spawnSync } from "node:child_process";
-import { chmod, mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
+import { chmod, copyFile, mkdir, mkdtemp, readFile, readdir, realpath, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -38,6 +38,7 @@ if (area === "add") {
   if (manifest.version === process.env.FAIL_VERSION) { console.error("安装 CLI 故障"); process.exit(1); }
   state.installed = true;
   state.version = manifest.version;
+  state.hooks = JSON.parse(readFileSync(path.join(state.source, "hooks/hooks.json"), "utf8"));
 }
 if (area === "remove") delete state.installed;
 writeFileSync(file, JSON.stringify(state));
@@ -47,12 +48,13 @@ writeFileSync(file, JSON.stringify(state));
   const destination = path.join(home, "aquarium-install", "codex-aquarium");
   const archive = path.join(directory, "codex-aquarium.tgz");
   const source = path.join(directory, "source", "codex-aquarium");
-  async function pack(version = "0.1.0") {
+  async function pack(version = "0.1.0", hooks = {}) {
     const files = {
       ".codex-plugin/plugin.json": JSON.stringify({ name: "codex-aquarium", version }),
       ".agents/plugins/marketplace.json": JSON.stringify({ name: "codex-aquarium-local", plugins: [{ name: "codex-aquarium", source: { source: "local", path: "./" } }] }),
       "dist/index.html": `version ${version}`,
-      "hooks/hooks.json": "{}",
+      "hooks/hooks.json": JSON.stringify(hooks),
+      "hooks/observe.mjs": "console.log(JSON.stringify({ runtime: process.execPath, root: process.env.PLUGIN_ROOT }));",
       "skills/aquarium/SKILL.md": "Read Hooks before trusting them.",
       "server/desktop.mjs": "export {};",
       "server/autostart.mjs": `
@@ -87,11 +89,49 @@ if (command === 'start') {
     const digest = createHash("sha256").update(await readFile(archive)).digest("hex");
     await writeFile(path.join(directory, "SHA256SUMS"), `${digest}  codex-aquarium.tgz\n`);
   }
-  function run(extraEnv = {}, args = ["--archive", archive], entrypoint = installer) {
-    return spawnSync(process.execPath, [entrypoint, ...args], { env: { ...env, ...extraEnv }, encoding: "utf8", timeout: 20_000 });
+  function run(extraEnv = {}, args = ["--archive", archive], entrypoint = installer, runtime = process.execPath) {
+    return spawnSync(runtime, [entrypoint, ...args], { env: { ...env, ...extraEnv }, encoding: "utf8", timeout: 20_000 });
   }
-  return { home, directory, destination, source, archive, pack, checksum, run };
+  return { home, bin, directory, destination, source, archive, pack, checksum, run };
 }
+
+test("注册前为所有 Hook 绑定安装器的 Node，不依赖 PATH，支持空格和 shell 特殊字符", async t => {
+  for (const specialPath of [false, true]) {
+    await t.test(specialPath ? "含空格、单引号和美元符号的 Node 路径" : "当前 Node 路径", async t => {
+      const f = await fixture(t);
+      const hooks = JSON.parse(await readFile(new URL("../hooks/hooks.json", import.meta.url), "utf8"));
+      await f.pack("0.1.0", hooks);
+      const trust = path.join(f.home, "hooks.state");
+      await writeFile(trust, "user-owned trust sentinel");
+      let runtime = process.execPath;
+      if (specialPath) {
+        runtime = path.join(f.directory, "node runtime ' $& [test]", "node");
+        await mkdir(path.dirname(runtime));
+        await copyFile(process.execPath, runtime);
+        await chmod(runtime, 0o755);
+        runtime = await realpath(runtime);
+      }
+      await writeFile(path.join(f.bin, "node"), "#!/bin/sh\nexit 71\n");
+      await chmod(path.join(f.bin, "node"), 0o755);
+      const result = f.run({}, undefined, installer, runtime);
+      assert.equal(result.status, 0, result.stderr);
+      const installed = JSON.parse(await readFile(path.join(f.destination, "hooks/hooks.json"), "utf8"));
+      const state = JSON.parse(await readFile(path.join(f.home, "stub.json"), "utf8"));
+      assert.deepEqual(state.hooks, installed, "注册时必须已经绑定解释器");
+      for (const groups of Object.values(installed.hooks)) {
+        for (const hook of groups.flatMap(group => group.hooks)) {
+          const invocation = spawnSync("/bin/sh", ["-c", hook.command], {
+            env: { ...process.env, PATH: f.bin, PLUGIN_ROOT: f.destination },
+            encoding: "utf8", timeout: 5_000,
+          });
+          assert.equal(invocation.status, 0, invocation.stderr);
+          assert.deepEqual(JSON.parse(invocation.stdout), { runtime, root: f.destination });
+        }
+      }
+      assert.equal(await readFile(trust, "utf8"), "user-owned trust sentinel");
+    });
+  }
+});
 
 test("本地发行包校验后安装，重复运行和升级使用同一目录，不触碰状态和信任文件", async t => {
   const f = await fixture(t);

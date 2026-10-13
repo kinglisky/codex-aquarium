@@ -52,7 +52,7 @@ If Node.js is missing or too old, direct me to https://nodejs.org/. Do not insta
 Download in a temporary directory. After a successful download, read the script, then run bash aquarium-install.sh:
 curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh
 Keep SHA-256 verification and use codex plugin list --json to confirm codex-aquarium@codex-aquarium-local is installed.
-Run node server/cli.mjs status from the installation directory and check /api/health at the actual address.
+Use the same Node.js executable that ran the installer to run server/cli.mjs status from the installation directory, then check /api/health at the actual address.
 On macOS, also confirm automatic startup was configured successfully.
 Open the aquarium in my existing default browser. Report the version, installation directory and address without displaying stop credentials.
 Remind me to restart Codex, enable Aquarium and personally review and trust Hooks. Do not confirm trust for me.
@@ -73,6 +73,8 @@ This installs a prebuilt plugin from GitHub raw files and checks SHA-256; no loc
 
 Keep the installation directory, normally `~/.codex/aquarium-install/codex-aquarium`, or under your custom `CODEX_HOME`. If automatic startup configuration fails, run `node server/autostart.mjs enable` from that directory to retry. If GitHub reports an API rate limit, try again later; keep SHA-256 verification enabled.
 
+The installer binds Hooks to the Node.js executable that successfully runs the installation, so background hooks do not pick another broken runtime. Reinstall the plugin if you move Node.js. When its executable path changes, review and trust the updated hooks in Codex.
+
 ## Connect your sessions
 
 Restart Codex → **Customize → Plugins → Codex Aquarium · 会话鱼缸** → enable Aquarium → click the Hooks gear to review and trust the hooks.
@@ -82,6 +84,8 @@ Restart Codex → **Customize → Plugins → Codex Aquarium · 会话鱼缸** �
 Open the local link above and give the agent some work. You can also use `$aquarium` to open the page; on Linux, use it to start the service first.
 
 On macOS, if you stop the aquarium manually, it stays stopped until you fully quit and reopen Codex. An empty tank usually means no sessions are active. Check that Hooks are trusted, then continue a session and trigger a tool call.
+
+If a task is running but no fish appear, check Hooks trust, confirm that the absolute Node.js path in the command still works, and check whether `/api/state` updates `lastEventAt` during tool calls. A page that opens confirms the server is running; it does not confirm that session events are connected.
 
 Local sessions only. No API key, no saved chat content, no history scanning and no uploaded runtime data.
 

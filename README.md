@@ -52,7 +52,7 @@ Node.js 缺失或版本过低时，提示我从 https://nodejs.org/ 安装，不
 在临时目录下载；下载成功后先阅读脚本，再执行 bash aquarium-install.sh：
 curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh
 保留 SHA-256 校验，用 codex plugin list --json 确认 codex-aquarium@codex-aquarium-local 已安装。
-在安装目录执行 node server/cli.mjs status，检查实际地址的 /api/health；macOS 还要确认自动启动配置成功。
+使用成功运行安装器的同一 Node.js，在安装目录执行 server/cli.mjs status，检查实际地址的 /api/health；macOS 还要确认自动启动配置成功。
 用现有默认浏览器打开鱼缸，告诉我版本、安装目录和地址，不输出停止凭据。
 提醒我重启 Codex、开启 Aquarium 技能，并亲自审阅和信任 Hooks，不替我确认。
 信任后验证真实会话的主鱼与并发工具、子 agent 跟随鱼；空闲时隐藏，继续同一会话恢复原来的鱼。
@@ -71,6 +71,8 @@ curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/re
 
 安装目录默认是 `~/.codex/aquarium-install/codex-aquarium`，设置 `CODEX_HOME` 时使用对应目录，请保留它。若提示自动启动配置失败，在安装目录执行 `node server/autostart.mjs enable` 重试；下载遇到 GitHub API 限流时稍后再试，不跳过 SHA-256 校验。
 
+安装器会把 Hooks 固定到本次安装成功运行的 Node.js，避免后台调用其他损坏的 Node.js。更换 Node.js 安装位置后，请重新安装插件；解释器路径改变时，需要在 Codex 中重新审阅并信任 Hooks。
+
 ## 接上会话
 
 重启 Codex →「自定义 → 插件 → Codex Aquarium · 会话鱼缸」→ 开启 Aquarium 技能 → 点「钩子」齿轮，审阅并信任 Hooks。
@@ -80,6 +82,8 @@ curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/re
 然后打开上方本地链接，让 agent 开始工作。也可以用 `$aquarium` 打开页面；Linux 需要先用它启动服务。
 
 macOS 上手动停止鱼缸后，本次 Codex 运行期间会保持停止，完全退出并重新打开 Codex 才会再次自动启动。空鱼缸通常表示没有活跃会话；确认 Hooks 已信任，再继续会话并触发一次工具调用。
+
+若任务正在运行却没有鱼，请检查 Hooks 是否已信任、命令中的 Node.js 绝对路径是否仍能运行，以及 `/api/state` 的 `lastEventAt` 是否随工具调用更新。网页能打开只代表服务已启动，不代表会话事件已接通。
 
 只接本机会话，无需 API Key，不保存聊天内容，不扫描历史，也不上传运行数据。
 

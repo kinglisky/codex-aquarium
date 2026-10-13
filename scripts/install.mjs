@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { access, lstat, mkdir, mkdtemp, readFile, realpath, rename, rm } from "node:fs/promises";
+import { access, lstat, mkdir, mkdtemp, readFile, realpath, rename, rm, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import path from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -81,6 +81,19 @@ async function validatePackage(directory) {
   return manifest.version;
 }
 
+async function bindHookRuntime(directory) {
+  const file = path.join(directory, "hooks", "hooks.json");
+  const configuration = await json(file);
+  const runtime = `'${process.execPath.replaceAll("'", "'\\''")}'`;
+  for (const groups of Object.values(configuration.hooks ?? {})) {
+    for (const hook of groups.flatMap(group => group.hooks)) {
+      if (hook.type !== "command") continue;
+      hook.command = hook.command.replace(/^node(?=\s)/, () => runtime);
+    }
+  }
+  await writeFile(file, `${JSON.stringify(configuration, null, 2)}\n`);
+}
+
 async function waitForShutdown(url) {
   for (let attempt = 0; attempt < 30; attempt++) {
     const running = await fetch(`${url}/api/health`, { signal: AbortSignal.timeout(500) })
@@ -108,6 +121,7 @@ async function install(configuration) {
     command("tar", ["-xzf", archive, "--no-same-owner", "--no-same-permissions", "-C", temporary]);
     const extracted = path.join(temporary, plugin);
     const version = await validatePackage(extracted);
+    await bindHookRuntime(extracted);
     const hadDirectory = await exists(destination);
     if (hadDirectory && ((await lstat(destination)).isSymbolicLink() || (await json(path.join(destination, ".codex-plugin", "plugin.json"))).name !== plugin)) {
       throw new Error(`拒绝覆盖非鱼缸安装目录：${destination}`);

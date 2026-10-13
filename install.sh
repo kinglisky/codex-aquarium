@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-VERSION='v0.2.2'
+VERSION='v0.2.3'
 RAW_BASE="https://api.github.com/repos/kinglisky/codex-aquarium/contents/$VERSION"
 
 fail() {
