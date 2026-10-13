@@ -4,18 +4,12 @@ import { ACTIVITY_FISH, createAquarium } from "./aquarium";
 import { FISH_TYPES, isActiveSession, speciesForSession } from "./sessions";
 import { demoSnapshot } from "./demo";
 import type { FishSpecies } from "./fish";
+import { MUSEUM_SPECIES } from "./museum-fish";
 
-const FISH_INFO: Record<FishSpecies, { name: string; color: string; role: string }> = {
-  neon: { name: "霓虹灯鱼", color: "#54d8f5", role: "阅读与检索" },
-  guppy: { name: "孔雀鱼", color: "#fb9b63", role: "其他工具" },
-  betta: { name: "斗鱼", color: "#dd78d3", role: "子 Agent" },
-  swordtail: { name: "剑尾鱼", color: "#f48b76", role: "写入与编辑" },
-  rainbow: { name: "彩虹鱼", color: "#9cbdf3", role: "网页与浏览器" },
-  golden: { name: "金丝鱼", color: "#e9ce7c", role: "终端与命令" },
-  blacktail: { name: "黑尾大勾", color: "#c4d6cb", role: "会话主鱼" },
-  cardinal: { name: "宝莲灯", color: "#20d8f6", role: "会话主鱼" },
-  tiger: { name: "虎皮", color: "#f5a552", role: "会话主鱼" },
-  zebra: { name: "斑马", color: "#83a9ec", role: "会话主鱼" },
+const FISH_ROLE: Record<FishSpecies, string> = {
+  neon: "阅读与检索", guppy: "其他工具", betta: "子 Agent", swordtail: "写入与编辑",
+  rainbow: "网页与浏览器", golden: "终端与命令", blacktail: "会话主鱼",
+  cardinal: "会话主鱼", tiger: "会话主鱼", zebra: "会话主鱼",
 };
 const STATUS: Record<SessionStatus, string> = { thinking: "思考中", working: "执行中", waiting: "等待您", idle: "休息中", interrupted: "已中断", stale: "状态过期" };
 const icons = {
@@ -26,12 +20,14 @@ const icons = {
   expand: '<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',
   collapse: '<path d="M3 8h5V3m8 0v5h5M8 21v-5H3m18 0h-5v5"/>',
   arrow: '<path d="m9 5 7 7-7 7"/>',
+  book: '<path d="M3 5c4-2 7-1 9 1 2-2 5-3 9-1v14c-4-2-7-1-9 1-2-2-5-3-9-1Zm9 1v14"/>',
+  walk: '<path d="M14 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-2 5-3 6 3 2-1 5m1-13 3 4 3 1m-8-4-4 3m6 4 4 5"/>',
   close: '<path d="m6 6 12 12M6 18 18 6"/>',
 };
 function icon(name: keyof typeof icons) { return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`; }
 function fishIcon(species: FishSpecies) {
   const tails: Record<FishSpecies, string> = { neon: "M12 16 3 11 5 17 3 22Z", guppy: "M13 16 2 7 1 17 3 26Z", betta: "M15 17 6 5 1 7 3 14 0 19 5 28 14 23Z", swordtail: "M12 16 3 11 5 18 0 29 13 21Z", rainbow: "M12 16 3 10 6 18 3 25Z", golden: "M12 16 3 12 7 18 3 23Z", blacktail: "M12 16 2 8 6 18 3 24Z", cardinal: "M12 16 3 12 6 18 3 23Z", tiger: "M12 16 3 10 7 18 3 26Z", zebra: "M12 16 2 11 6 18 2 24Z" };
-  return `<svg class="fish-symbol fish-${species}" viewBox="0 0 44 34" aria-hidden="true" style="color:${FISH_INFO[species].color}"><path d="${tails[species]}" fill="currentColor" opacity=".6"/><path d="M9 18Q24 5 39 17Q25 29 9 18Z" fill="currentColor"/><path d="m19 13 6-8 4 8m-11 9 7 6 4-6" fill="currentColor" opacity=".65"/><circle cx="34" cy="16" r="1.2" fill="#0a2031"/></svg>`;
+  return `<svg class="fish-symbol fish-${species}" viewBox="0 0 44 34" aria-hidden="true" style="color:${MUSEUM_SPECIES[species].color}"><path d="${tails[species]}" fill="currentColor" opacity=".6"/><path d="M9 18Q24 5 39 17Q25 29 9 18Z" fill="currentColor"/><path d="m19 13 6-8 4 8m-11 9 7 6 4-6" fill="currentColor" opacity=".65"/><circle cx="34" cy="16" r="1.2" fill="#0a2031"/></svg>`;
 }
 function escapeHtml(value: string) { return value.replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character] ?? character); }
 function required<T extends Element>(selector: string): T {
@@ -41,29 +37,34 @@ function required<T extends Element>(selector: string): T {
 }
 
 required<HTMLDivElement>("#app").innerHTML = `
-  <header class="app-header">
-    <a class="brand" href="/" aria-label="Codex Aquarium 首页"><span class="brand-mark">${icon("waves")}</span><span>泊<span class="brand-subtitle">Codex Aquarium</span></span></a>
-    <div class="mode-control" role="group" aria-label="数据来源"><button id="live-mode" class="active" aria-pressed="true">实时鱼缸</button><button id="demo-mode" aria-pressed="false">演示鱼群</button></div>
-    <div id="connection" class="connection" role="status"><span class="status-dot"></span><span>连接中</span></div>
-  </header>
   <main class="workspace">
-    <section class="aquarium-panel" aria-label="实时鱼缸">
-      <div class="scene-title"><h1>让工作，游起来。</h1><p>一个活跃会话，一只鱼。同行的小鱼，是它正在做的事。</p></div>
-      <div id="demo-notice" class="demo-notice" hidden>演示模式<span>鱼群为模拟数据</span></div>
+    <section class="aquarium-panel" aria-label="实时海洋馆">
       <div id="viewport"></div>
-      <div id="empty-state" class="empty-state" hidden><span class="empty-ripple">${icon("waves")}</span><h2>静候下一次工作</h2><p>在已安装插件的 Codex 中开始工作，<br>活跃时游进来，休息时暂时离开。</p><button id="empty-demo" class="text-button">先看看演示鱼群 ${icon("arrow")}</button></div>
-      <div id="offline-note" class="offline-note" hidden>连接已断开，鱼群停留在最后收到的状态。请确认本地服务仍在运行。</div>
-      <div class="scene-footer"><p class="gesture-hint">拖动环绕 · 滚轮缩放 · 点击鱼查看会话</p><div class="scene-controls"><button id="reset-view" title="恢复视角" aria-label="恢复视角">${icon("reset")}</button><button id="pause" title="暂停游动" aria-label="暂停游动" aria-pressed="false">${icon("pause")}</button><button id="immersive" title="进入全屏" aria-label="进入全屏" aria-pressed="false">${icon("expand")}</button></div></div>
+      <header class="app-header">
+        <a class="brand" href="/" aria-label="Codex Aquarium 首页"><span class="brand-mark">${icon("waves")}</span><span>泊<span class="brand-subtitle">海洋馆</span></span></a>
+        <div class="header-actions"><div id="connection" class="connection" role="status"><span class="status-dot"></span><span>连接中</span></div>
+        <div class="mode-control" role="group" aria-label="数据来源"><button id="live-mode" class="active" aria-pressed="true">实时</button><button id="demo-mode" aria-pressed="false">演示</button></div>
+        <button id="guide-toggle" class="guide-toggle" aria-expanded="false" aria-controls="museum-guide">${icon("book")}<span>展厅手册</span></button></div>
+      </header>
+      <div class="scene-title"><h1>远洋展厅</h1><p>一个会话，一位海洋来客。</p></div>
+      <div id="demo-notice" class="demo-notice" hidden>演示鱼群<span>模拟会话，不影响真实状态</span></div>
+      <div id="empty-state" class="empty-state" hidden><h2>海洋馆，正在等你。</h2><p>在 Codex 中开始一项任务，鱼就会游进来。</p><button id="empty-demo" class="text-button">看看演示鱼群 ${icon("arrow")}</button></div>
+      <div id="offline-note" class="offline-note" hidden>连接已断开，鱼群暂时停留。请确认本地服务仍在运行。</div>
+      <div class="scene-footer">
+        <div class="gallery-caption"><span class="gallery-line"></span><p>在这里，慢慢看。<small>拖动观察 · 滚轮靠近 · 点鱼查看会话</small></p></div>
+        <div class="visitor-controls" role="group" aria-label="沿玻璃散步"><button id="walk-left" aria-label="向左散步">${icon("arrow")}</button><span>${icon("walk")}<span>散步<small>A / D 或方向键</small></span></span><button id="walk-right" aria-label="向右散步">${icon("arrow")}</button></div>
+        <div class="scene-controls"><button id="near-view" title="靠近玻璃" aria-label="靠近玻璃" aria-pressed="false">${icon("waves")}</button><button id="reset-view" title="恢复视角" aria-label="恢复视角">${icon("reset")}</button><button id="pause" title="暂停游动" aria-label="暂停游动" aria-pressed="false">${icon("pause")}</button><button id="immersive" title="进入全屏" aria-label="进入全屏" aria-pressed="false">${icon("expand")}</button></div>
+      </div>
       <p id="fullscreen-notice" class="fullscreen-notice" role="status" hidden></p>
-      <div class="waterline"></div>
+      <aside id="museum-guide" class="sidebar" aria-label="展厅手册" hidden>
+        <div class="guide-heading"><div><h2>展厅手册</h2><p>正在发生的协作，都在这片海里。</p></div><button id="guide-close" class="icon-button" aria-label="收起展厅手册">${icon("close")}</button></div>
+        <section id="detail" class="detail" hidden aria-live="polite"></section>
+        <section class="session-section"><div class="section-title"><h2>此刻的来客</h2><span id="session-total">0 个活跃会话</span></div><div class="summary"><span><strong id="main-count">0</strong>只主鱼</span><span><strong id="activity-count">0</strong>只随行鱼</span></div><div id="session-list" class="session-list"></div><p id="session-empty" class="quiet-note">只展示正在执行或等待审批的会话。任务结束后离开，再次开始时还是原来那只鱼。</p></section>
+        <section class="settings"><div class="section-title"><h2>展厅光景</h2></div><label for="light">灯光<span id="light-value">100%</span></label><input id="light" type="range" min="45" max="140" value="100"><label for="flow">水流<span id="flow-value">轻柔</span></label><input id="flow" type="range" min="0" max="180" value="80"></section>
+        <section class="field-guide"><div class="section-title"><h2>海洋图鉴</h2><span>${FISH_TYPES.length} 种鱼</span></div><div class="fish-guide">${FISH_TYPES.map(species => `<div class="guide-entry" title="${MUSEUM_SPECIES[species].description}">${fishIcon(species)}<span>${MUSEUM_SPECIES[species].name}<small>${FISH_ROLE[species]}</small></span></div>`).join("")}</div><p class="quiet-note">原创 3D 模型，以海洋鱼类的轮廓重新绘制。大鱼代表会话，小鱼代表工具或子 Agent。</p></section>
+        <footer class="sidebar-footer"><span class="privacy-dot"></span>只在本机，安静地陪您工作</footer>
+      </aside>
     </section>
-    <aside class="sidebar" aria-label="会话与鱼群">
-      <section class="session-section"><div class="section-title"><h2>缸里的伙伴</h2><span id="session-total">0 个会话</span></div><div class="summary"><span><strong id="main-count">0</strong>只主鱼</span><span><strong id="activity-count">0</strong>只随行鱼</span></div><div id="session-list" class="session-list"></div><p id="session-empty" class="quiet-note">这里只显示活跃会话。继续工作后，同一只鱼会再次游回来。</p></section>
-      <section id="detail" class="detail" hidden aria-live="polite"></section>
-      <section class="settings"><div class="section-title"><h2>水下光景</h2></div><label for="light">灯光<span id="light-value">100%</span></label><input id="light" type="range" min="45" max="140" value="100"><label for="flow">水流<span id="flow-value">轻柔</span></label><input id="flow" type="range" min="0" max="180" value="80"></section>
-      <section class="field-guide"><div class="section-title"><h2>鱼群图鉴</h2><span>${FISH_TYPES.length} 种鱼</span></div><div class="fish-guide">${FISH_TYPES.map((species) => `<div class="guide-entry">${fishIcon(species)}<span>${FISH_INFO[species].name}<small>${FISH_INFO[species].role}</small></span></div>`).join("")}</div><p class="quiet-note">大鱼代表会话；小鱼代表正在执行的工具或子 Agent，完成后离开鱼群。</p></section>
-      <footer class="sidebar-footer"><span class="privacy-dot"></span>只在本机，安静地陪您工作</footer>
-    </aside>
   </main>`;
 
 let snapshot: AquariumSnapshot = { version: 1, source: "hooks", sessions: [], updatedAt: 0, lastEventAt: null };
@@ -87,16 +88,23 @@ function renderDetail() {
   detail.hidden = !session;
   if (!session) return;
   const species = speciesForSession(session.id);
-  detail.innerHTML = `<div class="detail-heading"><span style="color:${FISH_INFO[species].color}">${FISH_INFO[species].name}</span><button id="close-detail" class="icon-button" aria-label="收起会话详情">${icon("close")}</button></div><h3>${escapeHtml(session.label)}</h3><p class="detail-status"><span class="status-dot status-${session.status}"></span>${STATUS[session.status]}</p><div class="activity-list">${session.activities.length ? session.activities.map((activity) => `<div class="activity-row">${fishIcon(ACTIVITY_FISH[activity.category])}<span>${escapeHtml(activity.label)}<small>${activity.kind === "agent" ? "子 Agent" : "工具"} · ${activity.status === "waiting" ? "等待中" : "正在执行"}</small></span></div>`).join("") : '<p class="quiet-note">此刻没有正在执行的工具或子 Agent。</p>'}</div>`;
+  detail.innerHTML = `<div class="detail-heading"><span style="color:${MUSEUM_SPECIES[species].color}">${MUSEUM_SPECIES[species].name}</span><button id="close-detail" class="icon-button" aria-label="收起会话详情">${icon("close")}</button></div><h3>${escapeHtml(session.label)}</h3><p class="detail-status"><span class="status-dot status-${session.status}"></span>${STATUS[session.status]}</p><div class="activity-list">${session.activities.length ? session.activities.map((activity) => `<div class="activity-row">${fishIcon(ACTIVITY_FISH[activity.category])}<span>${escapeHtml(activity.label)}<small>${activity.kind === "agent" ? "子 Agent" : "工具"} · ${activity.status === "waiting" ? "等待中" : "正在执行"}</small></span></div>`).join("") : '<p class="quiet-note">此刻没有正在执行的工具或子 Agent。</p>'}</div>`;
   required<HTMLButtonElement>("#close-detail").addEventListener("click", () => selectSession(null));
   if (preserveFocus) required<HTMLButtonElement>("#close-detail").focus({ preventScroll: true });
+}
+
+function setGuide(open: boolean) {
+  required<HTMLElement>("#museum-guide").hidden = !open;
+  required<HTMLButtonElement>("#guide-toggle").setAttribute("aria-expanded", String(open));
 }
 
 function selectSession(id: string | null) {
   selectedId = id;
   aquarium?.select(id);
+  if (id) setGuide(true);
   for (const button of document.querySelectorAll<HTMLButtonElement>(".session-row")) button.setAttribute("aria-pressed", String(button.dataset.session === id));
   renderDetail();
+  if (id) required<HTMLElement>("#detail").scrollIntoView({ block: "nearest", behavior: reducedMotion.matches ? "auto" : "smooth" });
 }
 
 function renderConnection() {
@@ -170,7 +178,21 @@ try {
 required<HTMLButtonElement>("#live-mode").addEventListener("click", () => setMode("live"));
 required<HTMLButtonElement>("#demo-mode").addEventListener("click", () => setMode("demo"));
 required<HTMLButtonElement>("#empty-demo").addEventListener("click", () => setMode("demo"));
-required<HTMLButtonElement>("#reset-view").addEventListener("click", () => aquarium?.resetView());
+let nearView = false;
+const nearButton = required<HTMLButtonElement>("#near-view");
+function setNearView(value: boolean) {
+  nearView = value;
+  aquarium?.resetView(value);
+  nearButton.setAttribute("aria-pressed", String(value));
+  nearButton.setAttribute("aria-label", value ? "返回全景" : "靠近玻璃");
+  nearButton.title = value ? "返回全景" : "靠近玻璃";
+}
+required<HTMLButtonElement>("#reset-view").addEventListener("click", () => setNearView(false));
+nearButton.addEventListener("click", () => setNearView(!nearView));
+required<HTMLButtonElement>("#walk-left").addEventListener("click", () => aquarium?.walk(-1));
+required<HTMLButtonElement>("#walk-right").addEventListener("click", () => aquarium?.walk(1));
+required<HTMLButtonElement>("#guide-toggle").addEventListener("click", () => setGuide(Boolean(required<HTMLElement>("#museum-guide").hidden)));
+required<HTMLButtonElement>("#guide-close").addEventListener("click", () => { setGuide(false); required<HTMLButtonElement>("#guide-toggle").focus(); });
 required<HTMLButtonElement>("#pause").addEventListener("click", () => { paused = !paused; renderPause(); });
 required<HTMLInputElement>("#light").addEventListener("input", (event) => {
   const value = (event.currentTarget as HTMLInputElement).valueAsNumber;
@@ -221,7 +243,7 @@ async function toggleFullscreen() {
 }
 fullscreenButton.addEventListener("click", toggleFullscreen);
 document.addEventListener("fullscreenchange", renderFullscreen);
-document.addEventListener("keydown", (event) => { if (event.key === "Escape") selectSession(null); });
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") { selectSession(null); setGuide(false); } });
 function motionPreferenceChanged(event: MediaQueryListEvent) { paused = event.matches; renderPause(); }
 reducedMotion.addEventListener("change", motionPreferenceChanged);
 renderPause();

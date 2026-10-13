@@ -1,7 +1,7 @@
 {
   "name": "codex-aquarium",
-  "version": "0.1.7",
-  "description": "把已连接的 Codex 会话、子 agent 和工具状态变成一缸实时群游的鱼。",
+  "version": "0.2.0",
+  "description": "在原创 3D 海洋馆里，观看 Codex 活跃会话、子 agent 和工具组成的实时鱼群。",
   "author": { "name": "kinglisky" },
   "license": "MIT",
   "skills": "./skills/",

@@ -4,21 +4,34 @@
 
 I've been tinkering with aquariums lately. Waiting for an agent to finish gets boring, so I turned those sessions into a little fish tank. The agent works; I get to slack off and watch fish. Works for me.
 
-The fish still move a bit stiffly. Eventually, I'd like to get closer to the aquarium in Animal Crossing.
+The tank now lives in an ocean gallery: one visitor stands before a huge aquarium, watching fish swim through deep blue water as the agent works. The viewing angle takes inspiration from Animal Crossing's museum; the visitor, fish and gallery are original 3D work.
 
 **Local aquarium: [http://127.0.0.1:43187/](http://127.0.0.1:43187/)**
 
 After automatic startup is configured on macOS, opening Codex starts the aquarium silently, usually within 5 seconds. No chat prompt is needed, and no page opens automatically. Use the address printed by the installer.
 
-![Live aquarium: feathery plants, a low foreground carpet and fish from active sessions](docs/screenshots/aquarium-live.png)
+![Local ocean gallery render: one visitor before the aquarium, with demo fish inside](docs/screenshots/museum-gallery.jpg)
 
-Each active session gets a fish; concurrent tools and subagents become smaller followers. When work ends, the fish hides; resume that session and the same fish returns. Opening a chat, switching tabs or focusing its input does not count as activity. There are ten fish styles, including cardinal tetras, tiger barbs and zebra danios. No active sessions means an empty tank.
+The screenshot uses demo fish, not live session data.
 
-Drag to look around, scroll to zoom and click a fish to see its session. You can adjust the light and current, pause the fish, or enter native fullscreen.
+Each active session gets a fish; concurrent tools and subagents become smaller followers. When work ends, the fish hides; resume that session and the same fish returns. Opening a chat, switching tabs or focusing its input does not count as activity. There are 10 original, procedurally modeled 3D marine fish. With no active sessions, the live gallery has no fish.
 
-![Opening the aquarium from Codex, at 4× speed](docs/videos/demo-4x.webp)
+Press A / D, the arrow keys or the on-screen left and right buttons to walk along the glass. Use the approach button for a closer view. Drag to look around, scroll to zoom and click a fish to see its session. The gallery handbook shows live status and a fish guide, with controls for lighting and current. Deep blue water, overhead light beams and floor caustics move slowly around the tank. You can also pause the fish or enter native fullscreen.
 
-4× speed, about 23 seconds · [Higher-resolution WebM video](docs/videos/demo-4x.webm)
+<details>
+<summary>Earlier planted tank screenshots and demo</summary>
+
+These show the 0.1.x planted tank, kept for comparison.
+
+![Earlier planted tank: feathery plants, a foreground carpet and live session fish](docs/screenshots/aquarium-live.png)
+
+![Earlier planted tank: opening the aquarium from Codex, at 4× speed](docs/videos/demo-4x.webp)
+
+Earlier demo at 4× speed, about 23 seconds · [Higher-resolution WebM video](docs/videos/demo-4x.webm)
+
+</details>
+
+During model research, [Models Resource's Animal Crossing category](https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/) listed 28 fish entries. [Archive's 5.2 GB bundle](https://archive.org/download/acnh-1.6.0-models) contains DAE / PNG assets without the original animations. Neither is a complete glTF fish library ready to load. This version contains no Nintendo models or textures.
 
 ## Get a tank
 
