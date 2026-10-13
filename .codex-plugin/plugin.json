@@ -1,0 +1,14 @@
+{
+  "name": "codex-aquarium",
+  "version": "0.1.0",
+  "description": "把已连接的 Codex 会话、子 agent 和工具状态变成一缸实时群游的鱼。",
+  "author": { "name": "kinglisky" },
+  "license": "MIT",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "Codex Aquarium · 会话鱼缸",
+    "shortDescription": "一段会话一只鱼，并发工作组成鱼群",
+    "defaultPrompt": ["打开我的 Codex 实时鱼缸。"]
+  }
+}

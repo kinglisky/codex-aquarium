@@ -1,0 +1,82 @@
+name: 发布插件
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: 检出版本
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: 设置 pnpm
+        uses: pnpm/action-setup@f520eceda224fe1a4aed5a2a27a194379a409996 # v6
+
+      - name: 校验版本
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const files = ['package.json', '.codex-plugin/plugin.json'];
+          const [project, plugin] = await Promise.all(files.map(async (file) =>
+            JSON.parse(await readFile(file, 'utf8'))));
+          const tag = process.env.GITHUB_REF_NAME;
+          if (tag !== `v${project.version}` || project.version !== plugin.version) {
+            throw new Error(`标签 ${tag} 与项目版本 ${project.version}、插件版本 ${plugin.version} 不一致`);
+          }
+          NODE
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 测试、构建并打包
+        run: pnpm package
+
+      - name: 校验发行附件
+        working-directory: artifacts
+        run: sha256sum --check SHA256SUMS
+
+      - name: 发布 GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
+          将 Codex 会话、工具调用和子 agent 映射成实时 3D 鱼群，配有自然水草与透明玻璃鱼缸。
+
+          下载本页的 `codex-aquarium.tgz`、`install.mjs`、`SHA256SUMS`，放在同一个目录，运行：
+
+          ```sh
+          node install.mjs --archive ./codex-aquarium.tgz
+          ```
+
+          需要 Node.js 22.12+ 和支持插件 Hooks 的 Codex。安装器会校验发行包、安装插件并启动本地鱼缸；首次使用仍需本人在 Codex 中审阅并信任 Hooks。完整说明与真实渲染截图见该版本 README。
+          NOTES
+          printf '\n[完整安装说明](https://github.com/%s/blob/%s/README.md)\n\n![鱼缸真实渲染截图](https://raw.githubusercontent.com/%s/%s/docs/screenshots/aquarium-live.png)\n' \
+            "$GH_REPO" "$GITHUB_REF_NAME" "$GH_REPO" "$GITHUB_REF_NAME" >> "$RUNNER_TEMP/release-notes.md"
+          flags=()
+          if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
+          gh release create "$GITHUB_REF_NAME" \
+            artifacts/codex-aquarium.tgz artifacts/install.mjs artifacts/SHA256SUMS \
+            --verify-tag --title "Codex Aquarium $GITHUB_REF_NAME" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" "${flags[@]}"
