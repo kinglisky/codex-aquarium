@@ -58,9 +58,14 @@ node install.mjs --archive ./codex-aquarium.tgz
 ### 信任并打开
 
 1. 安装后重启 Codex 桌面端，让新插件加载。
-2. 在 Codex 中审阅并信任插件的 Hooks。CLI 可通过 `/hooks` 打开审阅界面。
-3. 在新建或继续的会话中输入 **“打开我的 Codex 实时鱼缸”**，也可使用 `$aquarium`。
-4. 让 Codex 执行工具调用，观察主鱼与跟随鱼。
+2. 打开 **自定义 → 插件 → Codex Aquarium · 会话鱼缸**，确认 **Aquarium** 技能的开关已开启。
+3. 点击「钩子」一栏右侧的齿轮，在设置中审阅并信任插件的 Hooks。CLI 也可通过 `/hooks` 打开审阅界面。
+4. 点击页面上方的示例提示词 **“打开我的 Codex 实时鱼缸”** 或 **“立即试用”**；也可在会话中输入这句话或使用 `$aquarium`。
+5. 让 Codex 执行工具调用，观察主鱼与跟随鱼。
+
+![Codex Aquarium 插件配置示例：启用 Aquarium 技能，通过钩子齿轮打开设置，使用示例提示词进入鱼缸](docs/screenshots/plugin-configuration.png)
+
+上图为插件配置页面。下方红色箭头标出钩子设置入口，上方红色箭头标出打开鱼缸的示例提示词；技能开关开启后，仍需单独审阅并信任 Hooks。
 
 默认地址是 [http://127.0.0.1:43187](http://127.0.0.1:43187)。安装器不会替用户确认信任、修改信任记录或绕过审批。新增或改动 Hooks 后，Codex 可能再次要求审阅。
 

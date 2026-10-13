@@ -17,6 +17,7 @@ const files = [
   'scripts/install.mjs',
   'docs/screenshots/aquarium-live.png',
   'docs/screenshots/aquarium-glass.png',
+  'docs/screenshots/plugin-configuration.png',
   'README.md',
   'CHANGELOG.md',
   'LICENSE',
