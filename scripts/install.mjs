@@ -16,7 +16,8 @@ const usage = `Codex Aquarium 本地包安装器（由 install.sh 调用）
   node install.mjs --help                  显示帮助
 
 安装目录：CODEX_HOME（默认 ~/.codex）下的 aquarium-install/codex-aquarium
-安装成功后启动本地鱼缸。请自行审阅并信任 Hooks，再重启 Codex。
+安装成功后启动本地鱼缸；macOS 同时配置随 Codex 应用自动启动。
+请自行审阅并信任 Hooks，再重启 Codex。
 不会修改 Hooks 信任记录，也不会自动打开浏览器。`;
 
 function options(arguments_) {
@@ -76,7 +77,7 @@ async function validatePackage(directory) {
   if (catalog.name !== marketplace || catalog.plugins.length !== 1 || entry?.name !== plugin || entry.source?.source !== "local" || entry.source.path !== "./") {
     throw new Error("发行包的本地 marketplace 配置无效。");
   }
-  await Promise.all(["dist/index.html", "server/cli.mjs", "hooks/hooks.json", "skills/aquarium/SKILL.md"].map(file => access(path.join(directory, file))));
+  await Promise.all(["dist/index.html", "server/cli.mjs", "server/autostart.mjs", "server/desktop.mjs", "hooks/hooks.json", "skills/aquarium/SKILL.md"].map(file => access(path.join(directory, file))));
   return manifest.version;
 }
 
@@ -159,7 +160,12 @@ async function install(configuration) {
       preserveBackup = await exists(backup);
       throw new Error(`${error.message}\n安装未完成，已尝试恢复原有安装。${failures.length ? `\n恢复提示：${failures.join("\n")}` : ""}${preserveBackup ? `\n原安装保留在：${backup}` : ""}`);
     }
-    console.log("\n请在 Codex 中审阅并信任此插件的 Hooks，然后重启 Codex。继续会话并执行工具调用后，鱼缸才会收到真实事件。\n以后可对 Codex 说：打开我的实时鱼缸。");
+    try {
+      console.log(command(process.execPath, [path.join(destination, "server", "autostart.mjs"), "enable"]));
+    } catch {
+      console.warn("鱼缸已安装，但自动启动未能配置。请在 macOS 登录会话中运行安装目录下的 node server/autostart.mjs enable 重试。");
+    }
+    console.log("\n请在 Codex 中审阅并信任此插件的 Hooks，然后重启 Codex。继续会话并执行工具调用后，鱼缸才会收到真实事件。\nmacOS 自动启动配置成功后，打开 Codex 即可直接访问鱼缸地址，无需发送启动提示词。");
   } finally {
     if (!preserveBackup) await rm(temporary, { recursive: true, force: true });
   }

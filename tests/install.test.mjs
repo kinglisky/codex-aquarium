@@ -54,6 +54,13 @@ writeFileSync(file, JSON.stringify(state));
       "dist/index.html": `version ${version}`,
       "hooks/hooks.json": "{}",
       "skills/aquarium/SKILL.md": "Read Hooks before trusting them.",
+      "server/desktop.mjs": "export {};",
+      "server/autostart.mjs": `
+import { appendFileSync } from 'node:fs';
+import path from 'node:path';
+appendFileSync(path.join(process.env.CODEX_HOME, 'autostart.jsonl'), process.argv[2] + '\\n');
+if (process.env.AUTOSTART_FAILURE) process.exit(1);
+console.log('已启用随 Codex 应用静默启动鱼缸。');`,
       "server/cli.mjs": `
 import { appendFileSync, existsSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -105,6 +112,29 @@ test("本地发行包校验后安装，重复运行和升级使用同一目录�
   const state = JSON.parse(await readFile(path.join(f.home, "stub.json"), "utf8"));
   assert.equal(state.source, f.destination);
   assert.equal(state.version, "0.2.0");
+  assert.equal(await readFile(path.join(f.home, "autostart.jsonl"), "utf8"), "enable\nenable\nenable\n");
+});
+
+test("自动启动配置失败只提示警告，保留成功安装与运行中的鱼缸", async t => {
+  const f = await fixture(t);
+  await f.pack();
+  const result = f.run({ AUTOSTART_FAILURE: "1" });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stderr, /鱼缸已安装，但自动启动未能配置/);
+  assert.equal(await readFile(path.join(f.destination, "dist/index.html"), "utf8"), "version 0.1.0");
+  assert.equal(await readFile(path.join(f.home, "service.jsonl"), "utf8"), "status\nstart\n");
+});
+
+test("发行包缺少自动启动组件时，在变更插件和服务之前拒绝安装", async t => {
+  const f = await fixture(t);
+  await f.pack();
+  await rm(path.join(f.source, "server", "desktop.mjs"));
+  const packed = spawnSync("tar", ["-czf", f.archive, "-C", path.dirname(f.source), "codex-aquarium"]);
+  assert.equal(packed.status, 0);
+  await f.checksum();
+  const result = f.run();
+  assert.equal(result.status, 1);
+  await assert.rejects(readFile(path.join(f.home, "stub.json")), { code: "ENOENT" });
 });
 
 test("安装 CLI 失败恢复旧文件与插件，不停止原服务", async t => {

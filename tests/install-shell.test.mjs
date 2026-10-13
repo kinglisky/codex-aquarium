@@ -8,7 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const installer = fileURLToPath(new URL("../install.sh", import.meta.url));
-const rawBase = "https://api.github.com/repos/kinglisky/codex-aquarium/contents/v0.1.4";
+const rawBase = "https://api.github.com/repos/kinglisky/codex-aquarium/contents/v0.1.5";
 
 async function fixture(t, { node = true } = {}) {
   const directory = await mkdtemp(path.join(tmpdir(), "aquarium-shell-"));
