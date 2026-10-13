@@ -1,143 +1,141 @@
 # Codex Aquarium · 泊
 
-让工作，游起来。把 Codex 当前的会话、工具调用和子 agent，变成一缸实时游动的鱼。
+中文 · [English](README.en.md)
 
-![Codex Aquarium 实时渲染：自然宝塔草、前景草甸与会话鱼群](docs/screenshots/aquarium-live.png)
+最近开始倒腾鱼缸，平时等待 agent 输出结果时很无聊，想着将 agent 会话映射成可视化的鱼缸。agent 工作，我摸鱼，刚好～
 
-上图直接截自本地运行的 WebGL 页面，鱼群来自已连接的 Codex 会话及并发活动。截图采用沉浸模式隐藏会话名称，没有使用生成图片或预渲染背景。
+目前游鱼的效果还是偏生硬，后续考虑还原一波动森水族馆的效果。
 
-## 演示效果
+**本地鱼缸：[http://127.0.0.1:43187/](http://127.0.0.1:43187/)**
 
-![Codex Aquarium 演示：从 Codex 会话中打开实时鱼缸（4 倍速）](docs/videos/demo-4x.webp)
+macOS 安装后，打开 Codex 应用，鱼缸会在后台静默启动，通常 5 秒内就能访问上面的链接，无需在会话里发送启动指令，也不会自动打开页面。如果安装器给出了其他地址，用它输出的地址；还没安装的话，往下看就好。
 
-动图在 README 中自动循环播放，已加速 4 倍，时长约 23 秒。WebP 分辨率为 1024 × 640，文件大小约 1.5 MiB。
+![本地鱼缸截图：宝塔草、前景草甸与正在工作的会话鱼群](docs/screenshots/aquarium-live.png)
 
-[观看或下载高清演示视频（4 倍速，WebM，1920 × 1200，约 3 MiB）](docs/videos/demo-4x.webm)
+## 先看看它怎么游
 
-## 鱼缸里有什么
+![从 Codex 会话中打开实时鱼缸，4 倍速演示](docs/videos/demo-4x.webp)
 
-- **一段活跃会话，一只主鱼**：思考、工作或等待时出现，所有活动结束后离开；继续同一会话时，原来的鱼会回来。
-- **并发工作组成鱼群**：正在执行的工具和子 agent 是跟随的小鱼，完成后离开。
-- **十种观赏鱼型**：霓虹灯鱼、孔雀鱼、燕尾斗鱼、红剑尾、蓝鳍虹鱼、金色长鳍、黑尾大勾、宝莲灯、虎皮和斑马。
-- **可交互的 3D 草缸**：拖动环绕、滚轮缩放、点击鱼查看会话；可调灯光、水流，也可暂停游动或进入浏览器原生全屏。按 Esc 或再次点击全屏按钮退出，恢复页面布局。
-- **本机运行**：无需 API Key，不上传会话信息，不扫描历史聊天。
+这是实际使用时录的演示，加速了 4 倍，约 23 秒。上面的 WebP 动图会自动循环，约 1.5 MiB；想看得更清楚，可以[打开高清 WebM 视频](docs/videos/demo-4x.webm)（约 3 MiB）。
 
-![真实侧面渲染：玻璃厚边、视角反光和前后交错的水草](docs/screenshots/aquarium-glass.png)
+一段正在工作的 Codex 会话，对应一只鱼。agent 思考、调用工具、等你确认权限时，它就在缸里游；工具和子 agent 同时开工，就有小鱼跟在后面，组成一小群。
 
-两张截图均由正在运行的插件页面直接截取。玻璃、水面、水草与鱼均由 Three.js 实时渲染；宝塔草和前景草甸使用程序化三维几何。
+工作结束，鱼会离开。等你继续同一段会话，回来的还是原来那只，鱼型和外观都不会变。所以这里看的就是此刻谁在忙，没有活跃会话时，安静的空缸也很正常。
 
-## 安装条件
+目前放了十种鱼：霓虹灯鱼、孔雀鱼、燕尾斗鱼、红剑尾、蓝鳍虹鱼、金色长鳍、黑尾大勾、宝莲灯、虎皮和斑马。背景是有高有低的宝塔草，前面铺了一层矮草，鱼、草、水面和玻璃都由 Three.js 实时渲染。
 
-- 支持插件及生命周期 Hooks 的 **Codex 桌面端**。
-- 命令行可用的 **Node.js 22.12+**、`codex`、`curl`、`tar` 和 Bash。
-- 浏览器支持 WebGL 2。
+可以拖动换个角度、滚轮拉近，点鱼看看对应会话，也能调灯光和水流、暂停游动。想专心摸鱼就点全屏按钮，进入浏览器原生全屏；按 Esc 或再点一次回来。
 
-使用发行包无需安装 pnpm、克隆源码或自行编译。当前桌面实测平台是 macOS；Windows 和 Linux 尚未完成真实 Codex 桌面安装验证。
+<details>
+<summary>换个角度看看玻璃和水草</summary>
 
-## 快速安装
+![鱼缸侧面的实际渲染：玻璃厚边、反光和前后交错的水草](docs/screenshots/aquarium-glass.png)
 
-### 复制给 Codex 安装
+这里的截图都来自本地运行的页面，鱼群来自真实会话。拍摄时隐藏了会话名称，水草和玻璃也是现场渲染的。
 
-把下面整段发送给本机 Codex agent，它会检查环境、下载安装并打开鱼缸。首次安装后，Hooks 仍需你本人在 Codex 中审阅并信任。
+</details>
+
+## 也想养一缸？
+
+需要支持插件与 Hooks 的 Codex 桌面端，以及能在终端运行的 Node.js 22.12+、Codex CLI、Bash、curl 和 tar。浏览器需要支持 WebGL 2。目前在 macOS 上实测过，Linux 和 Windows 的 Codex 桌面安装还没完成验证。
+
+下面两种方式选一个就行，用的是预构建包，不用自己编译。
+
+### 让 Codex 帮你装
+
+把下面这段复制给本机 Codex agent，让它完成环境检查、安装和验证。最后的 Hooks 信任，需要你自己点一下。
 
 ```text
-请帮我在这台电脑安装或更新 Codex Aquarium，并验证安装成功。
-
+请帮我安装或更新 Codex Aquarium，并验证它能正常运行。
 官方仓库：https://github.com/kinglisky/codex-aquarium
-安装脚本：https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master
 
-请直接完成以下步骤：
-1. 检查 Bash、curl、tar、Codex CLI 和 Node.js 22.12+；运行 codex plugin add --help，确认 CLI 支持插件安装。
-   若没有 Node.js 或版本过低，提示我从 https://nodejs.org/ 安装 Node.js 22.12+，然后停止，不自动安装系统软件。
-   其他依赖缺失时，说明具体缺项。
-2. 在临时目录运行：
-   curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh
-   下载成功后先阅读 aquarium-install.sh，确认来自上述官方仓库。
-3. 执行 bash aquarium-install.sh。
-   脚本从 GitHub raw 文件下载同版本的预构建包并校验 SHA-256，随后安装插件并启动服务。
-   遇到错误时报告原因，不跳过校验或改写信任记录。
-4. 用 codex plugin list --json 确认 codex-aquarium@codex-aquarium-local 已安装。
-   从安装器输出的安装目录运行 node server/cli.mjs status；若服务未运行，执行 node server/cli.mjs start。
-   再检查实际服务地址的 /api/health。不要输出运行目录中的停止凭据。
-5. 使用我现有的默认浏览器打开服务返回的本地地址，并告诉我安装版本、安装目录和鱼缸地址。
-   默认地址通常为 http://127.0.0.1:43187，以实际输出为准。
-6. 提醒我重启 Codex、启用 Aquarium 技能，并到“自定义 → 插件 → Codex Aquarium · 会话鱼缸 → 钩子”审阅并信任 Hooks。
-   此步骤由我本人完成，不替我确认、不修改信任文件。
-   完成后，让我继续一个会话触发工具调用，验证活跃主鱼和工具跟随鱼；全部活动结束后主鱼隐藏。
-   继续同一会话应恢复原来的鱼。不要用演示鱼群冒充真实验证。
+先检查 Bash、curl、tar、Codex CLI 和 Node.js 22.12+，确认 codex plugin add --help 可用。
+如果缺少 Node.js 或版本过低，请提示我从 https://nodejs.org/ 安装后再继续，不要自动安装系统软件；其他依赖缺失也请告诉我。
 
-若 raw 文件下载失败或缺少必要权限，请清楚说明阻塞原因，不把未完成的安装报告为成功。
+在临时目录下载官方安装脚本：
+curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh
+下载成功后先阅读脚本，再执行 bash aquarium-install.sh；保留脚本的 SHA-256 校验，不改写信任记录。
+
+用 codex plugin list --json 确认 codex-aquarium@codex-aquarium-local 已安装。
+从安装器输出的安装目录运行 node server/cli.mjs status，必要时用 node server/cli.mjs start 启动。
+macOS 安装器会配置随 Codex 应用自动启动；检查输出是否成功，失败时说明原因，不要声称已启用。
+检查实际服务地址的 /api/health，用我现有的默认浏览器打开鱼缸，告诉我版本、安装目录和地址，不输出停止凭据。
+
+提醒我重启 Codex、启用 Aquarium 技能，并到插件的“钩子”设置里审阅并信任 Hooks。这一步由我本人完成。
+之后继续一个真实会话，触发工具调用，验证主鱼与跟随鱼；全部活动结束后鱼应隐藏，继续同一会话应恢复原来的鱼。
+不要用演示鱼群代替真实验证；如果安装或验证失败，请说明具体原因。
 ```
 
-### curl 快捷安装
+### 自己跑一条命令
 
-在 macOS / Linux 终端复制执行：
+在 macOS / Linux 终端执行：
 
 ```bash
 curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh && bash aquarium-install.sh
 ```
 
-命令通过 GitHub 官方 raw API 读取仓库中的 [install.sh](install.sh)，只有下载成功才会执行。脚本从同一仓库的 `distribution` 分支下载预构建插件，校验 SHA-256 后安装并启动鱼缸，整个流程无需访问 Release 附件服务器。
+脚本通过 GitHub 官方 raw API 下载仓库里的文件，从 `distribution` 分支取得预构建包，校验 SHA-256 后安装并启动鱼缸，不用访问 Release 附件。缺少 Node.js 或版本低于 22.12 时，会提示你去 [Node.js 官网](https://nodejs.org/) 安装，然后退出；装好后再跑一次即可。
 
-缺少 Node.js 或版本低于 22.12 时，脚本会提示前往 [Node.js 官网](https://nodejs.org/) 安装，并退出。安装完成后重新执行上述命令即可。
+安装源默认放在 `~/.codex/aquarium-install/codex-aquarium`（设置了 `CODEX_HOME` 就用对应目录），后续更新还会用到它，先留着就好。
 
-默认安装源位于 `~/.codex/aquarium-install/codex-aquarium`；设置 `CODEX_HOME` 时使用对应目录。请保留该目录，后续更新仍会使用它。
+### 装好了，再接上会话
 
-## 信任并打开
+重启 Codex，打开「自定义 → 插件 → Codex Aquarium · 会话鱼缸」，开启 Aquarium 技能。再点「钩子」右边的齿轮，审阅并信任 Hooks。安装器不会替你确认这一步，后续 Hooks 有变化时也可能需要重新审阅。
 
-1. 安装后重启 Codex 桌面端，让新插件加载。
-2. 打开 **自定义 → 插件 → Codex Aquarium · 会话鱼缸**，确认 **Aquarium** 技能的开关已开启。
-3. 点击「钩子」一栏右侧的齿轮，在设置中审阅并信任插件的 Hooks。CLI 也可通过 `/hooks` 打开审阅界面。
-4. 点击页面上方的示例提示词 **“打开我的 Codex 实时鱼缸”** 或 **“立即试用”**；也可在会话中输入这句话或使用 `$aquarium`。
-5. 让 Codex 执行工具调用，观察主鱼与跟随鱼。
+![插件设置：开启 Aquarium 技能，点钩子齿轮信任 Hooks，再使用示例提示词打开鱼缸](docs/screenshots/plugin-configuration.png)
 
-![Codex Aquarium 插件配置示例：启用 Aquarium 技能，通过钩子齿轮打开设置，使用示例提示词进入鱼缸](docs/screenshots/plugin-configuration.png)
+下方红色箭头是钩子设置。macOS 配置自动启动成功后，直接访问上面的本地鱼缸链接即可，不用先给 agent 发消息。上方的示例提示词、`$aquarium` 和「立即试用」仍可用于打开页面。之后让 agent 干点活，第一只鱼就会游进来。
 
-上图为插件配置页面。下方红色箭头标出钩子设置入口，上方红色箭头标出打开鱼缸的示例提示词；技能开关开启后，仍需单独审阅并信任 Hooks。
+后台启动项随用户登录运行，每 5 秒检查一次 Codex 主进程，只在应用启动时尝试拉起鱼缸；不会读取聊天内容。手动停止鱼缸后，本次 Codex 运行期间会保持停止，下次重新打开 Codex 再启动。Linux 暂未配置应用自动启动，仍需用示例提示词启动服务。
 
-默认地址是 [http://127.0.0.1:43187](http://127.0.0.1:43187)。安装器不会替用户确认信任、修改信任记录或绕过审批。新增或改动 Hooks 后，Codex 可能再次要求审阅。
+## 打开了，怎么还没有鱼？
 
-## 更新与卸载
+先看看有没有正在工作的会话。安装前就已经打开的聊天，需要继续发消息、触发工具调用，鱼缸才会收到新的事件；只切换标签页不会让鱼出现。也可以先打开页面里标注的「演示鱼群」看看效果，再切回实时模式。
 
-更新时再次发送上面的 [Codex 安装指引](#复制给-codex-安装)，或重新执行 [curl 快捷安装命令](#curl-快捷安装)。安装源会更新，成功安装后本地鱼缸服务会重新启动；用户运行数据与 Hooks 信任记录不会被安装器删除。
+如果 agent 明明在工作却没有鱼，检查 Aquarium 技能是否开启、Hooks 是否信任。服务重启后，旧状态也会暂时隐藏，继续对应会话就能恢复。这里目前只接本机事件，远程或云端会话还不支持，托管 WebSearch 等工具也不一定能被 Hooks 观察到。
 
-卸载前先在 Codex 中让 Aquarium 停止本地服务，再运行：
+更新后还是旧页面的话，刷新浏览器，并确认安装成功、本地服务已经重启。无法全屏时，按页面提示在支持全屏的浏览器中打开。
+
+安装下载失败，检查终端能否访问 `api.github.com`；API 限流可以稍后重试。如果遇到 404 或反复出现 SHA-256 校验失败，请反馈给维护者，不要跳过校验。
+
+## 再说几件小事
+
+鱼缸在本机运行，只监听回环地址，不需要 API Key。它只记录会话 ID、工具名称、事件类型和时间等状态信息，不保存提示词、回答或工具输入输出，不扫描历史聊天，也不上传运行数据。安装时的联网请求用于下载官方仓库文件。
+
+更新时，再把上面的指引发给 agent，或者重新跑一次 curl 命令就行。安装器会重启鱼缸服务，保留运行数据和 Hooks 信任记录。
+
+<details>
+<summary>会话状态再细一点</summary>
+
+思考、工作和等待权限的会话都会显示。主会话结束后，如果子 agent 还在忙，主鱼会留着；所有活动结束进入空闲时才隐藏。中断或会话结束会清理对应活动，同一会话重新活跃后按会话 ID 恢复鱼型和外观。
+
+服务重启或连续 30 分钟没有事件，状态会过期并隐藏；收到新的活跃事件后恢复，24 小时无事件后移除状态记录。工具鱼归属主会话，目前不区分每个工具具体属于哪一个子 agent。
+
+运行数据默认放在 `${CODEX_HOME:-~/.codex}/codex-aquarium`。如果设置 `AQUARIUM_DATA_DIR`，Hooks 和服务需要使用同一目录；服务停止凭据只留在本机。
+
+</details>
+
+<details>
+<summary>不养了，怎么卸载</summary>
+
+先关闭后台启动项并停止服务，再移除插件：
 
 ```bash
+aquarium_root="${CODEX_HOME:-$HOME/.codex}/aquarium-install/codex-aquarium"
+node "$aquarium_root/server/autostart.mjs" disable
+node "$aquarium_root/server/cli.mjs" stop
 codex plugin remove codex-aquarium@codex-aquarium-local
 codex plugin marketplace remove codex-aquarium-local
 ```
 
-确认不再使用后，可自行删除安装源目录。运行数据保存在独立目录 `~/.codex/codex-aquarium`，卸载插件不会自动清除它。
+不用了可以自行删除安装源目录。独立保存的运行数据不会随插件卸载而删除。
 
-## 实时状态边界
+</details>
 
-鱼缸只展示**已触发插件事件且处于思考、工作或等待状态的会话**（`thinking` / `working` / `waiting`），不是桌面侧栏所有打开的聊天。安装前已存在的会话需要继续运行并触发事件，才会进入鱼缸；是否活跃由真实事件判断，切换标签页不会改变状态。
+<details>
+<summary>想一起折腾：开发与发布</summary>
 
-发送消息时，主鱼进入鱼缸；等待权限时仍然保留。工具和子 agent 按各自 ID 加入、退出鱼群，完成后离开。主会话停止响应后，若仍有子 agent 运行，主鱼会继续保留；全部活动结束、进入空闲（`idle`）后隐藏。中断或会话结束时清理对应活动。继续同一会话时，主鱼按会话 ID 恢复相同鱼型和外观，不会重新抽取一只鱼。
-
-服务重启后，已有会话暂时标为「状态过期」（`stale`）并隐藏，收到新的活跃事件后恢复。连续 30 分钟无事件也会标为过期并隐藏，24 小时无事件后移除状态记录。权限事件缺少调用 ID 时，会等待同名并发工具全部结束，避免提前显示权限已解决。
-
-本地 Shell、`apply_patch`、MCP 和多数本地函数工具可被 Hooks 观察；托管 `WebSearch` 等工具不保证触发。工具鱼归属主会话，不假定 Hooks 能提供每个工具的子 agent 归属。远程或云端编排尚不在本版本支持范围内。
-
-页面提供明确标注的「演示鱼群」用于预览；它与真实会话数据分开，实时模式不会为了填满鱼缸而虚构会话。
-
-## 常见问题
-
-| 现象 | 处理方式 |
-| --- | --- |
-| 鱼缸没有鱼 | 确认插件已启用、Hooks 已信任，并让一个会话继续工作；没有活跃会话时空缸是正常状态。 |
-| 安装后仍是旧页面 | 刷新浏览器；确认更新安装成功并已重启本地鱼缸服务。 |
-| 无法进入全屏 | 按页面提示，在支持全屏的浏览器中打开鱼缸，再点击全屏按钮。 |
-| 工作结束或服务重启后鱼消失 | 空闲和状态过期的会话会隐藏；继续对应会话，收到新的活跃事件后会恢复原来的鱼。 |
-| `codex` 命令不存在 | 安装或配置 Codex CLI，确认 `codex plugin add --help` 可用，再使用上述安装方式。 |
-| 缺少 Node.js 或版本过低 | 按脚本提示安装 Node.js 22.12+，确认 `node --version` 可用后重新执行安装命令。 |
-| raw 下载失败 | 确认终端能访问 `api.github.com`；404 表示对应版本的 raw 文件尚未发布，需由维护者修复。GitHub API 限流时稍后重试。 |
-| SHA-256 校验失败 | 重新执行上述安装流程；若仍失败，请向维护者反馈，不跳过校验。 |
-
-## 开发与构建
-
-源码构建使用项目声明的 pnpm 版本。
+源码使用项目声明的 pnpm 版本：
 
 ```bash
 git clone https://github.com/kinglisky/codex-aquarium.git
@@ -146,41 +144,12 @@ pnpm install --frozen-lockfile
 pnpm package
 ```
 
-`pnpm package` 执行测试和生产构建，输出预构建包、`install.sh`、内部安装组件和 `SHA256SUMS`。发行包包含已构建界面、服务端、Hooks、skill、截图文档与许可证，不包含 `node_modules`。
+`pnpm package` 会执行测试与生产构建，输出预构建包、安装脚本和 `SHA256SUMS`。开发预览用 `pnpm dev`，检查用 `pnpm check`；构建后可以用 `node server/cli.mjs start`、`status`、`stop` 管理本地服务。
 
-```bash
-pnpm dev                    # 前端开发预览
-pnpm check                  # 测试与生产构建
-node server/cli.mjs start    # 从源码目录启动已构建的鱼缸
-node server/cli.mjs status
-node server/cli.mjs stop
-```
+发布新版本时，同步更新 `package.json`、`.codex-plugin/plugin.json`、`install.sh` 的版本和 [CHANGELOG.md](CHANGELOG.md)，再执行 `pnpm package`、`pnpm publish:distribution`，最后推送源码和对应的 `v<版本号>` 标签。发布需要已登录且有仓库写入权限的 GitHub CLI，每个版本对应独立目录，已发布的版本不能覆盖。
 
-以上命令用于开发和验证构建；日常安装和更新使用前述两种方式。
+想了解插件格式和 Hooks，可以看看[插件打包说明](https://developers.openai.com/plugins/build/plugins)和 [Hooks 与信任](https://learn.chatgpt.com/docs/hooks)。
 
-## 发布版本
-
-同步修改 `package.json`、`.codex-plugin/plugin.json` 与 `install.sh` 中的版本，更新 [CHANGELOG.md](CHANGELOG.md)。构建并将 raw 文件发布到 `distribution` 分支后，再推送源码和对应标签：
-
-```bash
-pnpm package
-pnpm publish:distribution
-git tag v0.1.4
-git push origin master v0.1.4
-```
-
-发布命令需要已登录且具有仓库写入权限的 GitHub CLI。每个版本发布到独立目录，已发布的同版本文件不能被覆盖。
-
-含生命周期 Hooks 的插件目前适合 Codex 桌面端手动安装或 marketplace 分发，不能提交到官方公共插件目录。[官方打包说明](https://developers.openai.com/plugins/build/plugins) · [Hooks 与信任](https://learn.chatgpt.com/docs/hooks)
-
-## 数据与隐私
-
-采集器仅保留会话及调用 ID、事件类型、工具名称、agent 类型、时间等状态元数据。不保存提示词、回答、工具参数、工具输出或外部服务认证信息，不扫描历史会话，不向远程服务器发送运行数据。鱼缸服务只监听本机回环地址。
-
-默认数据目录为 `${CODEX_HOME:-~/.codex}/codex-aquarium`。如设置 `AQUARIUM_DATA_DIR`，Hooks 和服务必须使用同一目录。服务的停止凭据仅保存在本机运行目录。
-
-安装脚本联网仅用于读取官方仓库的 GitHub raw 文件。
-
-## 许可证
+</details>
 
 [MIT](LICENSE)

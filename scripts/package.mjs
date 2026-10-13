@@ -20,6 +20,7 @@ const files = [
   'docs/screenshots/aquarium-glass.png',
   'docs/screenshots/plugin-configuration.png',
   'README.md',
+  'README.en.md',
   'CHANGELOG.md',
   'LICENSE',
 ];
