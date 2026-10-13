@@ -56,29 +56,13 @@ jobs:
         working-directory: artifacts
         run: sha256sum --check SHA256SUMS
 
-      - name: 发布 GitHub Release
+      - name: 发布 GitHub raw 文件
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
-          将 Codex 会话、工具调用和子 agent 映射成实时 3D 鱼群，配有自然水草与透明玻璃鱼缸。
-
-          在 macOS / Linux 终端执行以下快捷安装命令，只有下载成功才会运行安装器：
-
-          ```sh
-          curl -fL https://github.com/kinglisky/codex-aquarium/releases/latest/download/install.mjs -o aquarium-install.mjs && node aquarium-install.mjs
-          ```
-
-          也可复制下方 README 中的安装指引，让本机 Codex agent 完成环境检查、安装和验证。
-
-          需要 Node.js 22.12+、tar、支持插件安装的 Codex CLI，以及支持插件 Hooks 的 Codex 桌面端。安装器会校验发行包、安装插件并启动本地鱼缸；首次使用仍需本人在 Codex 中审阅并信任 Hooks。完整说明与真实渲染截图见该版本 README。
-          NOTES
-          printf '\n[复制给 Codex agent 的安装指引](https://github.com/%s/blob/%s/README.md#复制给-codex-安装)\n\n![鱼缸真实渲染截图](https://raw.githubusercontent.com/%s/%s/docs/screenshots/aquarium-live.png)\n' \
-            "$GH_REPO" "$GITHUB_REF_NAME" "$GH_REPO" "$GITHUB_REF_NAME" >> "$RUNNER_TEMP/release-notes.md"
-          flags=()
-          if [[ "$GITHUB_REF_NAME" == *-* ]]; then flags+=(--prerelease); fi
-          gh release create "$GITHUB_REF_NAME" \
-            artifacts/codex-aquarium.tgz artifacts/install.mjs artifacts/SHA256SUMS \
-            --verify-tag --title "Codex Aquarium $GITHUB_REF_NAME" \
-            --notes-file "$RUNNER_TEMP/release-notes.md" "${flags[@]}"
+          if gh api "repos/$GH_REPO/contents/$GITHUB_REF_NAME/SHA256SUMS?ref=distribution" > /dev/null; then
+            echo "$GITHUB_REF_NAME raw 文件已发布，保留原有文件。"
+            exit 0
+          fi
+          pnpm publish:distribution
