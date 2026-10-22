@@ -1,0 +1,20 @@
+{
+  "name": "codex-aquarium",
+  "version": "0.3.2",
+  "description": "把 Codex 活跃会话化作鱼群，与小动物一起逛 3D 海洋馆。 Turn active Codex sessions into fish in a 3D aquarium.",
+  "author": { "name": "kinglisky" },
+  "license": "MIT",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "requires_local_executor": true,
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md"
+    }
+  },
+  "interface": {
+    "displayName": "Codex Aquarium · 摸鱼海洋馆",
+    "shortDescription": "Agent 工作，你来摸鱼",
+    "defaultPrompt": ["打开我的 Codex 实时鱼缸。", "Open my live Codex aquarium."]
+  }
+}

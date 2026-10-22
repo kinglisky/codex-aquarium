@@ -1,0 +1,560 @@
+{
+  "sourceRepository": "https://github.com/969981/ACNH_Resources",
+  "sourceCommit": "9e5d6855fb1216fd8bfd03fba9148a374729112b",
+  "sources": [
+    {
+      "modelId": "IdrMuseumFish0Obj",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj.Nin_NX_NVN.zs",
+      "gitBlob": "efbd7c8ddca3da42fae229eca4df4b62d63fa48f",
+      "bytes": 2091682,
+      "sha256": "305fb97a203752120d1f4d8b05b01b384775c054428f995e2919fa574f745dbc"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj.Nin_NX_NVN.zs",
+      "gitBlob": "898f95b5b3678aaf1c26a01681bebe5e6e7ac26b",
+      "bytes": 1190224,
+      "sha256": "440b3535182aec3aa74725b5a4821d81490bab6e178c03df9e347e748d60aba4"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralSet_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralSet_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "05ee4176b338074de0ef367d699c8f2d026d149a",
+      "bytes": 79168,
+      "sha256": "5b6c48952b2187090c3e6f083f10c50a8a75449e03ce96cfd85f047e062c5de6"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralSet_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralSet_OP.Nin_NX_NVN.zs",
+      "gitBlob": "87f7f5a55e72429bd744ce9f27675018b0d3f68f",
+      "bytes": 7280,
+      "sha256": "2f771cdfdf5553bd214c8ae9e3794bc152bf65f66a5f63754f42beaafa1a7aa8"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralSet2_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralSet2_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "5c45033a04e3ddaaed30c4560721a978ed3bae36",
+      "bytes": 86462,
+      "sha256": "e4cdd657d9772dbbf86ef0a848c5b85eb647e7e231f1e9cdcc9d37180e665b35"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralSet2_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralSet2_OP.Nin_NX_NVN.zs",
+      "gitBlob": "43f4cae4059173eb2d344d5734c088ae71c4e925",
+      "bytes": 7893,
+      "sha256": "61287dddff4d2734f1c127412a4cb99a862dff13c982c468738ae321f6b4bac1"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralMamenasu_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralMamenasu_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "a977ef62bcfcf82435e2de787965653e76ee3b1a",
+      "bytes": 34419,
+      "sha256": "23e48502a816167f45117c678c17650fc28e928581925c4d7f20bc8ae15c3afe"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralMamenasu_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralMamenasu_OP.Nin_NX_NVN.zs",
+      "gitBlob": "4199e9840aff7fabd39a79415fdb401426cd9d96",
+      "bytes": 503,
+      "sha256": "390179befe0471cb8ed530d644758112cf73607889ec0ae08b0940d1f5a3ad40"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralMamenasu2_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralMamenasu2_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "4e634dba17e1b5f2846faa5db6d998e3f9610ff8",
+      "bytes": 33553,
+      "sha256": "888a2a0cfebd2012ba486dafba1e86eb25081e35fadc97d5bbe5349cc2fa21c1"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralMamenasu2_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralMamenasu2_OP.Nin_NX_NVN.zs",
+      "gitBlob": "f5e616abc90a4634e63297343c06ace8d44ba35b",
+      "bytes": 504,
+      "sha256": "df7e1ec7728f3a9041eab0c279280d1aaf3a4a043d29d8d0a1fb2f6cbb46d7d4"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj_Tex_mAquariumPlant_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj_Tex_mAquariumPlant_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "5898867f7a9c81b164d8726449cfed1c06a95801",
+      "bytes": 23084,
+      "sha256": "1e05e3b71799a184f6bdbb4fe9ec159c872c82ba9302449069b69ad31530d998"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj_Tex_mAquariumPlant_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj_Tex_mAquariumPlant_OP.Nin_NX_NVN.zs",
+      "gitBlob": "8b5e5debe3a30586367a64284b5371c741ac3c8c",
+      "bytes": 12595,
+      "sha256": "c1be3c5f6287ec8cf0191d2bba39d6217dba3039b60385fa986359c7e6f6c100"
+    },
+    {
+      "modelId": "IdrMuseumFish_0_Tex_mFishSand_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish_0_Tex_mFishSand_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "e09191bde1a539af2c822f1189a567fc0eac34c9",
+      "bytes": 104576,
+      "sha256": "deb2bb6bd07c802e7c1a589df369b9350869d0f2384c397d4b6aa9f2eca2241f"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mIwa00_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mIwa00_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "942ff01df5db2d5e1c910fee79269351c594df48",
+      "bytes": 37161,
+      "sha256": "92561bcee8fad1737e39a7f8dfe975d9a0c8f1a394f7654d6f01952cd5bbb0b7"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mKazari_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mKazari_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "13f7115c7f93511ccd1de25d581cd939dac446f0",
+      "bytes": 17640,
+      "sha256": "1b96c97198f4310e0f569ed794f9f64bbc884d9c72fd07cbfaecb2c54e798c1c"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mRock_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mRock_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "158d763637a3de544091a9f305530c433f1590b6",
+      "bytes": 39405,
+      "sha256": "86a43e41b6bab180bf569f8e5a146832bde1999d4739e97fe573071633254dcf"
+    }
+  ],
+  "models": [
+    {
+      "id": "reef-garden",
+      "source": "IdrMuseumFish0Obj",
+      "nodes": [
+        20,
+        21,
+        24,
+        27,
+        28
+      ],
+      "file": "scenery/reef-garden.glb",
+      "bytes": 3522288,
+      "sha256": "5b6b05e4dcd347edbabf9b10763831cb04d3a4d4791a5215b149550e871a47f4",
+      "parts": [
+        {
+          "sourceNode": "BubbleDiscBlue2__mCoralSet2",
+          "vertices": 55659,
+          "material": "mCoralSet2"
+        },
+        {
+          "sourceNode": "BubbleDiscBlue_2__mCoralSet",
+          "vertices": 19548,
+          "material": "mCoralSet"
+        },
+        {
+          "sourceNode": "RockS04__mIwa00",
+          "vertices": 7941,
+          "material": "mIwa00"
+        },
+        {
+          "sourceNode": "pPlatonic1_1__mCoralMamenasu",
+          "vertices": 2016,
+          "material": "mCoralMamenasu"
+        },
+        {
+          "sourceNode": "pPlatonic1_2__mCoralMamenasu2",
+          "vertices": 3456,
+          "material": "mCoralMamenasu2"
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -29.91254425048828,
+          -5.238207817077637,
+          -19.282711029052734
+        ],
+        "max": [
+          29.676315307617188,
+          17.763832092285156,
+          20.41501808166504
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.3330969214439392
+        ],
+        "max": [
+          0.5,
+          0.3860124349594116,
+          0.3330969214439392
+        ]
+      },
+      "normalizedSize": {
+        "x": 1,
+        "y": 0.3860124349594116,
+        "z": 0.6661938428878784
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    },
+    {
+      "id": "reef-island-left",
+      "source": "IdrMuseumFish0Obj",
+      "nodes": [
+        20,
+        21,
+        24,
+        27,
+        28
+      ],
+      "region": "left",
+      "file": "scenery/reef-island-left.glb",
+      "bytes": 2070596,
+      "sha256": "721a6a051890962966fe05626ffd1b3fcbb16fcea948ed58214372fbebac2c69",
+      "parts": [
+        {
+          "sourceNode": "BubbleDiscBlue2__mCoralSet2",
+          "vertices": 24336,
+          "material": "mCoralSet2",
+          "connectedComponents": 192
+        },
+        {
+          "sourceNode": "BubbleDiscBlue_2__mCoralSet",
+          "vertices": 12864,
+          "material": "mCoralSet",
+          "connectedComponents": 68
+        },
+        {
+          "sourceNode": "RockS04__mIwa00",
+          "vertices": 2598,
+          "material": "mIwa00",
+          "connectedComponents": 10
+        },
+        {
+          "sourceNode": "pPlatonic1_1__mCoralMamenasu",
+          "vertices": 1152,
+          "material": "mCoralMamenasu",
+          "connectedComponents": 7
+        },
+        {
+          "sourceNode": "pPlatonic1_2__mCoralMamenasu2",
+          "vertices": 2304,
+          "material": "mCoralMamenasu2",
+          "connectedComponents": 12
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -29.91254425048828,
+          -5.238207817077637,
+          -19.282711029052734
+        ],
+        "max": [
+          1.515817642211914,
+          17.763832092285156,
+          16.36383628845215
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.440833181142807,
+          0,
+          -0.4999999701976776
+        ],
+        "max": [
+          0.440833181142807,
+          0.6452810168266296,
+          0.4999999701976776
+        ]
+      },
+      "normalizedSize": {
+        "x": 0.881666362285614,
+        "y": 0.6452810168266296,
+        "z": 0.9999999403953552
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    },
+    {
+      "id": "reef-island-right",
+      "source": "IdrMuseumFish0Obj",
+      "nodes": [
+        20,
+        21,
+        24,
+        27,
+        28
+      ],
+      "region": "right",
+      "file": "scenery/reef-island-right.glb",
+      "bytes": 2138156,
+      "sha256": "deca38d23516174f4d9a7f5c67d1ca375441486479730520226801dbe6f15385",
+      "parts": [
+        {
+          "sourceNode": "BubbleDiscBlue2__mCoralSet2",
+          "vertices": 31323,
+          "material": "mCoralSet2",
+          "connectedComponents": 192
+        },
+        {
+          "sourceNode": "BubbleDiscBlue_2__mCoralSet",
+          "vertices": 6684,
+          "material": "mCoralSet",
+          "connectedComponents": 68
+        },
+        {
+          "sourceNode": "RockS04__mIwa00",
+          "vertices": 5343,
+          "material": "mIwa00",
+          "connectedComponents": 10
+        },
+        {
+          "sourceNode": "pPlatonic1_1__mCoralMamenasu",
+          "vertices": 864,
+          "material": "mCoralMamenasu",
+          "connectedComponents": 7
+        },
+        {
+          "sourceNode": "pPlatonic1_2__mCoralMamenasu2",
+          "vertices": 1152,
+          "material": "mCoralMamenasu2",
+          "connectedComponents": 12
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -2.4116897583007812,
+          -4.686378479003906,
+          -17.07826042175293
+        ],
+        "max": [
+          29.676315307617188,
+          10.919463157653809,
+          20.41501808166504
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.4279167652130127,
+          0,
+          -0.5
+        ],
+        "max": [
+          0.4279167652130127,
+          0.41623038053512573,
+          0.5
+        ]
+      },
+      "normalizedSize": {
+        "x": 0.8558335304260254,
+        "y": 0.41623038053512573,
+        "z": 1
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    },
+    {
+      "id": "planted-kelp-bank",
+      "source": "IdrMuseumFish0Obj",
+      "nodes": [
+        7,
+        8
+      ],
+      "file": "scenery/planted-kelp-bank.glb",
+      "bytes": 417228,
+      "sha256": "728f85b9cec9a9d20009383fd3076f3f738ca045060f19781c7f32ad30080d2b",
+      "parts": [
+        {
+          "sourceNode": "kaisou_mizukusaALeaf__mKazari",
+          "vertices": 6522,
+          "material": "mKazari"
+        },
+        {
+          "sourceNode": "Rock01__mRock",
+          "vertices": 2001,
+          "material": "mRock"
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -156.86854553222656,
+          -10.146191596984863,
+          -41.4847526550293
+        ],
+        "max": [
+          -117.35063934326172,
+          43.48070526123047,
+          7.605459213256836
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.3684522807598114,
+          0,
+          -0.4577013850212097
+        ],
+        "max": [
+          0.3684522807598114,
+          1,
+          0.4577013850212097
+        ]
+      },
+      "normalizedSize": {
+        "x": 0.7369045615196228,
+        "y": 1,
+        "z": 0.9154027700424194
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    },
+    {
+      "id": "planted-kelp-cove",
+      "source": "IdrMuseumFish0Obj",
+      "nodes": [
+        14,
+        16
+      ],
+      "file": "scenery/planted-kelp-cove.glb",
+      "bytes": 294816,
+      "sha256": "680dc44af06c42687c36af448310d86f9f9bd37e498a2a5b08db62e8fc19284e",
+      "parts": [
+        {
+          "sourceNode": "kaisou_mizukusaALeaf__mKazari",
+          "vertices": 3408,
+          "material": "mKazari"
+        },
+        {
+          "sourceNode": "kazari__mRock",
+          "vertices": 1290,
+          "material": "mRock"
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -155.63771057128906,
+          -10.6633939743042,
+          14.717704772949219
+        ],
+        "max": [
+          -124.9383773803711,
+          30.517986297607422,
+          63.55093002319336
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.3143283426761627,
+          0,
+          -0.5
+        ],
+        "max": [
+          0.3143283426761627,
+          0.8433066010475159,
+          0.5
+        ]
+      },
+      "normalizedSize": {
+        "x": 0.6286566853523254,
+        "y": 0.8433066010475159,
+        "z": 1
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    },
+    {
+      "id": "planted-aquarium-bank",
+      "source": "IdrMuseumFish2Obj",
+      "nodes": [
+        42
+      ],
+      "file": "scenery/planted-aquarium-bank.glb",
+      "bytes": 125060,
+      "sha256": "9835245b07efacc2c9085d7e196a3efefac7432b1a03f8ae4ce5692e4308f270",
+      "parts": [
+        {
+          "sourceNode": "pPlane209_0_1__mAquariumPlant",
+          "vertices": 2631,
+          "material": "mAquariumPlant"
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -126.5426254272461,
+          4.624833106994629,
+          48.3238639831543
+        ],
+        "max": [
+          -83.02933502197266,
+          23.609880447387695,
+          71.17511749267578
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.2625778615474701
+        ],
+        "max": [
+          0.5,
+          0.4363045394420624,
+          0.2625778615474701
+        ]
+      },
+      "normalizedSize": {
+        "x": 1,
+        "y": 0.4363045394420624,
+        "z": 0.5251557230949402
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    },
+    {
+      "id": "reef-rocks",
+      "source": "IdrMuseumFish0Obj",
+      "nodes": [
+        24
+      ],
+      "file": "scenery/reef-rocks.glb",
+      "bytes": 381976,
+      "sha256": "a8f60032bf60fbe5d33d2659c01f20f986d17125877105f0e49fe8afd9e045be",
+      "parts": [
+        {
+          "sourceNode": "RockS04__mIwa00",
+          "vertices": 7941,
+          "material": "mIwa00"
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -29.91254425048828,
+          -5.238207817077637,
+          -19.282711029052734
+        ],
+        "max": [
+          27.648639678955078,
+          17.763832092285156,
+          19.765304565429688
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.33918705582618713
+        ],
+        "max": [
+          0.5,
+          0.3996102809906006,
+          0.33918705582618713
+        ]
+      },
+      "normalizedSize": {
+        "x": 1,
+        "y": 0.3996102809906006,
+        "z": 0.6783741116523743
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    },
+    {
+      "id": "sand-tile",
+      "source": "IdrMuseumFish_0_Tex_mFishSand_Alb",
+      "file": "scenery/sand-tile.glb",
+      "bytes": 232436,
+      "sha256": "a8b8217758cdc77c12d2e8b92cc45cfbab2f05edfab301fb965a69be998c22c1",
+      "texture": "mFishSand_Alb.png",
+      "textureSha256": "f10a5343bf37b72eac54bcd7c75b065c140382812bbc3cc1faaceec053374322",
+      "normalizedSize": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      },
+      "processing": "Original unmodified museum sand albedo, embedded on a generated unit XZ plane as a texture carrier. UV 0..1; repeat wrapping; sRGB. No color editing or synthetic texture."
+    }
+  ]
+}

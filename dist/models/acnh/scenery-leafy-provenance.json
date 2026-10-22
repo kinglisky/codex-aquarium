@@ -1,0 +1,116 @@
+{
+  "sourceRepository": "https://github.com/969981/ACNH_Resources",
+  "sourceCommit": "9e5d6855fb1216fd8bfd03fba9148a374729112b",
+  "sources": [
+    {
+      "modelId": "IdrMuseumFish0Obj",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj.Nin_NX_NVN.zs",
+      "gitBlob": "efbd7c8ddca3da42fae229eca4df4b62d63fa48f",
+      "bytes": 2091682,
+      "sha256": "305fb97a203752120d1f4d8b05b01b384775c054428f995e2919fa574f745dbc"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mKazari_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mKazari_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "13f7115c7f93511ccd1de25d581cd939dac446f0",
+      "bytes": 17640,
+      "sha256": "1b96c97198f4310e0f569ed794f9f64bbc884d9c72fd07cbfaecb2c54e798c1c"
+    }
+  ],
+  "models": [
+    {
+      "id": "kelp-leafy-bank",
+      "source": "IdrMuseumFish0Obj",
+      "nodes": [
+        7
+      ],
+      "file": "scenery/kelp-leafy-bank.glb",
+      "bytes": 231112,
+      "sha256": "d1c4d61d0c9b8e1ebde5fd5e0f3e116d89ea5aeef097e2177992062dc6aca763",
+      "parts": [
+        {
+          "sourceNode": "kaisou_mizukusaALeaf__mKazari",
+          "vertices": 6522,
+          "material": "mKazari"
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -155.5153350830078,
+          -10.146191596984863,
+          -33.52268981933594
+        ],
+        "max": [
+          -126.0685806274414,
+          43.48070526123047,
+          7.038859844207764
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.2745521068572998,
+          0,
+          -0.37818288803100586
+        ],
+        "max": [
+          0.2745521068572998,
+          1,
+          0.37818288803100586
+        ]
+      },
+      "normalizedSize": {
+        "x": 0.5491042137145996,
+        "y": 1,
+        "z": 0.7563657760620117
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    },
+    {
+      "id": "kelp-leafy-cove",
+      "source": "IdrMuseumFish0Obj",
+      "nodes": [
+        14
+      ],
+      "file": "scenery/kelp-leafy-cove.glb",
+      "bytes": 131460,
+      "sha256": "b834781394c99d6d6f3559b5b2fbf58dc1ab83ea29384063b98951e279ab8ab2",
+      "parts": [
+        {
+          "sourceNode": "kaisou_mizukusaALeaf__mKazari",
+          "vertices": 3408,
+          "material": "mKazari"
+        }
+      ],
+      "sourceBounds": {
+        "min": [
+          -154.34349060058594,
+          -10.6633939743042,
+          51.171104431152344
+        ],
+        "max": [
+          -127.90950012207031,
+          30.517986297607422,
+          63.55093002319336
+        ]
+      },
+      "normalizedBounds": {
+        "min": [
+          -0.3209458887577057,
+          0,
+          -0.1503085345029831
+        ],
+        "max": [
+          0.3209458887577057,
+          1,
+          0.1503085345029831
+        ]
+      },
+      "normalizedSize": {
+        "x": 0.6418917775154114,
+        "y": 1,
+        "z": 0.3006170690059662
+      },
+      "processing": "Original museum meshes and original albedo/opacity retained. Authored relative coordinates preserved. No individual specimen repositioning. Optional islands retain complete connected components selected by source X centroid. Centered and grounded; longest axis = 1."
+    }
+  ]
+}
