@@ -62,6 +62,35 @@ test('旧请求失败不能删除同路径的新请求，关闭展厅后迟到�
   assert.deepEqual(late.disposed, { geometry: 1, material: 1, texture: 1 });
 });
 
+test('先无旅伴进入展厅，不等待远端模型，下载失败后可重试且原场景资源不受影响', async t => {
+  const loaded = new Map();
+  const requests = [];
+  t.mock.method(GLTFLoader.prototype, 'loadAsync', path => {
+    if (path.includes('/companions/')) return new Promise((resolve, reject) => requests.push({ resolve, reject }));
+    const asset = model();
+    loaded.set(path, asset);
+    return Promise.resolve({ scene: asset.group });
+  });
+  const assets = await loadMuseumAssets({ player: 'boy', companion: 'none' });
+  assert.equal(requests.length, 0, '首屏加载只使用基础包，无需等待可选旅伴下载');
+  assert.equal(assets.companion, null);
+  assert.equal(assets.visitor, loaded.get('/models/acnh/players/boy.glb').group);
+  const pending = assets.loadCharacter('companions/cat00');
+  assert.equal(assets.loadCharacter('companions/cat00'), pending, '同时请求同一旅伴只下载一次');
+  const rejected = assert.rejects(pending, /下载失败/);
+  requests[0].reject(new Error('下载失败'));
+  await rejected;
+  for (const asset of loaded.values()) assert.deepEqual(asset.disposed, { geometry: 0, material: 0, texture: 0 });
+  const retry = assets.loadCharacter('companions/cat00');
+  assert.notEqual(retry, pending, '拒绝的 Promise 不能阻止后续重试');
+  assert.equal(requests.length, 2);
+  const companion = model();
+  requests[1].resolve({ scene: companion.group });
+  assert.equal(await retry, companion.group);
+  assets.dispose();
+  for (const asset of [...loaded.values(), companion]) assert.deepEqual(asset.disposed, { geometry: 1, material: 1, texture: 1 });
+});
+
 test('进入展厅只加载人物和布景，八十种鱼按需加载且同种并发请求复用', async t => {
   const paths = [];
   let finish;

@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { randomBytes } from "node:crypto";
 import { createState } from "./state.mjs";
 import { dataDirectory, readJson, atomicJson, consumeEvents } from "./storage.mjs";
+import { createModelCache, readModelManifest } from "./models.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png", ".ico": "image/x-icon", ".glb": "model/gltf-binary" };
@@ -17,8 +18,9 @@ function localRequest(request) {
   } catch { return false; }
 }
 
-export async function startServer({ directory = dataDirectory(), port = 43187, assets = path.join(root, "dist") } = {}) {
+export async function startServer({ directory = dataDirectory(), port = 43187, assets = path.join(root, "dist"), modelManifest = path.join(root, "server/model-manifest.json") } = {}) {
   const state = createState(await readJson(path.join(directory, "state.json")));
+  const models = createModelCache({ directory, manifest: await readModelManifest(modelManifest) });
   const clients = new Set();
   const token = randomBytes(32).toString("hex");
   let lastPublished = "";
@@ -96,11 +98,18 @@ export async function startServer({ directory = dataDirectory(), port = 43187, a
       const file = path.resolve(assets, `.${decodeURIComponent(url.pathname === "/" ? "/index.html" : url.pathname)}`);
       const type = MIME[path.extname(file)];
       if (!file.startsWith(`${path.resolve(assets)}${path.sep}`) || !type) { json(404, { error: "页面不存在。" }); return; }
-      const content = await readFile(file);
+      const content = await readFile(file).catch(async error => {
+        if (error.code !== "ENOENT") throw error;
+        const name = path.relative(path.join(assets, "models/acnh"), file).split(path.sep).join("/");
+        const model = await models.get(name);
+        if (!model) throw error;
+        return model;
+      });
       response.writeHead(200, { "Content-Type": type, "Cache-Control": "no-cache", "Content-Security-Policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'" });
       response.end(request.method === "HEAD" ? undefined : content);
     } catch (error) {
       if (response.headersSent) { response.destroy(); return; }
+      if (error.code === "ERR_MODEL_DOWNLOAD") { json(503, { error: error.message }); return; }
       json(error.code === "ENOENT" ? 404 : 500, { error: "页面暂不可用，请先执行 pnpm build。" });
     }
   });

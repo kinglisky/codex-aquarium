@@ -31,10 +31,12 @@
 先添加 GitHub 来源：
 
 ```bash
-codex plugin marketplace add kinglisky/codex-aquarium --ref marketplace
+codex plugin marketplace add kinglisky/codex-aquarium --ref marketplace \
+  --sparse .agents --sparse .codex-plugin --sparse dist \
+  --sparse hooks --sparse server --sparse skills --sparse docs --sparse scripts
 ```
 
-重启 Codex，在插件页面选择 **Codex Aquarium** 来源，安装鱼缸。首次安装后运行插件的 **Setup** 配置技能，或告诉 Codex「完成 Codex Aquarium 首次配置」，然后亲自审阅、信任 Hooks。市场包已包含构建好的网页和模型，无需编译。
+重启 Codex，在插件页面选择 **Codex Aquarium** 来源，安装鱼缸。首次安装后运行插件的 **Setup** 配置技能，或告诉 Codex「完成 Codex Aquarium 首次配置」，然后亲自审阅、信任 Hooks。市场包已预构建；请保留 `--sparse` 参数，避免克隆全部历史模型。
 
 更新来源后，在 Codex 中更新插件：
 
@@ -42,7 +44,7 @@ codex plugin marketplace add kinglisky/codex-aquarium --ref marketplace
 codex plugin marketplace upgrade codex-aquarium-local
 ```
 
-已用下方脚本安装的用户可继续原方式更新。如需切换到 GitHub 来源，先执行 `codex plugin marketplace remove codex-aquarium-local`，再添加上面的来源。
+已用下方脚本安装的用户可继续原方式更新。如需切换来源，或之前添加来源时未使用 `--sparse`，先执行 `codex plugin marketplace remove codex-aquarium-local`，再用上面的命令添加。
 
 ### 让 Agent 安装
 
@@ -68,6 +70,8 @@ curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/re
 ```
 
 从 GitHub raw 安装预构建包并校验 SHA-256，无需本地编译；缺少合适的 Node.js 时提示安装并退出。升级也用同一指引或命令。安装目录默认是 `~/.codex/aquarium-install/codex-aquarium`（遵循 `CODEX_HOME`），请保留。
+
+**轻量安装**：默认人物、西施惠、全部鱼类和造景随包提供。其他小动物在首次选用时下载并校验，缓存在本机，后续使用无需重复下载；未下载的旅伴需要联网，下载失败可重新选择重试。
 
 ## 开始摸鱼
 

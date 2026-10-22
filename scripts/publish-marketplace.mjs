@@ -20,7 +20,7 @@ export async function publishMarketplace(root = projectRoot) {
     throw new Error('市场目录必须指向同分支中预构建的鱼缸。');
   }
   await Promise.all([
-    'dist/index.html', 'server/cli.mjs', 'server/autostart.mjs',
+    'dist/index.html', 'server/cli.mjs', 'server/autostart.mjs', 'server/model-manifest.json',
     'hooks/hooks.json', 'hooks/run.sh', 'hooks/observe.mjs', 'skills/aquarium/SKILL.md', 'skills/setup/SKILL.md',
   ].map(file => access(join(directory, file))));
 

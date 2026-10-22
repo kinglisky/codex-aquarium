@@ -31,10 +31,12 @@ Requires Node.js 22.12+, Codex Desktop with plugin and Hooks support, the Codex 
 Add the GitHub source:
 
 ```bash
-codex plugin marketplace add kinglisky/codex-aquarium --ref marketplace
+codex plugin marketplace add kinglisky/codex-aquarium --ref marketplace \
+  --sparse .agents --sparse .codex-plugin --sparse dist \
+  --sparse hooks --sparse server --sparse skills --sparse docs --sparse scripts
 ```
 
-Restart Codex, select the **Codex Aquarium** source on the Plugins page and install the aquarium. Run its **Setup** skill once, or ask Codex to "Complete the initial setup for Codex Aquarium", then personally review and trust Hooks. The marketplace package includes the built interface and models; no compilation is needed.
+Restart Codex, select the **Codex Aquarium** source on the Plugins page and install the aquarium. Run its **Setup** skill once, or ask Codex to "Complete the initial setup for Codex Aquarium", then personally review and trust Hooks. The package is prebuilt. Keep the `--sparse` options to avoid downloading the full model history.
 
 Refresh the source, then update the plugin in Codex:
 
@@ -42,7 +44,7 @@ Refresh the source, then update the plugin in Codex:
 codex plugin marketplace upgrade codex-aquarium-local
 ```
 
-If you installed with the script below, you can keep using it to update. To switch to the GitHub source, first run `codex plugin marketplace remove codex-aquarium-local`, then add the source above.
+If you installed with the script below, you can keep using it to update. To switch sources, or replace a source previously added without `--sparse`, first run `codex plugin marketplace remove codex-aquarium-local`, then add it with the command above.
 
 ### Ask your agent
 
@@ -68,6 +70,8 @@ curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/re
 ```
 
 Installs a prebuilt package from GitHub raw files with SHA-256 verification. No local build is needed. The script exits with installation guidance if a suitable Node.js is missing. Use the same prompt or command to update. Keep the installation directory: `~/.codex/aquarium-install/codex-aquarium` by default, or under your custom `CODEX_HOME`.
+
+**Lightweight install**: both players, Isabelle, all fish and scenery are included. Other companions download with checksum verification when first selected and stay cached locally. Uncached companions require internet access; select again to retry a failed download.
 
 ## Watch the fish
 

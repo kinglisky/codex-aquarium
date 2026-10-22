@@ -31,7 +31,7 @@ async function fixture(t) {
     'dist/index.html': '<script src="/assets/app.js"></script>',
     'dist/assets/app.js': 'console.log("aquarium");',
     'dist/models/fish.glb': 'fish model fixture',
-    'server/cli.mjs': '', 'server/autostart.mjs': '',
+    'server/cli.mjs': '', 'server/autostart.mjs': '', 'server/model-manifest.json': '{}',
     'hooks/hooks.json': '{}', 'hooks/run.sh': '', 'hooks/observe.mjs': '',
     'skills/aquarium/SKILL.md': '---\nname: aquarium\ndescription: Watch fish\n---',
     'skills/setup/SKILL.md': '---\nname: setup\ndescription: Set up aquarium\n---',

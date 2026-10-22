@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { createModelManifest, includeBundledModel } from './model-assets.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outputDirectory = join(root, 'artifacts');
@@ -67,8 +68,11 @@ try {
   }
   const required = ['dist/index.html', 'server/cli.mjs', 'hooks/observe.mjs', ...files];
   await Promise.all(required.map((file) => stat(join(root, file))));
+  const modelManifest = await createModelManifest(root);
   await mkdir(packageRoot);
-  await cp(join(root, 'dist'), join(packageRoot, 'dist'), { recursive: true });
+  await cp(join(root, 'dist'), join(packageRoot, 'dist'), {
+    recursive: true, filter: includeBundledModel,
+  });
 
   for (const directory of ['server', 'hooks']) {
     await mkdir(join(packageRoot, directory));
@@ -84,6 +88,7 @@ try {
     await mkdir(dirname(join(packageRoot, file)), { recursive: true });
     await cp(join(root, file), join(packageRoot, file));
   }
+  await writeFile(join(packageRoot, 'server/model-manifest.json'), `${JSON.stringify(modelManifest)}\n`);
 
   const archive = join(temporary, 'codex-aquarium.tgz');
   const result = spawnSync('tar', ['-czf', archive, '-C', temporary, 'codex-aquarium'], {

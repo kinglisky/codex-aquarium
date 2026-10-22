@@ -246,7 +246,10 @@ async function initializeAquarium() {
   try {
     required<HTMLElement>("#viewport").innerHTML = `<div class="render-error" role="status"><p data-i18n="loadingModels">${t("loadingModels")}</p></div>`;
     await initSwimming();
-    const assets = await loadMuseumAssets(appearance);
+    const savedAppearance = appearance;
+    const deferredCompanion = appearance.companion !== "none" && appearance.companion !== DEFAULT_APPEARANCE.companion;
+    const initialAppearance = deferredCompanion ? { ...appearance, companion: "none" } : appearance;
+    const assets = await loadMuseumAssets(initialAppearance);
     if (destroyed) { assets.dispose(); return; }
     required<HTMLElement>("#viewport").replaceChildren();
     try {
@@ -266,6 +269,11 @@ async function initializeAquarium() {
       }
     } catch (error) {
       console.error("无法生成造景预览", error);
+    }
+    if (deferredCompanion) {
+      appearance = initialAppearance;
+      renderAppearanceSelection();
+      void applyAppearance(savedAppearance, "companionRestoreFailed");
     }
   } catch (error) {
     required<HTMLElement>("#viewport").innerHTML = `<div class="render-error"><h2 data-i18n="renderFailed">${t("renderFailed")}</h2><p data-i18n="renderHelp">${t("renderHelp")}</p></div>`;
@@ -368,6 +376,10 @@ async function changeAppearance(event: Event) {
       break;
     default: return;
   }
+  await applyAppearance(next);
+}
+async function applyAppearance(next: MuseumAppearance, failureMessage: MessageKey = "appearanceFailed") {
+  if (!aquarium || destroyed) return;
   if (next.player === appearance.player && next.companion === appearance.companion) return;
   const focused = document.activeElement;
   const keyboardFocus = focused instanceof HTMLInputElement && focused.matches(":focus-visible");
@@ -375,7 +387,7 @@ async function changeAppearance(event: Event) {
   playerChoices.disabled = companionChoices.disabled = true;
   renderAppearanceSelection();
   required<HTMLElement>(".appearance-settings").setAttribute("aria-busy", "true");
-  showStatus(status, "loadingModels");
+  showStatus(status, "loadingAppearance");
   try {
     if (!await aquarium.setAppearance(next) || destroyed) {
       showStatus(status, "appearanceIncomplete");
@@ -386,7 +398,7 @@ async function changeAppearance(event: Event) {
     try { localStorage.setItem(APPEARANCE_KEY, JSON.stringify(appearance)); }
     catch { showStatus(status, "appearanceNotSaved"); }
   } catch {
-    showStatus(status, "appearanceFailed");
+    showStatus(status, failureMessage);
   } finally {
     renderAppearanceSelection();
     playerChoices.disabled = companionChoices.disabled = false;
