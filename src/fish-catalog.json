@@ -1,0 +1,1597 @@
+{
+  "bitterling": {
+    "name": "红目鲫",
+    "englishName": "Bitterling",
+    "model": "bitterling",
+    "length": 0.55,
+    "profile": "standard",
+    "color": "#c6bc83",
+    "description": "银灰小鱼，带暖金色腹部",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "pale-chub": {
+    "name": "溪哥",
+    "englishName": "Pale chub",
+    "model": "pale-chub",
+    "length": 0.65,
+    "profile": "standard",
+    "color": "#b2c8b1",
+    "description": "修长银身，鳍尖透出粉色",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "crucian-carp": {
+    "name": "鲫鱼",
+    "englishName": "Crucian carp",
+    "model": "crucian-carp",
+    "length": 1.05,
+    "profile": "standard",
+    "color": "#b4a991",
+    "description": "圆润银灰鳞片与扇形尾鳍",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "dace": {
+    "name": "雅罗鱼",
+    "englishName": "Dace",
+    "model": "dace",
+    "length": 0.95,
+    "profile": "standard",
+    "color": "#b0baa4",
+    "description": "纺锤形银身与细长尾柄",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "carp": {
+    "name": "鲤鱼",
+    "englishName": "Carp",
+    "model": "carp",
+    "length": 1.5,
+    "profile": "standard",
+    "color": "#a9936d",
+    "description": "铜金鳞片与嘴边短须",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "koi": {
+    "name": "锦鲤",
+    "englishName": "Koi",
+    "model": "koi",
+    "length": 1.7,
+    "profile": "standard",
+    "color": "#f1d9c0",
+    "description": "白底红斑，舒展的长尾鳍",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "goldfish": {
+    "name": "金鱼",
+    "englishName": "Goldfish",
+    "model": "goldfish",
+    "length": 0.65,
+    "profile": "standard",
+    "color": "#f19a3f",
+    "description": "橘红身体与半透明扇尾",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "pop-eyed-goldfish": {
+    "name": "龙睛金鱼",
+    "englishName": "Pop-eyed goldfish",
+    "model": "pop-eyed-goldfish",
+    "length": 0.65,
+    "profile": "standard",
+    "color": "#464348",
+    "description": "黑色圆眼与柔软裙摆尾鳍",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "ranchu-goldfish": {
+    "name": "兰寿金鱼",
+    "englishName": "Ranchu goldfish",
+    "model": "ranchu-goldfish",
+    "length": 0.7,
+    "profile": "standard",
+    "color": "#dc8b54",
+    "description": "红白短身，圆头与小扇尾",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "killifish": {
+    "name": "稻田鱼",
+    "englishName": "Killifish",
+    "model": "killifish",
+    "length": 0.5,
+    "profile": "standard",
+    "color": "#d5c59d",
+    "description": "浅金半透明小鱼",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "crawfish": {
+    "name": "蝲蛄",
+    "englishName": "Crawfish",
+    "model": "crawfish",
+    "length": 0.65,
+    "profile": "crab",
+    "color": "#bc5b3e",
+    "description": "红褐甲壳与一对大钳",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "foot_l",
+      "foot_r",
+      "scissors",
+      "tentacle"
+    ],
+    "frequency": 3.4,
+    "amplitude": 0.03,
+    "finAmplitude": 0.1
+  },
+  "soft-shelled-turtle": {
+    "name": "鳖",
+    "englishName": "Soft-shelled turtle",
+    "model": "soft-shelled-turtle",
+    "length": 1.05,
+    "profile": "turtle",
+    "color": "#9c9e6c",
+    "description": "扁圆软甲与细长鼻尖",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "LegBL",
+      "LegBR",
+      "LegFL",
+      "LegFR"
+    ],
+    "frequency": 2.5,
+    "amplitude": 0.05,
+    "finAmplitude": 0.14
+  },
+  "snapping-turtle": {
+    "name": "拟鳄龟",
+    "englishName": "Snapping turtle",
+    "model": "snapping-turtle",
+    "length": 1.15,
+    "profile": "turtle",
+    "color": "#aaa279",
+    "description": "带棱背甲与锯齿长尾",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "leg_a",
+      "leg_b"
+    ],
+    "frequency": 2.5,
+    "amplitude": 0.05,
+    "finAmplitude": 0.14
+  },
+  "tadpole": {
+    "name": "蝌蚪",
+    "englishName": "Tadpole",
+    "model": "tadpole",
+    "length": 0.5,
+    "profile": "eel",
+    "color": "#645849",
+    "description": "圆形小身体拖着透明长尾",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 3.6,
+    "amplitude": 0.3,
+    "finAmplitude": 0.1
+  },
+  "frog": {
+    "name": "青蛙",
+    "englishName": "Frog",
+    "model": "frog",
+    "length": 0.55,
+    "profile": "frog",
+    "color": "#8cae50",
+    "description": "亮绿皮肤与折叠后腿",
+    "spine": [
+      "a"
+    ],
+    "fins": [
+      "arm",
+      "leg_1_l",
+      "leg_2_l"
+    ],
+    "frequency": 2.8,
+    "amplitude": 0.04,
+    "finAmplitude": 0.12
+  },
+  "freshwater-goby": {
+    "name": "塘鳢鱼",
+    "englishName": "Freshwater goby",
+    "model": "freshwater-goby",
+    "length": 0.85,
+    "profile": "standard",
+    "color": "#a78c6c",
+    "description": "宽阔头部与斑驳褐色花纹",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "loach": {
+    "name": "泥鳅",
+    "englishName": "Loach",
+    "model": "loach",
+    "length": 0.8,
+    "profile": "eel",
+    "color": "#baab7e",
+    "description": "黄褐细长身躯与短须",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 3.6,
+    "amplitude": 0.3,
+    "finAmplitude": 0.1
+  },
+  "catfish": {
+    "name": "鲶鱼",
+    "englishName": "Catfish",
+    "model": "catfish",
+    "length": 1.45,
+    "profile": "standard",
+    "color": "#8d9b8b",
+    "description": "灰绿光滑身体与长须",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "giant-snakehead": {
+    "name": "黑鱼",
+    "englishName": "Giant snakehead",
+    "model": "giant-snakehead",
+    "length": 1.65,
+    "profile": "standard",
+    "color": "#a8ab88",
+    "description": "修长深色斑纹与连续背鳍",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "bluegill": {
+    "name": "蓝鳃太阳鱼",
+    "englishName": "Bluegill",
+    "model": "bluegill",
+    "length": 0.85,
+    "profile": "standard",
+    "color": "#7f9f97",
+    "description": "蓝绿圆身与橙色腹部",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "yellow-perch": {
+    "name": "黄鲈鱼",
+    "englishName": "Yellow perch",
+    "model": "yellow-perch",
+    "length": 0.9,
+    "profile": "standard",
+    "color": "#d1b55e",
+    "description": "金黄侧身带深色竖纹",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "black-bass": {
+    "name": "黑鲈鱼",
+    "englishName": "Black bass",
+    "model": "black-bass",
+    "length": 1.2,
+    "profile": "standard",
+    "color": "#83947c",
+    "description": "橄榄绿背部与侧面深纹",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "tilapia": {
+    "name": "罗非鱼",
+    "englishName": "Tilapia",
+    "model": "tilapia",
+    "length": 1.05,
+    "profile": "standard",
+    "color": "#b9a999",
+    "description": "浅灰宽身与细密尾纹",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin_a",
+      "Fin_b"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "pike": {
+    "name": "白斑狗鱼",
+    "englishName": "Pike",
+    "model": "pike",
+    "length": 2.2,
+    "profile": "standard",
+    "color": "#b8b99b",
+    "description": "长吻与布满浅斑的流线身形",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "pond-smelt": {
+    "name": "西太公鱼",
+    "englishName": "Pond smelt",
+    "model": "pond-smelt",
+    "length": 0.6,
+    "profile": "standard",
+    "color": "#b8d6c9",
+    "description": "纤细透明银身",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "sweetfish": {
+    "name": "香鱼",
+    "englishName": "Sweetfish",
+    "model": "sweetfish",
+    "length": 0.9,
+    "profile": "standard",
+    "color": "#acc398",
+    "description": "黄绿色背部与银白腹部",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "cherry-salmon": {
+    "name": "樱花钩吻鲑",
+    "englishName": "Cherry salmon",
+    "model": "cherry-salmon",
+    "length": 1.05,
+    "profile": "standard",
+    "color": "#c6bba3",
+    "description": "银色侧身带规则椭圆斑块",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "char": {
+    "name": "花羔红点鲑",
+    "englishName": "Char",
+    "model": "char",
+    "length": 1.1,
+    "profile": "standard",
+    "color": "#b9b98e",
+    "description": "橄榄色身体散布浅色斑点",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "golden-trout": {
+    "name": "金鳟",
+    "englishName": "Golden trout",
+    "model": "golden-trout",
+    "length": 1.15,
+    "profile": "standard",
+    "color": "#d1a360",
+    "description": "金色腹部与红色侧线",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "stringfish": {
+    "name": "远东哲罗鱼",
+    "englishName": "Stringfish",
+    "model": "stringfish",
+    "length": 2.3,
+    "profile": "standard",
+    "color": "#b69f88",
+    "description": "铜褐色大身体与细密黑点",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "salmon": {
+    "name": "鲑鱼",
+    "englishName": "Salmon",
+    "model": "salmon",
+    "length": 1.6,
+    "profile": "standard",
+    "color": "#b0a984",
+    "description": "橄榄色背部与粉红侧斑",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "king-salmon": {
+    "name": "帝王鲑",
+    "englishName": "King salmon",
+    "model": "king-salmon",
+    "length": 2.35,
+    "profile": "standard",
+    "color": "#c4b59e",
+    "description": "宽厚银灰身体与墨色斑点",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "mitten-crab": {
+    "name": "中华绒螯蟹",
+    "englishName": "Mitten crab",
+    "model": "mitten-crab",
+    "length": 0.6,
+    "profile": "crab",
+    "color": "#a3805e",
+    "description": "棕褐背甲与毛茸茸的螯足",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "l_leg1",
+      "l_leg2",
+      "r_leg1",
+      "r_leg2"
+    ],
+    "frequency": 3.4,
+    "amplitude": 0.03,
+    "finAmplitude": 0.1
+  },
+  "guppy": {
+    "name": "孔雀鱼",
+    "englishName": "Guppy",
+    "model": "guppy",
+    "length": 0.55,
+    "profile": "standard",
+    "color": "#e19a77",
+    "description": "彩色扇形尾鳍与细长小身体",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "nibble-fish": {
+    "name": "温泉医生鱼",
+    "englishName": "Nibble fish",
+    "model": "nibble-fish",
+    "length": 0.55,
+    "profile": "standard",
+    "color": "#c5b391",
+    "description": "浅褐小鱼与透明鳍缘",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "angelfish": {
+    "name": "神仙鱼",
+    "englishName": "Angelfish",
+    "model": "angelfish",
+    "length": 0.85,
+    "profile": "standard",
+    "color": "#c7bf97",
+    "description": "银色竖纹与高耸三角鳍",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin_a",
+      "Fin_b",
+      "Fin_c"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "betta": {
+    "name": "斗鱼",
+    "englishName": "Betta",
+    "model": "betta",
+    "length": 0.7,
+    "profile": "standard",
+    "color": "#cf698a",
+    "description": "蓝红渐变身体与飘逸大鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "Fin_a",
+      "Fin_b",
+      "Fin_c",
+      "Fin_d",
+      "Fin_e"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "neon-tetra": {
+    "name": "霓虹灯鱼",
+    "englishName": "Neon tetra",
+    "model": "neon-tetra",
+    "length": 0.5,
+    "profile": "standard",
+    "color": "#65c6df",
+    "description": "蓝色霓虹侧线与鲜红尾腹",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "rainbowfish": {
+    "name": "彩虹鱼",
+    "englishName": "Rainbowfish",
+    "model": "rainbowfish",
+    "length": 0.6,
+    "profile": "standard",
+    "color": "#d49c78",
+    "description": "蓝紫与橘红相接的闪亮侧身",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "piranha": {
+    "name": "食人鱼",
+    "englishName": "Piranha",
+    "model": "piranha",
+    "length": 0.9,
+    "profile": "standard",
+    "color": "#cc9e83",
+    "description": "银灰圆身配红色下腹",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "arowana": {
+    "name": "骨舌鱼",
+    "englishName": "Arowana",
+    "model": "arowana",
+    "length": 1.9,
+    "profile": "standard",
+    "color": "#d1b970",
+    "description": "大块金鳞与上翘嘴须",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "dorado": {
+    "name": "黄金河虎",
+    "englishName": "Dorado",
+    "model": "dorado",
+    "length": 2,
+    "profile": "standard",
+    "color": "#dec369",
+    "description": "金黄色身体与朱红尾鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "gar": {
+    "name": "雀鳝",
+    "englishName": "Gar",
+    "model": "gar",
+    "length": 2.45,
+    "profile": "standard",
+    "color": "#c2bca0",
+    "description": "长而尖的口鼻与菱形鳞甲",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "arapaima": {
+    "name": "巨骨舌鱼",
+    "englishName": "Arapaima",
+    "model": "arapaima",
+    "length": 2.85,
+    "profile": "standard",
+    "color": "#b29c85",
+    "description": "厚重鳞片在尾部渐变为砖红",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "saddled-bichir": {
+    "name": "恩氏多鳍鱼",
+    "englishName": "Saddled bichir",
+    "model": "saddled-bichir",
+    "length": 1.45,
+    "profile": "standard",
+    "color": "#b6aa8a",
+    "description": "斑驳长身与一列小背鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "l_fin",
+      "r_fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "sturgeon": {
+    "name": "鲟鱼",
+    "englishName": "Sturgeon",
+    "model": "sturgeon",
+    "length": 2.5,
+    "profile": "standard",
+    "color": "#9bafa8",
+    "description": "尖吻与纵列骨板",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "sea-butterfly": {
+    "name": "海天使",
+    "englishName": "Sea butterfly",
+    "model": "sea-butterfly",
+    "length": 0.5,
+    "profile": "seahorse",
+    "color": "#e7bfd0",
+    "description": "透明身体与蝴蝶状侧鳍",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin_l",
+      "Fin_r"
+    ],
+    "frequency": 4.2,
+    "amplitude": 0.08,
+    "finAmplitude": 0.18
+  },
+  "seahorse": {
+    "name": "海马",
+    "englishName": "Seahorse",
+    "model": "seahorse",
+    "length": 0.65,
+    "profile": "seahorse",
+    "color": "#d7bb7d",
+    "description": "弯曲长颈与卷起的小尾巴",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "fin"
+    ],
+    "frequency": 4.2,
+    "amplitude": 0.08,
+    "finAmplitude": 0.18
+  },
+  "clownfish": {
+    "name": "小丑鱼",
+    "englishName": "Clownfish",
+    "model": "clownfish",
+    "length": 0.65,
+    "profile": "standard",
+    "color": "#ef9956",
+    "description": "橘红身体配醒目白色环带",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "surgeonfish": {
+    "name": "拟刺尾鲷",
+    "englishName": "Surgeonfish",
+    "model": "surgeonfish",
+    "length": 0.85,
+    "profile": "standard",
+    "color": "#5b9be3",
+    "description": "宝蓝身体与亮黄色三角尾",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "butterfly-fish": {
+    "name": "耳带蝴蝶鱼",
+    "englishName": "Butterfly fish",
+    "model": "butterfly-fish",
+    "length": 0.8,
+    "profile": "standard",
+    "color": "#e9d180",
+    "description": "明黄扁身与眼部黑带",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "napoleonfish": {
+    "name": "苏眉鱼",
+    "englishName": "Napoleonfish",
+    "model": "napoleonfish",
+    "length": 2.35,
+    "profile": "standard",
+    "color": "#6fafa6",
+    "description": "蓝绿巨身与额头隆起",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "Fin_l",
+      "Fin_r"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "zebra-turkeyfish": {
+    "name": "狮子鱼",
+    "englishName": "Zebra turkeyfish",
+    "model": "zebra-turkeyfish",
+    "length": 1.05,
+    "profile": "standard",
+    "color": "#c79d8c",
+    "description": "红白条纹与展开的羽状胸鳍",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin_a",
+      "Fin_b",
+      "Fin_c"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "blowfish": {
+    "name": "河豚",
+    "englishName": "Blowfish",
+    "model": "blowfish",
+    "length": 0.85,
+    "profile": "standard",
+    "color": "#c4c29c",
+    "description": "浅色腹部与深色圆点",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "fin_l",
+      "fin_r"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "puffer-fish": {
+    "name": "刺豚",
+    "englishName": "Puffer fish",
+    "model": "puffer-fish",
+    "length": 0.95,
+    "profile": "standard",
+    "color": "#d4ba83",
+    "description": "金褐斑点与短刺覆盖全身",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "fin_l",
+      "fin_r"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "anchovy": {
+    "name": "凤尾鱼",
+    "englishName": "Anchovy",
+    "model": "anchovy",
+    "length": 0.6,
+    "profile": "standard",
+    "color": "#a9cece",
+    "description": "银蓝纺锤形小鱼",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "horse-mackerel": {
+    "name": "竹荚鱼",
+    "englishName": "Horse mackerel",
+    "model": "horse-mackerel",
+    "length": 0.8,
+    "profile": "standard",
+    "color": "#b9ceba",
+    "description": "银白侧线与黄绿色鳍缘",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "barred-knifejaw": {
+    "name": "条石鲷",
+    "englishName": "Barred knifejaw",
+    "model": "barred-knifejaw",
+    "length": 1.05,
+    "profile": "standard",
+    "color": "#c0c3b3",
+    "description": "银色侧身带粗黑竖条",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "sea-bass": {
+    "name": "鲈鱼",
+    "englishName": "Sea bass",
+    "model": "sea-bass",
+    "length": 1.8,
+    "profile": "standard",
+    "color": "#a4b8ac",
+    "description": "银绿背部与宽大尾鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "red-snapper": {
+    "name": "鲷鱼",
+    "englishName": "Red snapper",
+    "model": "red-snapper",
+    "length": 1.35,
+    "profile": "standard",
+    "color": "#df9693",
+    "description": "粉红鳞片与淡金眼圈",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "dab": {
+    "name": "鲽鱼",
+    "englishName": "Dab",
+    "model": "dab",
+    "length": 1.05,
+    "profile": "flat",
+    "color": "#b7a98e",
+    "description": "贴近底部的扁平褐色身体",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 3.5,
+    "amplitude": 0.12,
+    "finAmplitude": 0.12
+  },
+  "olive-flounder": {
+    "name": "比目鱼",
+    "englishName": "Olive flounder",
+    "model": "olive-flounder",
+    "length": 1.9,
+    "profile": "flat",
+    "color": "#9eaa8d",
+    "description": "橄榄色扁身与波浪鳍缘",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 3.5,
+    "amplitude": 0.12,
+    "finAmplitude": 0.12
+  },
+  "squid": {
+    "name": "鱿鱼",
+    "englishName": "Squid",
+    "model": "squid",
+    "length": 1.2,
+    "profile": "squid",
+    "color": "#ddd5bb",
+    "description": "半透明长筒身体与柔软触腕",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "FinAL",
+      "FinAR",
+      "FinBL",
+      "FinBR",
+      "FinCL",
+      "FinCR"
+    ],
+    "frequency": 3.8,
+    "amplitude": 0.08,
+    "finAmplitude": 0.16
+  },
+  "moray-eel": {
+    "name": "裸胸鳝",
+    "englishName": "Moray eel",
+    "model": "moray-eel",
+    "length": 2.25,
+    "profile": "eel",
+    "color": "#b8a67b",
+    "description": "细长斑纹身体与起伏背鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g"
+    ],
+    "fins": [],
+    "frequency": 3.6,
+    "amplitude": 0.3,
+    "finAmplitude": 0.1
+  },
+  "ribbon-eel": {
+    "name": "五彩鳗",
+    "englishName": "Ribbon eel",
+    "model": "ribbon-eel",
+    "length": 1.9,
+    "profile": "eel",
+    "color": "#6b9ac4",
+    "description": "蓝色丝带身体配亮黄鳍缘",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h"
+    ],
+    "fins": [],
+    "frequency": 3.6,
+    "amplitude": 0.3,
+    "finAmplitude": 0.1
+  },
+  "tuna": {
+    "name": "金枪鱼",
+    "englishName": "Tuna",
+    "model": "tuna",
+    "length": 2.6,
+    "profile": "standard",
+    "color": "#9baebc",
+    "description": "蓝灰流线身体与镰刀形黄鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "blue-marlin": {
+    "name": "旗鱼",
+    "englishName": "Blue marlin",
+    "model": "blue-marlin",
+    "length": 3.05,
+    "profile": "standard",
+    "color": "#9cacbd",
+    "description": "长剑状上颌与高背鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "giant-trevally": {
+    "name": "白面弄鱼",
+    "englishName": "Giant trevally",
+    "model": "giant-trevally",
+    "length": 2.05,
+    "profile": "standard",
+    "color": "#b3c5b9",
+    "description": "宽阔银身与叉形尾鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "mahi-mahi": {
+    "name": "鬼头刀",
+    "englishName": "Mahi-mahi",
+    "model": "mahi-mahi",
+    "length": 2.35,
+    "profile": "standard",
+    "color": "#a0c795",
+    "description": "亮绿金色侧身与高额头",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "ocean-sunfish": {
+    "name": "翻车鱼",
+    "englishName": "Ocean sunfish",
+    "model": "ocean-sunfish",
+    "length": 2.65,
+    "profile": "standard",
+    "color": "#a6bfca",
+    "description": "圆盘状大身体与高耸背腹鳍",
+    "spine": [
+      "a"
+    ],
+    "fins": [
+      "Fin",
+      "down_Fin",
+      "up_Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.025,
+    "finAmplitude": 0.28
+  },
+  "ray": {
+    "name": "鳐鱼",
+    "englishName": "Ray",
+    "model": "ray",
+    "length": 1.85,
+    "profile": "ray",
+    "color": "#acac93",
+    "description": "菱形宽鳍与细长鞭尾",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "Fin_f",
+      "Fin_g",
+      "Fin_h",
+      "Fin_i"
+    ],
+    "frequency": 3.2,
+    "amplitude": 0.08,
+    "finAmplitude": 0.24
+  },
+  "saw-shark": {
+    "name": "锯鲨",
+    "englishName": "Saw shark",
+    "model": "saw-shark",
+    "length": 3.25,
+    "profile": "shark",
+    "color": "#acc5bd",
+    "description": "锯齿长吻与低伏流线身体",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 2.8,
+    "amplitude": 0.15,
+    "finAmplitude": 0.1
+  },
+  "hammerhead-shark": {
+    "name": "双髻鲨",
+    "englishName": "Hammerhead shark",
+    "model": "hammerhead-shark",
+    "length": 3.35,
+    "profile": "shark",
+    "color": "#9cbac2",
+    "description": "锤形宽头与高直背鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e"
+    ],
+    "fins": [],
+    "frequency": 2.8,
+    "amplitude": 0.15,
+    "finAmplitude": 0.1
+  },
+  "great-white-shark": {
+    "name": "鲨鱼",
+    "englishName": "Great white shark",
+    "model": "great-white-shark",
+    "length": 3.65,
+    "profile": "shark",
+    "color": "#aac0c7",
+    "description": "蓝灰背部与雪白腹部",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [],
+    "frequency": 2.8,
+    "amplitude": 0.15,
+    "finAmplitude": 0.1
+  },
+  "whale-shark": {
+    "name": "鲸鲨",
+    "englishName": "Whale shark",
+    "model": "whale-shark",
+    "length": 4.3,
+    "profile": "shark",
+    "color": "#91b5c9",
+    "description": "宽阔头部与星点斑纹",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e"
+    ],
+    "fins": [
+      "fin_l",
+      "fin_r"
+    ],
+    "frequency": 2.8,
+    "amplitude": 0.15,
+    "finAmplitude": 0.1
+  },
+  "suckerfish": {
+    "name": "吸盘鱼",
+    "englishName": "Suckerfish",
+    "model": "suckerfish",
+    "length": 1.65,
+    "profile": "standard",
+    "color": "#a3afad",
+    "description": "深灰长身与头顶椭圆吸盘",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "Fin_down",
+      "Fin_up"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "football-fish": {
+    "name": "灯笼鱼",
+    "englishName": "Football fish",
+    "model": "football-fish",
+    "length": 1.45,
+    "profile": "standard",
+    "color": "#aaa083",
+    "description": "圆厚深色身体与发光诱饵",
+    "spine": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fins": [
+      "Fin"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "oarfish": {
+    "name": "皇带鱼",
+    "englishName": "Oarfish",
+    "model": "oarfish",
+    "length": 3.45,
+    "profile": "eel",
+    "color": "#d8babd",
+    "description": "银色丝带长身与朱红背鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "Fin_a",
+      "Fin_down",
+      "Fin_up",
+      "Fin_b",
+      "Fin_c",
+      "Fin_d",
+      "Fin_e",
+      "Fin_f",
+      "Fin_g"
+    ],
+    "frequency": 3.6,
+    "amplitude": 0.3,
+    "finAmplitude": 0.1
+  },
+  "barreleye": {
+    "name": "太平洋桶眼鱼",
+    "englishName": "Barreleye",
+    "model": "barreleye",
+    "length": 1.05,
+    "profile": "standard",
+    "color": "#b9d2bf",
+    "description": "透明头罩内有明绿管状眼睛",
+    "spine": [
+      "a",
+      "b"
+    ],
+    "fins": [
+      "Fin_a",
+      "Fin_b",
+      "Fin_c"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  },
+  "coelacanth": {
+    "name": "矛尾鱼",
+    "englishName": "Coelacanth",
+    "model": "coelacanth",
+    "length": 2.5,
+    "profile": "standard",
+    "color": "#9daea7",
+    "description": "古老鳞甲与肉质成对鳍",
+    "spine": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "fins": [
+      "Fin_a",
+      "Fin_b",
+      "Fin_c",
+      "Fin_d"
+    ],
+    "frequency": 4.5,
+    "amplitude": 0.24,
+    "finAmplitude": 0.1
+  }
+}

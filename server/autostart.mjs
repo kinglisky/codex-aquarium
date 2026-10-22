@@ -29,7 +29,7 @@ export async function configureAutostart(action, {
   }
   const directory = path.resolve(env.AQUARIUM_DATA_DIR || path.join(env.CODEX_HOME || path.join(home, ".codex"), "codex-aquarium"));
   const environment = {
-    PATH: env.PATH || "/usr/bin:/bin:/usr/sbin:/sbin",
+    PATH: `${path.dirname(node)}${path.delimiter}${env.PATH || "/usr/bin:/bin:/usr/sbin:/sbin"}`,
     CODEX_HOME: path.resolve(env.CODEX_HOME || path.join(home, ".codex")),
     AQUARIUM_DATA_DIR: directory,
   };

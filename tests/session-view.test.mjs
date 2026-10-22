@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createState } from "../server/state.mjs";
 import { sanitizeHook } from "../server/events.mjs";
-import { FISH_TYPES, isActiveSession, hashSeed, speciesForSession } from "../src/sessions.ts";
+import { FISH_TYPES, LEADER_FISH_TYPES, isActiveSession, hashSeed, speciesForSession, speciesForExhibit } from "../src/sessions.ts";
 
 test("only thinking, working and waiting sessions enter the aquarium", () => {
   const statuses = ["thinking", "working", "waiting", "idle", "interrupted", "stale"];
@@ -65,10 +65,17 @@ test("a fish keeps its species and appearance seed across hiding, resuming and s
   assert.equal(visible(1500 + 31 * 60_000).length, 0);
 });
 
-test("session identity is independent of order and includes all ten fish species", () => {
-  const ids = Array.from({ length: 200 }, (_, index) => `session-${index}`);
+test("session identity is independent of order and uses the medium and large fish pool", () => {
+  const ids = Array.from({ length: 1600 }, (_, index) => `session-${index}`);
   const expected = new Map(ids.map(id => [id, speciesForSession(id)]));
   for (const id of ids.toReversed()) assert.equal(speciesForSession(id), expected.get(id));
+  assert.deepEqual(new Set(expected.values()), new Set(LEADER_FISH_TYPES));
+});
+
+test("exhibit identity remains independent and includes all eighty fish species", () => {
+  const ids = Array.from({ length: 1600 }, (_, index) => `exhibit-${index}`);
+  const expected = new Map(ids.map(id => [id, speciesForExhibit(id)]));
+  for (const id of ids.toReversed()) assert.equal(speciesForExhibit(id), expected.get(id));
   assert.deepEqual(new Set(expected.values()), new Set(FISH_TYPES));
-  assert.equal(new Set(FISH_TYPES).size, 10);
+  assert.equal(new Set(FISH_TYPES).size, 80);
 });

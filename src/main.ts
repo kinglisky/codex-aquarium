@@ -1,19 +1,32 @@
 import "./style.css";
-import type { AquariumSnapshot, AquariumSession, SessionStatus } from "../shared/protocol";
+import type { AquariumSnapshot, AquariumSession } from "../shared/protocol";
 import { ACTIVITY_FISH, createAquarium } from "./aquarium";
-import { FISH_TYPES, isActiveSession, speciesForSession } from "./sessions";
-import { demoSnapshot } from "./demo";
-import type { FishSpecies } from "./fish";
+import { FISH_TYPES, isActiveSession, speciesForExhibit, speciesForSession } from "./sessions";
+import { demoGroup, demoSnapshot, DEMO_GROUP_COUNT, DEMO_GROUP_TICKS } from "./demo";
+import type { MuseumFishSpecies } from "./museum-fish";
 import { MUSEUM_SPECIES } from "./museum-fish";
 import { loadMuseumAssets } from "./museum-assets";
 import { initSwimming } from "./swimming";
+import { APPEARANCE_KEY, COMPANION_CATALOG, DEFAULT_APPEARANCE, filterCompanions, isCompanionId, isPlayerId, parseAppearance, PLAYER_MODELS } from "./museum-characters";
+import type { MuseumAppearance } from "./museum-characters";
+import { DEFAULT_SCENERY_STYLE, SCENERY_KEY, SCENERY_PRESETS, parseSceneryStyle } from "./scenery-presets";
+import type { SceneryStyle } from "./scenery-presets";
+import { createSceneryPreviews } from "./scenery-previews";
+import { LOCALE_KEY, resolveLocale, translate } from "./i18n";
+import type { MessageKey, MessageValues } from "./i18n";
+import { companionName, companionSpeciesName, fishDescription, fishName, playerName, sceneryCopy } from "./catalog-i18n";
 
-const FISH_ROLE: Record<FishSpecies, string> = {
-  neon: "阅读与检索", guppy: "其他工具", betta: "子 Agent", swordtail: "写入与编辑",
-  rainbow: "网页与浏览器", golden: "终端与命令", blacktail: "会话主鱼",
-  cardinal: "会话主鱼", tiger: "会话主鱼", zebra: "会话主鱼",
-};
-const STATUS: Record<SessionStatus, string> = { thinking: "思考中", working: "执行中", waiting: "等待您", idle: "休息中", interrupted: "已中断", stale: "状态过期" };
+const browserLanguages = navigator.languages.length ? navigator.languages : [navigator.language];
+let locale = resolveLocale(null, browserLanguages);
+try { locale = resolveLocale(localStorage.getItem(LOCALE_KEY), browserLanguages); }
+catch { /* 无法读取本地存储时，跟随浏览器语言。 */ }
+function t(key: MessageKey, values?: MessageValues) { return translate(locale, key, values); }
+function renderDocumentLanguage() {
+  document.documentElement.lang = locale;
+  document.title = t("pageTitle");
+  document.querySelector<HTMLMetaElement>('meta[name="description"]')?.setAttribute("content", t("pageDescription"));
+}
+renderDocumentLanguage();
 const icons = {
   waves: '<path d="M2 8c3-3 5 3 8 0s5 3 8 0M2 13c3-3 5 3 8 0s5 3 8 0"/>',
   pause: '<path d="M7 5v14M17 5v14"/>',
@@ -27,9 +40,16 @@ const icons = {
   close: '<path d="m6 6 12 12M6 18 18 6"/>',
 };
 function icon(name: keyof typeof icons) { return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`; }
-function fishIcon(species: FishSpecies) {
-  const tails: Record<FishSpecies, string> = { neon: "M12 16 3 11 5 17 3 22Z", guppy: "M13 16 2 7 1 17 3 26Z", betta: "M15 17 6 5 1 7 3 14 0 19 5 28 14 23Z", swordtail: "M12 16 3 11 5 18 0 29 13 21Z", rainbow: "M12 16 3 10 6 18 3 25Z", golden: "M12 16 3 12 7 18 3 23Z", blacktail: "M12 16 2 8 6 18 3 24Z", cardinal: "M12 16 3 12 6 18 3 23Z", tiger: "M12 16 3 10 7 18 3 26Z", zebra: "M12 16 2 11 6 18 2 24Z" };
-  return `<svg class="fish-symbol fish-${species}" viewBox="0 0 44 34" aria-hidden="true" style="color:${MUSEUM_SPECIES[species].color}"><path d="${tails[species]}" fill="currentColor" opacity=".6"/><path d="M9 18Q24 5 39 17Q25 29 9 18Z" fill="currentColor"/><path d="m19 13 6-8 4 8m-11 9 7 6 4-6" fill="currentColor" opacity=".65"/><circle cx="34" cy="16" r="1.2" fill="#0a2031"/></svg>`;
+function fishIcon(species: MuseumFishSpecies) {
+  const { color, profile } = MUSEUM_SPECIES[species];
+  const silhouettes: Record<string, string> = {
+    eel: "M6 21Q18 6 37 13Q27 15 21 20T6 21Z",
+    ray: "m5 18 16-13 13 11 7 2-11 2-8 10-9-9Z",
+    seahorse: "M24 6q12 0 9 8l-6 1q-5 8 1 10t-5 5q-8-4-7-11l3-7Z",
+    shark: "m6 17-5-9 12 5 8-9 3 9q10 0 16 5-10 7-24 3l-11 7Z",
+  };
+  const body = silhouettes[profile] ?? "m11 17-9-7 3 8-3 7 10-5q15 9 28-3-14-12-29 0Z";
+  return `<svg class="fish-symbol fish-${species}" viewBox="0 0 44 34" aria-hidden="true" style="color:${color}"><path d="${body}" fill="currentColor"/><circle cx="33" cy="16" r="1" fill="#0a2031"/></svg>`;
 }
 function escapeHtml(value: string) { return value.replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character] ?? character); }
 function required<T extends Element>(selector: string): T {
@@ -38,33 +58,69 @@ function required<T extends Element>(selector: string): T {
   return element;
 }
 
+function showStatus(element: HTMLElement, key: MessageKey) {
+  element.hidden = false;
+  element.dataset.i18n = key;
+  element.textContent = t(key);
+}
+
+let appearance: MuseumAppearance = { ...DEFAULT_APPEARANCE };
+try { appearance = parseAppearance(JSON.parse(localStorage.getItem(APPEARANCE_KEY) ?? "null")); }
+catch { /* 浏览器禁用本地存储时，仍可选择本次逛馆的搭配。 */ }
+let sceneryStyle: SceneryStyle = DEFAULT_SCENERY_STYLE;
+try { sceneryStyle = parseSceneryStyle(localStorage.getItem(SCENERY_KEY)); }
+catch { /* 无法读取本地存储时，使用默认造景。 */ }
+
+function sceneryCard(style: SceneryStyle) {
+  const { name, description } = sceneryCopy(style, locale);
+  return `<label class="scenery-option"><input type="radio" name="scenery" value="${style}" ${sceneryStyle === style ? "checked" : ""}><span class="scenery-card"><img data-scenery-preview="${style}" alt="" width="320" height="180" decoding="async" hidden><span class="scenery-copy"><strong data-scenery-name="${style}">${escapeHtml(name)}</strong><span data-scenery-description="${style}">${escapeHtml(description)}</span></span><span class="scenery-check" aria-hidden="true">✓</span></span></label>`;
+}
+
+function characterCard(group: keyof MuseumAppearance, id: string, name: string, portrait = `portraits/${id}`) {
+  const preview = id === "none" ? `<span class="character-empty">${icon("walk")}</span>` : `<img src="/models/acnh/${escapeHtml(portrait)}.png" alt="" width="256" height="300" loading="lazy" decoding="async">`;
+  return `<label class="character-option"><input type="radio" name="${group}" value="${escapeHtml(id)}" ${appearance[group] === id ? "checked" : ""}><span class="character-card">${preview}<span class="character-name" data-character-group="${group}" data-character-id="${escapeHtml(id)}">${escapeHtml(name)}</span><span class="character-check" aria-hidden="true">✓</span></span></label>`;
+}
+
+function fishGuide() {
+  return FISH_TYPES.map(species => `<div class="guide-entry" title="${escapeHtml(fishDescription(species, locale))}">${fishIcon(species)}<span>${escapeHtml(fishName(species, locale))}${locale === "zh-CN" ? `<small>${escapeHtml(MUSEUM_SPECIES[species].englishName)}</small>` : ""}</span></div>`).join("");
+}
+
+const companionSpecies = [...new Set(COMPANION_CATALOG.map(model => model.species))].sort((a, b) => a.localeCompare(b, "zh-CN"));
+
 required<HTMLDivElement>("#app").innerHTML = `
   <main class="workspace">
-    <section class="aquarium-panel" aria-label="实时海洋馆">
+    <section class="aquarium-panel" data-i18n-label="aquarium" aria-label="${t("aquarium")}">
       <div id="viewport"></div>
       <header class="app-header">
-        <a class="brand" href="/" aria-label="Codex Aquarium 首页"><span class="brand-mark">${icon("waves")}</span><span>泊<span class="brand-subtitle">海洋馆</span></span></a>
-        <div class="header-actions"><div id="connection" class="connection" role="status"><span class="status-dot"></span><span>连接中</span></div>
-        <div class="mode-control" role="group" aria-label="数据来源"><button id="live-mode" class="active" aria-pressed="true">实时</button><button id="demo-mode" aria-pressed="false">演示</button></div>
-        <button id="guide-toggle" class="guide-toggle" aria-expanded="false" aria-controls="museum-guide">${icon("book")}<span>展厅手册</span></button></div>
+        <div class="header-actions"><div id="connection" class="connection" role="status"><span class="status-dot"></span><span>${t("connecting")}</span></div>
+        <div class="mode-control" role="group" data-i18n-label="source" aria-label="${t("source")}"><button id="live-mode" class="active" aria-pressed="true" data-i18n="live">${t("live")}</button><button id="demo-mode" aria-pressed="false" data-i18n="demo">${t("demo")}</button></div>
+        <button id="demo-next" class="guide-toggle" hidden>${t("nextGroup", { group: 1, total: DEMO_GROUP_COUNT })}</button>
+        <select id="language" class="language-control" data-i18n-label="language" aria-label="${t("language")}"><option value="zh-CN" lang="zh-CN" ${locale === "zh-CN" ? "selected" : ""}>中文</option><option value="en" lang="en" ${locale === "en" ? "selected" : ""}>English</option></select>
+        <button id="guide-toggle" class="guide-toggle" data-i18n-label="guide" aria-label="${t("guide")}" aria-expanded="false" aria-controls="museum-guide">${icon("book")}<span data-i18n="guide">${t("guide")}</span></button></div>
       </header>
-      <div class="scene-title"><h1>远洋展厅</h1><p>一个会话，一位海洋来客。</p></div>
-      <div id="demo-notice" class="demo-notice" hidden>演示鱼群<span>模拟会话，不影响真实状态</span></div>
-      <div id="empty-state" class="empty-state" hidden><h2>海洋馆，正在等你。</h2><p>在 Codex 中开始一项任务，鱼就会游进来。</p><button id="empty-demo" class="text-button">看看演示鱼群 ${icon("arrow")}</button></div>
-      <div id="offline-note" class="offline-note" hidden>连接已断开，鱼群暂时停留。请确认本地服务仍在运行。</div>
+      <div id="offline-note" class="offline-note" data-i18n="offlineNote" hidden>${t("offlineNote")}</div>
       <div class="scene-footer">
-        <div class="gallery-caption"><span class="gallery-line"></span><p>在这里，慢慢看。<small>拖动观察 · 滚轮靠近 · 点鱼查看会话</small></p></div>
-        <div class="visitor-controls" role="group" aria-label="沿玻璃散步"><button id="walk-left" aria-label="向左散步">${icon("arrow")}</button><span>${icon("walk")}<span>散步<small>A / D 或方向键</small></span></span><button id="walk-right" aria-label="向右散步">${icon("arrow")}</button></div>
-        <div class="scene-controls"><button id="near-view" title="靠近玻璃" aria-label="靠近玻璃" aria-pressed="false">${icon("waves")}</button><button id="reset-view" title="恢复视角" aria-label="恢复视角">${icon("reset")}</button><button id="pause" title="暂停游动" aria-label="暂停游动" aria-pressed="false">${icon("pause")}</button><button id="immersive" title="进入全屏" aria-label="进入全屏" aria-pressed="false">${icon("expand")}</button></div>
+        <p class="operation-hint" data-i18n="operationHint">${t("operationHint")}</p>
+        <div class="visitor-controls" role="group" data-i18n-label="runAlongGlass" aria-label="${t("runAlongGlass")}"><button id="walk-left" data-i18n-label="runLeft" aria-label="${t("runLeft")}">${icon("arrow")}</button><span>${icon("walk")}<span><span data-i18n="run">${t("run")}</span><small data-i18n="runKeys">${t("runKeys")}</small></span></span><button id="walk-right" data-i18n-label="runRight" aria-label="${t("runRight")}">${icon("arrow")}</button></div>
+        <div class="scene-controls"><button id="near-view" title="${t("nearView")}" aria-label="${t("nearView")}" aria-pressed="false">${icon("waves")}</button><button id="reset-view" data-i18n-title="resetView" data-i18n-label="resetView" title="${t("resetView")}" aria-label="${t("resetView")}">${icon("reset")}</button><button id="pause" title="${t("pause")}" aria-label="${t("pause")}" aria-pressed="false">${icon("pause")}</button><button id="immersive" title="${t("enterFullscreen")}" aria-label="${t("enterFullscreen")}" aria-pressed="false">${icon("expand")}</button></div>
       </div>
       <p id="fullscreen-notice" class="fullscreen-notice" role="status" hidden></p>
-      <aside id="museum-guide" class="sidebar" aria-label="展厅手册" hidden>
-        <div class="guide-heading"><div><h2>展厅手册</h2><p>正在发生的协作，都在这片海里。</p></div><button id="guide-close" class="icon-button" aria-label="收起展厅手册">${icon("close")}</button></div>
+      <aside id="museum-guide" class="sidebar" data-i18n-label="guide" aria-label="${t("guide")}" hidden>
+        <div class="guide-heading"><h2 data-i18n="guide">${t("guide")}</h2><button id="guide-close" class="icon-button" data-i18n-label="closeGuide" aria-label="${t("closeGuide")}">${icon("close")}</button></div>
         <section id="detail" class="detail" hidden aria-live="polite"></section>
-        <section class="session-section"><div class="section-title"><h2>此刻的来客</h2><span id="session-total">0 个活跃会话</span></div><div class="summary"><span><strong id="main-count">0</strong>只主鱼</span><span><strong id="activity-count">0</strong>只随行鱼</span></div><div id="session-list" class="session-list"></div><p id="session-empty" class="quiet-note">只展示正在执行或等待审批的会话。任务结束后离开，再次开始时还是原来那只鱼。</p></section>
-        <section class="settings"><div class="section-title"><h2>展厅光景</h2></div><label for="light">灯光<span id="light-value">100%</span></label><input id="light" type="range" min="45" max="140" value="100"><label for="flow">水流<span id="flow-value">轻柔</span></label><input id="flow" type="range" min="0" max="180" value="80"></section>
-        <section class="field-guide"><div class="section-title"><h2>海洋图鉴</h2><span>${FISH_TYPES.length} 种鱼</span></div><div class="fish-guide">${FISH_TYPES.map(species => `<div class="guide-entry" title="${MUSEUM_SPECIES[species].description}">${fishIcon(species)}<span>${MUSEUM_SPECIES[species].name}<small>${FISH_ROLE[species]}</small></span></div>`).join("")}</div><p class="quiet-note">《集合啦！动物森友会》鱼类模型与贴图，配合程序化游动。大鱼代表会话，小鱼代表工具或子 Agent。</p></section>
-        <footer class="sidebar-footer"><span class="privacy-dot"></span>只在本机，安静地陪您工作</footer>
+        <section class="session-section"><div class="section-title"><h2 data-i18n="visitors">${t("visitors")}</h2><span id="session-total">${t("activeSessions", { count: 0 })}</span></div><div class="summary"><span><strong id="main-count">0</strong><span data-i18n="mainFish">${t("mainFish")}</span></span><span><strong id="activity-count">0</strong><span data-i18n="followerFish">${t("followerFish")}</span></span></div><div id="session-list" class="session-list"></div><p id="session-empty" class="quiet-note" data-i18n="emptySessions">${t("emptySessions")}</p></section>
+        <section class="scenery-settings"><fieldset id="scenery-presets"><legend data-i18n="scenery">${t("scenery")}</legend><div class="scenery-grid">${(Object.keys(SCENERY_PRESETS) as SceneryStyle[]).map(sceneryCard).join("")}</div></fieldset><p id="scenery-status" class="quiet-note" role="status" hidden></p></section>
+        <section class="appearance-settings"><div class="section-title"><h2 data-i18n="appearance">${t("appearance")}</h2></div>
+          <fieldset id="player-models"><legend data-i18n="player">${t("player")}</legend><div class="character-grid player-grid">${Object.keys(PLAYER_MODELS).filter(isPlayerId).map(id => characterCard("player", id, playerName(id, locale))).join("")}</div></fieldset>
+          <fieldset id="companion-models"><legend data-i18n="companion">${t("companion")}</legend>
+            <div class="companion-filters"><label for="companion-search" data-i18n="searchCompanions">${t("searchCompanions")}</label><input id="companion-search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="${t("searchPlaceholder")}" aria-controls="companion-grid"><label for="companion-species" data-i18n="species">${t("species")}</label><select id="companion-species" aria-controls="companion-grid"><option value="" data-i18n="allSpecies">${t("allSpecies")}</option>${companionSpecies.map(species => `<option value="${escapeHtml(species)}">${escapeHtml(companionSpeciesName(species, locale))}</option>`).join("")}</select></div>
+            <p id="companion-current" class="quiet-note"></p><p id="companion-results" class="quiet-note" role="status"></p>
+            <div id="companion-grid" class="character-grid"></div><button id="companion-more" class="companion-more" type="button" aria-controls="companion-grid" data-i18n="loadMore" hidden>${t("loadMore")}</button>
+          </fieldset>
+          <p id="appearance-status" class="quiet-note" role="status" hidden></p>
+        </section>
+        <section class="settings"><div class="section-title"><h2 data-i18n="atmosphere">${t("atmosphere")}</h2></div><label for="light"><span data-i18n="light">${t("light")}</span><span id="light-value">100%</span></label><input id="light" type="range" min="45" max="140" value="100"><label for="flow"><span data-i18n="flow">${t("flow")}</span><span id="flow-value">${t("gentle")}</span></label><input id="flow" type="range" min="0" max="180" value="80"></section>
+        <section class="field-guide"><div class="section-title"><h2 data-i18n="fieldGuide">${t("fieldGuide")}</h2><span id="fish-total">${t("fishTotal", { count: FISH_TYPES.length })}</span></div><div class="fish-guide">${fishGuide()}</div></section>
       </aside>
     </section>
   </main>`;
@@ -89,8 +145,8 @@ function renderDetail() {
   const session = selectedSession();
   detail.hidden = !session;
   if (!session) return;
-  const species = speciesForSession(session.id);
-  detail.innerHTML = `<div class="detail-heading"><span style="color:${MUSEUM_SPECIES[species].color}">${MUSEUM_SPECIES[species].name}</span><button id="close-detail" class="icon-button" aria-label="收起会话详情">${icon("close")}</button></div><h3>${escapeHtml(session.label)}</h3><p class="detail-status"><span class="status-dot status-${session.status}"></span>${STATUS[session.status]}</p><div class="activity-list">${session.activities.length ? session.activities.map((activity) => `<div class="activity-row">${fishIcon(ACTIVITY_FISH[activity.category])}<span>${escapeHtml(activity.label)}<small>${activity.kind === "agent" ? "子 Agent" : "工具"} · ${activity.status === "waiting" ? "等待中" : "正在执行"}</small></span></div>`).join("") : '<p class="quiet-note">此刻没有正在执行的工具或子 Agent。</p>'}</div>`;
+  const species = mode === "demo" ? speciesForExhibit(session.id) : speciesForSession(session.id);
+  detail.innerHTML = `<div class="detail-heading"><span style="color:${MUSEUM_SPECIES[species].color}">${escapeHtml(fishName(species, locale))}</span><button id="close-detail" class="icon-button" aria-label="${t("closeDetail")}">${icon("close")}</button></div><h3>${escapeHtml(session.label)}</h3><p class="detail-status"><span class="status-dot status-${session.status}"></span>${t(session.status)}</p><div class="activity-list">${session.activities.length ? session.activities.map((activity) => `<div class="activity-row">${fishIcon(ACTIVITY_FISH[activity.category])}<span>${escapeHtml(activity.label)}<small>${t(activity.kind === "agent" ? "agent" : "tool")} · ${t(activity.status === "waiting" ? "activityWaiting" : "activityRunning")}</small></span></div>`).join("") : `<p class="quiet-note">${t("noActivities")}</p>`}</div>`;
   required<HTMLButtonElement>("#close-detail").addEventListener("click", () => selectSession(null));
   if (preserveFocus) required<HTMLButtonElement>("#close-detail").focus({ preventScroll: true });
 }
@@ -110,10 +166,9 @@ function selectSession(id: string | null) {
 }
 
 function renderConnection() {
-  const label = { connecting: "连接中", connected: "本地已连接", offline: "连接已断开" }[connection];
   const element = required<HTMLElement>("#connection");
   element.className = `connection ${mode === "demo" ? "demo" : connection}`;
-  element.innerHTML = `<span class="status-dot"></span><span>${mode === "demo" ? "演示中" : label}</span>`;
+  element.innerHTML = `<span class="status-dot"></span><span>${t(mode === "demo" ? "demoConnection" : connection)}</span>`;
   required<HTMLElement>("#offline-note").hidden = mode === "demo" || connection !== "offline";
   aquarium?.setDisconnected(mode === "live" && connection !== "connected");
 }
@@ -121,20 +176,37 @@ function renderConnection() {
 function renderSnapshot(value: AquariumSnapshot) {
   const sessions = value.sessions.filter(isActiveSession);
   shownSnapshot = { ...value, sessions };
-  aquarium?.setSessions(sessions);
+  renderAquariumSessions();
+  renderSessionList();
+}
+
+function renderAquariumSessions() {
+  aquarium?.setSessions(shownSnapshot.sessions, mode === "demo");
+}
+
+function renderSessionList() {
+  const { sessions } = shownSnapshot;
   const activities = sessions.reduce((total, session) => total + session.activities.length, 0);
   required<HTMLElement>("#main-count").textContent = String(sessions.length);
   required<HTMLElement>("#activity-count").textContent = String(activities);
-  required<HTMLElement>("#session-total").textContent = `${sessions.length} 个活跃会话`;
+  required<HTMLElement>("#session-total").textContent = t(sessions.length === 1 ? "activeSession" : "activeSessions", { count: sessions.length });
   required<HTMLElement>("#session-empty").hidden = sessions.length > 0;
-  required<HTMLElement>("#empty-state").hidden = sessions.length > 0;
   const list = required<HTMLElement>("#session-list");
   const focusedId = document.activeElement instanceof HTMLButtonElement ? document.activeElement.dataset.session : undefined;
-  list.innerHTML = sessions.map((session) => `<button class="session-row" data-session="${escapeHtml(session.id)}" aria-pressed="${session.id === selectedId}">${fishIcon(speciesForSession(session.id))}<span class="session-copy"><strong>${escapeHtml(session.label)}</strong><span><i class="status-dot status-${session.status}"></i>${STATUS[session.status]}${session.activities.length ? `<span class="follower-count">+${session.activities.length} 随行</span>` : ""}</span></span>${icon("arrow")}</button>`).join("");
+  list.innerHTML = sessions.map((session) => `<button class="session-row" data-session="${escapeHtml(session.id)}" aria-pressed="${session.id === selectedId}">${fishIcon((mode === "demo" ? speciesForExhibit : speciesForSession)(session.id))}<span class="session-copy"><strong>${escapeHtml(session.label)}</strong><span><i class="status-dot status-${session.status}"></i>${t(session.status)}${session.activities.length ? `<span class="follower-count">${t("followers", { count: session.activities.length })}</span>` : ""}</span></span>${icon("arrow")}</button>`).join("");
   for (const button of list.querySelectorAll<HTMLButtonElement>(".session-row")) button.addEventListener("click", () => selectSession(button.dataset.session ?? null));
   if (focusedId) [...list.querySelectorAll<HTMLButtonElement>(".session-row")].find((button) => button.dataset.session === focusedId)?.focus({ preventScroll: true });
   if (selectedId && !selectedSession()) selectSession(null);
   renderDetail();
+}
+
+function renderDemo() {
+  renderDemoGroup();
+  renderSnapshot(demoSnapshot(demoTick, locale));
+}
+
+function renderDemoGroup() {
+  required<HTMLButtonElement>("#demo-next").textContent = t("nextGroup", { group: demoGroup(demoTick) + 1, total: DEMO_GROUP_COUNT });
 }
 
 function setMode(value: "live" | "demo") {
@@ -142,22 +214,22 @@ function setMode(value: "live" | "demo") {
   clearInterval(demoTimer);
   demoTimer = undefined;
   selectSession(null);
-  required<HTMLElement>("#demo-notice").hidden = mode !== "demo";
   for (const name of ["live", "demo"] as const) {
     const button = required<HTMLButtonElement>(`#${name}-mode`);
     button.classList.toggle("active", mode === name);
     button.setAttribute("aria-pressed", String(mode === name));
   }
   renderConnection();
+  required<HTMLButtonElement>("#demo-next").hidden = mode !== "demo";
   if (mode === "live") {
     renderSnapshot(snapshot);
     return;
   }
-  renderSnapshot(demoSnapshot(demoTick));
+  renderDemo();
   demoTimer = setInterval(() => {
     if (paused) return;
     demoTick += 1;
-    renderSnapshot(demoSnapshot(demoTick));
+    renderDemo();
   }, 2400);
 }
 
@@ -165,43 +237,172 @@ function renderPause() {
   const button = required<HTMLButtonElement>("#pause");
   button.innerHTML = icon(paused ? "play" : "pause");
   button.setAttribute("aria-pressed", String(paused));
-  button.setAttribute("aria-label", paused ? "继续游动" : "暂停游动");
-  button.title = paused ? "继续游动" : "暂停游动";
+  button.setAttribute("aria-label", t(paused ? "resume" : "pause"));
+  button.title = t(paused ? "resume" : "pause");
   aquarium?.setPaused(paused);
 }
 
-try {
-  required<HTMLElement>("#viewport").innerHTML = '<div class="render-error" role="status"><p>正在迎接海洋来客…</p></div>';
-  await initSwimming();
-  const assets = await loadMuseumAssets();
-  required<HTMLElement>("#viewport").replaceChildren();
+async function initializeAquarium() {
   try {
-    aquarium = createAquarium(required<HTMLElement>("#viewport"), selectSession, assets);
+    required<HTMLElement>("#viewport").innerHTML = `<div class="render-error" role="status"><p data-i18n="loadingModels">${t("loadingModels")}</p></div>`;
+    await initSwimming();
+    const assets = await loadMuseumAssets(appearance);
+    if (destroyed) { assets.dispose(); return; }
+    required<HTMLElement>("#viewport").replaceChildren();
+    try {
+      aquarium = createAquarium(required<HTMLElement>("#viewport"), selectSession, assets, sceneryStyle);
+    } catch (error) {
+      assets.dispose();
+      throw error;
+    }
+    aquarium.setLight(required<HTMLInputElement>("#light").valueAsNumber / 100);
+    aquarium.setFlow(required<HTMLInputElement>("#flow").valueAsNumber / 100);
+    aquarium.resetView(nearView);
+    try {
+      const previews = createSceneryPreviews(assets.scenery);
+      for (const image of document.querySelectorAll<HTMLImageElement>("[data-scenery-preview]")) {
+        image.src = previews[parseSceneryStyle(image.dataset.sceneryPreview)];
+        image.hidden = false;
+      }
+    } catch (error) {
+      console.error("无法生成造景预览", error);
+    }
   } catch (error) {
-    assets.dispose();
-    throw error;
+    required<HTMLElement>("#viewport").innerHTML = `<div class="render-error"><h2 data-i18n="renderFailed">${t("renderFailed")}</h2><p data-i18n="renderHelp">${t("renderHelp")}</p></div>`;
+    console.error("鱼缸初始化失败", error);
   }
-} catch (error) {
-  required<HTMLElement>("#viewport").innerHTML = '<div class="render-error"><h2>暂时无法绘制 3D 鱼缸</h2><p>请刷新页面重试，并确认浏览器支持 WebGL 2、已启用硬件加速。展厅手册仍可查看实时会话。</p></div>';
-  console.error("鱼缸初始化失败", error);
 }
 
 required<HTMLButtonElement>("#live-mode").addEventListener("click", () => setMode("live"));
 required<HTMLButtonElement>("#demo-mode").addEventListener("click", () => setMode("demo"));
-required<HTMLButtonElement>("#empty-demo").addEventListener("click", () => setMode("demo"));
 let nearView = false;
 const nearButton = required<HTMLButtonElement>("#near-view");
 function setNearView(value: boolean) {
   nearView = value;
   aquarium?.resetView(value);
-  nearButton.setAttribute("aria-pressed", String(value));
-  nearButton.setAttribute("aria-label", value ? "返回全景" : "靠近玻璃");
-  nearButton.title = value ? "返回全景" : "靠近玻璃";
+  renderNearView();
+}
+function renderNearView() {
+  nearButton.setAttribute("aria-pressed", String(nearView));
+  nearButton.setAttribute("aria-label", t(nearView ? "wideView" : "nearView"));
+  nearButton.title = t(nearView ? "wideView" : "nearView");
 }
 required<HTMLButtonElement>("#reset-view").addEventListener("click", () => setNearView(false));
 nearButton.addEventListener("click", () => setNearView(!nearView));
 required<HTMLButtonElement>("#walk-left").addEventListener("click", () => aquarium?.walk(-1));
 required<HTMLButtonElement>("#walk-right").addEventListener("click", () => aquarium?.walk(1));
+const sceneryChoices = required<HTMLFieldSetElement>("#scenery-presets");
+function renderScenerySelection() {
+  for (const input of sceneryChoices.querySelectorAll<HTMLInputElement>("input")) input.checked = input.value === sceneryStyle;
+}
+sceneryChoices.addEventListener("change", (event) => {
+  const input = event.target;
+  if (!(input instanceof HTMLInputElement) || input.type !== "radio") return;
+  if (!aquarium) { renderScenerySelection(); return; }
+  const next = parseSceneryStyle(input.value);
+  if (next === sceneryStyle) return;
+  const status = required<HTMLElement>("#scenery-status");
+  status.hidden = true;
+  try {
+    aquarium.setScenery(next);
+    sceneryStyle = next;
+    try { localStorage.setItem(SCENERY_KEY, sceneryStyle); }
+    catch { showStatus(status, "sceneryNotSaved"); }
+  } catch (error) {
+    showStatus(status, "sceneryFailed");
+    console.error("切换水箱造景失败", error);
+  }
+  renderScenerySelection();
+});
+const playerChoices = required<HTMLFieldSetElement>("#player-models");
+const companionChoices = required<HTMLFieldSetElement>("#companion-models");
+const companionSearch = required<HTMLInputElement>("#companion-search");
+const companionSpeciesSelect = required<HTMLSelectElement>("#companion-species");
+const companionGrid = required<HTMLElement>("#companion-grid");
+const companionMore = required<HTMLButtonElement>("#companion-more");
+const COMPANION_BATCH_SIZE = 36;
+let shownCompanions = 0;
+function renderCompanionChoices(reset = false) {
+  const models = filterCompanions(companionSearch.value, companionSpeciesSelect.value);
+  const start = reset ? 0 : shownCompanions;
+  shownCompanions = Math.min(start + COMPANION_BATCH_SIZE, models.length);
+  const cards = models.slice(start, shownCompanions).map(model => characterCard("companion", model.id, companionName(model.id, locale), model.portrait)).join("");
+  if (reset) companionGrid.innerHTML = characterCard("companion", "none", companionName("none", locale)) + cards;
+  if (!reset) companionGrid.insertAdjacentHTML("beforeend", cards);
+  companionMore.hidden = shownCompanions >= models.length;
+  renderCompanionResults(models.length);
+  return companionGrid.children[start + 1]?.querySelector<HTMLInputElement>("input");
+}
+function renderCompanionResults(count = filterCompanions(companionSearch.value, companionSpeciesSelect.value).length) {
+  required<HTMLElement>("#companion-results").textContent = t(count ? "companionResults" : "noCompanions", { count, shown: shownCompanions });
+}
+function renderAppearanceSelection() {
+  for (const [choices, selected] of [[playerChoices, appearance.player], [companionChoices, appearance.companion]] as const) {
+    for (const input of choices.querySelectorAll<HTMLInputElement>("input")) input.checked = input.value === selected;
+  }
+  required<HTMLElement>("#companion-current").textContent = t("currentCompanion", { name: companionName(appearance.companion, locale) });
+}
+renderCompanionChoices(true);
+renderAppearanceSelection();
+companionSearch.addEventListener("input", () => renderCompanionChoices(true));
+companionSpeciesSelect.addEventListener("change", () => renderCompanionChoices(true));
+companionMore.addEventListener("click", () => {
+  const keyboardFocus = companionMore.matches(":focus-visible");
+  const firstAdded = renderCompanionChoices();
+  if (keyboardFocus) firstAdded?.focus({ preventScroll: true });
+});
+async function changeAppearance(event: Event) {
+  const input = event.target;
+  if (!(input instanceof HTMLInputElement) || input.type !== "radio") return;
+  if (playerChoices.disabled || companionChoices.disabled) return;
+  if (!aquarium) { renderAppearanceSelection(); return; }
+  const next: MuseumAppearance = { ...appearance };
+  switch (input.name) {
+    case "player":
+      if (!isPlayerId(input.value)) return;
+      next.player = input.value;
+      break;
+    case "companion":
+      if (!isCompanionId(input.value)) return;
+      next.companion = input.value;
+      break;
+    default: return;
+  }
+  if (next.player === appearance.player && next.companion === appearance.companion) return;
+  const focused = document.activeElement;
+  const keyboardFocus = focused instanceof HTMLInputElement && focused.matches(":focus-visible");
+  const status = required<HTMLElement>("#appearance-status");
+  playerChoices.disabled = companionChoices.disabled = true;
+  renderAppearanceSelection();
+  required<HTMLElement>(".appearance-settings").setAttribute("aria-busy", "true");
+  showStatus(status, "loadingModels");
+  try {
+    if (!await aquarium.setAppearance(next) || destroyed) {
+      showStatus(status, "appearanceIncomplete");
+      return;
+    }
+    appearance = next;
+    showStatus(status, "appearanceSaved");
+    try { localStorage.setItem(APPEARANCE_KEY, JSON.stringify(appearance)); }
+    catch { showStatus(status, "appearanceNotSaved"); }
+  } catch {
+    showStatus(status, "appearanceFailed");
+  } finally {
+    renderAppearanceSelection();
+    playerChoices.disabled = companionChoices.disabled = false;
+    required<HTMLElement>(".appearance-settings").setAttribute("aria-busy", "false");
+    if (keyboardFocus && document.activeElement === document.body && !required<HTMLElement>("#museum-guide").hidden) {
+      revealFullscreenControls();
+      focused.focus({ preventScroll: true });
+    }
+  }
+}
+playerChoices.addEventListener("change", changeAppearance);
+companionChoices.addEventListener("change", changeAppearance);
+required<HTMLButtonElement>("#demo-next").addEventListener("click", () => {
+  demoTick = (Math.floor(demoTick / DEMO_GROUP_TICKS) + 1) * DEMO_GROUP_TICKS;
+  setMode("demo");
+});
 required<HTMLButtonElement>("#guide-toggle").addEventListener("click", () => setGuide(Boolean(required<HTMLElement>("#museum-guide").hidden)));
 required<HTMLButtonElement>("#guide-close").addEventListener("click", () => { setGuide(false); required<HTMLButtonElement>("#guide-toggle").focus(); });
 required<HTMLButtonElement>("#pause").addEventListener("click", () => { paused = !paused; renderPause(); });
@@ -213,28 +414,56 @@ required<HTMLInputElement>("#light").addEventListener("input", (event) => {
 required<HTMLInputElement>("#flow").addEventListener("input", (event) => {
   const value = (event.currentTarget as HTMLInputElement).valueAsNumber;
   aquarium?.setFlow(value / 100);
-  required<HTMLElement>("#flow-value").textContent = value === 0 ? "静水" : value < 100 ? "轻柔" : "活泼";
+  renderFlow(value);
 });
+function renderFlow(value = required<HTMLInputElement>("#flow").valueAsNumber) {
+  required<HTMLElement>("#flow-value").textContent = t(value === 0 ? "still" : value < 100 ? "gentle" : "lively");
+}
 const fullscreenPanel = required<HTMLElement>(".aquarium-panel");
 const fullscreenButton = required<HTMLButtonElement>("#immersive");
 const fullscreenNotice = required<HTMLElement>("#fullscreen-notice");
+let controlsTimer: ReturnType<typeof setTimeout> | undefined;
+function hideFullscreenControls() {
+  clearTimeout(controlsTimer);
+  const focused = document.activeElement;
+  if (focused?.matches(":focus-visible") && focused.closest(".app-header, .scene-footer, .sidebar")) return;
+  fullscreenPanel.classList.remove("controls-visible");
+}
+function revealFullscreenControls() {
+  if (document.fullscreenElement !== fullscreenPanel) return;
+  clearTimeout(controlsTimer);
+  fullscreenPanel.classList.add("controls-visible");
+  controlsTimer = setTimeout(hideFullscreenControls, 2400);
+}
+function revealKeyboardControls(event: KeyboardEvent) {
+  if (event.key === "Tab") revealFullscreenControls();
+}
+fullscreenPanel.addEventListener("pointermove", revealFullscreenControls);
+fullscreenPanel.addEventListener("pointerdown", revealFullscreenControls);
+fullscreenPanel.addEventListener("pointerleave", hideFullscreenControls);
+document.addEventListener("keydown", revealKeyboardControls);
 function renderFullscreen() {
   const active = document.fullscreenElement === fullscreenPanel;
   document.body.classList.toggle("immersive", active);
+  clearTimeout(controlsTimer);
+  fullscreenPanel.classList.remove("controls-visible");
+  renderFullscreenButton();
+}
+function renderFullscreenButton() {
+  const active = document.fullscreenElement === fullscreenPanel;
   fullscreenButton.setAttribute("aria-pressed", String(active));
-  fullscreenButton.setAttribute("aria-label", active ? "退出全屏" : "进入全屏");
-  fullscreenButton.title = active ? "退出全屏（Esc）" : "进入全屏";
+  fullscreenButton.setAttribute("aria-label", t(active ? "exitFullscreen" : "enterFullscreen"));
+  fullscreenButton.title = t(active ? "exitFullscreenHint" : "enterFullscreen");
   fullscreenButton.innerHTML = icon(active ? "collapse" : "expand");
 }
-function showFullscreenNotice(message: string) {
-  fullscreenNotice.textContent = message;
-  fullscreenNotice.hidden = false;
+function showFullscreenNotice(key: MessageKey) {
+  showStatus(fullscreenNotice, key);
 }
 async function toggleFullscreen() {
   if (fullscreenButton.disabled) return;
   const active = document.fullscreenElement === fullscreenPanel;
   if (!fullscreenPanel.requestFullscreen || !document.exitFullscreen || document.fullscreenEnabled === false) {
-    showFullscreenNotice("当前窗口不支持全屏，请在独立浏览器中打开鱼缸。");
+    showFullscreenNotice("fullscreenUnsupported");
     return;
   }
   fullscreenNotice.hidden = true;
@@ -246,7 +475,7 @@ async function toggleFullscreen() {
     }
     await fullscreenPanel.requestFullscreen({ navigationUI: "hide" });
   } catch {
-    showFullscreenNotice(active ? "未能退出全屏，请按 Esc 返回。" : "未能进入全屏，请在浏览器中打开鱼缸后重试。");
+    showFullscreenNotice(active ? "fullscreenExitFailed" : "fullscreenEnterFailed");
   } finally {
     fullscreenButton.disabled = false;
     renderFullscreen();
@@ -260,12 +489,57 @@ reducedMotion.addEventListener("change", motionPreferenceChanged);
 renderPause();
 renderSnapshot(snapshot);
 
+function renderLocale() {
+  renderDocumentLanguage();
+  const attributes = { "data-i18n": null, "data-i18n-label": "aria-label", "data-i18n-title": "title", "data-i18n-placeholder": "placeholder" };
+  for (const [source, target] of Object.entries(attributes)) {
+    for (const element of document.querySelectorAll<HTMLElement>(`[${source}]`)) {
+      const key = element.getAttribute(source) as MessageKey;
+      if (target) { element.setAttribute(target, t(key)); continue; }
+      element.textContent = t(key);
+    }
+  }
+  for (const style of Object.keys(SCENERY_PRESETS) as SceneryStyle[]) {
+    const copy = sceneryCopy(style, locale);
+    required<HTMLElement>(`[data-scenery-name="${style}"]`).textContent = copy.name;
+    required<HTMLElement>(`[data-scenery-description="${style}"]`).textContent = copy.description;
+  }
+  for (const element of document.querySelectorAll<HTMLElement>("[data-character-id]")) {
+    const id = element.dataset.characterId;
+    if (element.dataset.characterGroup === "player" && isPlayerId(id)) element.textContent = playerName(id, locale);
+    if (element.dataset.characterGroup === "companion" && isCompanionId(id)) element.textContent = companionName(id, locale);
+  }
+  for (const option of companionSpeciesSelect.options) {
+    if (option.value) option.textContent = companionSpeciesName(option.value, locale);
+  }
+  required<HTMLElement>(".fish-guide").innerHTML = fishGuide();
+  required<HTMLElement>("#fish-total").textContent = t("fishTotal", { count: FISH_TYPES.length });
+  if (mode === "demo") shownSnapshot = demoSnapshot(demoTick, locale);
+  renderSessionList();
+  renderConnection();
+  renderDemoGroup();
+  renderCompanionResults();
+  renderAppearanceSelection();
+  renderFlow();
+  renderNearView();
+  renderPause();
+  renderFullscreenButton();
+}
+required<HTMLSelectElement>("#language").addEventListener("change", event => {
+  locale = resolveLocale((event.currentTarget as HTMLSelectElement).value, browserLanguages);
+  try { localStorage.setItem(LOCALE_KEY, locale); }
+  catch { /* 无法保存时，仍可切换本次访问的语言。 */ }
+  renderLocale();
+});
+renderLocale();
+
 function receiveSnapshot(data: string) {
   const value = JSON.parse(data) as AquariumSnapshot;
   if (value.version !== 1 || value.source !== "hooks" || !Array.isArray(value.sessions)) throw new Error("不支持的会话数据格式");
   snapshot = value;
   connection = "connected";
   renderConnection();
+  required<HTMLButtonElement>("#demo-next").hidden = mode !== "demo";
   if (mode === "live") renderSnapshot(snapshot);
 }
 
@@ -290,7 +564,15 @@ window.addEventListener("pagehide", () => {
   initialFetch.abort();
   eventSource.close();
   document.removeEventListener("fullscreenchange", renderFullscreen);
+  document.removeEventListener("keydown", revealKeyboardControls);
+  clearTimeout(controlsTimer);
   reducedMotion.removeEventListener("change", motionPreferenceChanged);
   aquarium?.dispose();
 }, { once: true });
 window.addEventListener("pageshow", (event) => { if (event.persisted) window.location.reload(); });
+
+await initializeAquarium();
+if (!destroyed) {
+  renderAquariumSessions();
+  renderLocale();
+}

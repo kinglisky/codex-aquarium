@@ -1,0 +1,4340 @@
+[
+  {
+    "id": "isabelle",
+    "name": "西施惠",
+    "englishName": "Isabelle",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/isabelle",
+    "portrait": "portraits/isabelle"
+  },
+  {
+    "id": "tomNook",
+    "name": "狸克",
+    "englishName": "Tom Nook",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/tom-nook",
+    "portrait": "portraits/tomNook"
+  },
+  {
+    "id": "timmy",
+    "name": "豆狸",
+    "englishName": "Timmy",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/timmy",
+    "portrait": "portraits/timmy"
+  },
+  {
+    "id": "marshal",
+    "name": "小润",
+    "englishName": "Marshal",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/marshal",
+    "portrait": "portraits/marshal"
+  },
+  {
+    "id": "raymond",
+    "name": "杰克",
+    "englishName": "Raymond",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/raymond",
+    "portrait": "portraits/raymond"
+  },
+  {
+    "id": "audie",
+    "name": "莫妮卡",
+    "englishName": "Audie",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/audie",
+    "portrait": "portraits/audie"
+  },
+  {
+    "id": "stitches",
+    "name": "玩具熊",
+    "englishName": "Stitches",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/stitches",
+    "portrait": "portraits/stitches"
+  },
+  {
+    "id": "tia",
+    "name": "茉莉",
+    "englishName": "Tia",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/tia",
+    "portrait": "portraits/tia"
+  },
+  {
+    "id": "zucker",
+    "name": "章丸丸",
+    "englishName": "Zucker",
+    "species": "章鱼",
+    "category": "villager",
+    "model": "companions/zucker",
+    "portrait": "portraits/zucker"
+  },
+  {
+    "id": "apollo",
+    "name": "阿波罗",
+    "englishName": "Apollo",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/apollo",
+    "portrait": "portraits/apollo"
+  },
+  {
+    "id": "cat15",
+    "name": "阿邦",
+    "englishName": "Tom",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat15",
+    "portrait": "portraits/cat15"
+  },
+  {
+    "id": "gor08",
+    "name": "阿保",
+    "englishName": "Al",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor08",
+    "portrait": "portraits/gor08"
+  },
+  {
+    "id": "npc-ott",
+    "name": "阿本先生",
+    "englishName": "Lyle",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-ott",
+    "portrait": "portraits/npc-ott"
+  },
+  {
+    "id": "dog06",
+    "name": "阿笨",
+    "englishName": "Walker",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog06",
+    "portrait": "portraits/dog06"
+  },
+  {
+    "id": "tig04",
+    "name": "阿彪",
+    "englishName": "Leonardo",
+    "species": "老虎",
+    "category": "villager",
+    "model": "companions/tig04",
+    "portrait": "portraits/tig04"
+  },
+  {
+    "id": "ant01",
+    "name": "阿诚",
+    "englishName": "Antonio",
+    "species": "食蚁兽",
+    "category": "villager",
+    "model": "companions/ant01",
+    "portrait": "portraits/ant01"
+  },
+  {
+    "id": "rbt11",
+    "name": "阿醋",
+    "englishName": "Claude",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt11",
+    "portrait": "portraits/rbt11"
+  },
+  {
+    "id": "kal02",
+    "name": "阿得",
+    "englishName": "Melba",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal02",
+    "portrait": "portraits/kal02"
+  },
+  {
+    "id": "rhn02",
+    "name": "阿蹲",
+    "englishName": "Spike",
+    "species": "犀牛",
+    "category": "villager",
+    "model": "companions/rhn02",
+    "portrait": "portraits/rhn02"
+  },
+  {
+    "id": "squ05",
+    "name": "阿二",
+    "englishName": "Agent S",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ05",
+    "portrait": "portraits/squ05"
+  },
+  {
+    "id": "duk08",
+    "name": "阿坊",
+    "englishName": "Derwin",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk08",
+    "portrait": "portraits/duk08"
+  },
+  {
+    "id": "rbt10",
+    "name": "阿飞",
+    "englishName": "Doc",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt10",
+    "portrait": "portraits/rbt10"
+  },
+  {
+    "id": "dog04",
+    "name": "阿富",
+    "englishName": "Bones",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog04",
+    "portrait": "portraits/dog04"
+  },
+  {
+    "id": "rbt18",
+    "name": "阿甘",
+    "englishName": "Cole",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt18",
+    "portrait": "portraits/rbt18"
+  },
+  {
+    "id": "npc-pck",
+    "name": "阿欢",
+    "englishName": "Pavé",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-pck",
+    "portrait": "portraits/npc-pck"
+  },
+  {
+    "id": "mus05",
+    "name": "阿将",
+    "englishName": "Rod",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus05",
+    "portrait": "portraits/mus05"
+  },
+  {
+    "id": "flg07",
+    "name": "阿刻",
+    "englishName": "Jeremiah",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg07",
+    "portrait": "portraits/flg07"
+  },
+  {
+    "id": "gor00",
+    "name": "阿朗",
+    "englishName": "Cesar",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor00",
+    "portrait": "portraits/gor00"
+  },
+  {
+    "id": "kal05",
+    "name": "阿栗",
+    "englishName": "Ozzie",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal05",
+    "portrait": "portraits/kal05"
+  },
+  {
+    "id": "crd08",
+    "name": "阿龙",
+    "englishName": "Drago",
+    "species": "鳄鱼",
+    "category": "villager",
+    "model": "companions/crd08",
+    "portrait": "portraits/crd08"
+  },
+  {
+    "id": "cbr13",
+    "name": "阿妹",
+    "englishName": "June",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr13",
+    "portrait": "portraits/cbr13"
+  },
+  {
+    "id": "crd00",
+    "name": "阿泥",
+    "englishName": "Alfonso",
+    "species": "鳄鱼",
+    "category": "villager",
+    "model": "companions/crd00",
+    "portrait": "portraits/crd00"
+  },
+  {
+    "id": "cow00",
+    "name": "阿排",
+    "englishName": "Patty",
+    "species": "母牛",
+    "category": "villager",
+    "model": "companions/cow00",
+    "portrait": "portraits/cow00"
+  },
+  {
+    "id": "cat00",
+    "name": "阿判",
+    "englishName": "Bob",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat00",
+    "portrait": "portraits/cat00"
+  },
+  {
+    "id": "mus14",
+    "name": "阿聘",
+    "englishName": "Moose",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus14",
+    "portrait": "portraits/mus14"
+  },
+  {
+    "id": "cbr03",
+    "name": "阿钦",
+    "englishName": "Pudge",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr03",
+    "portrait": "portraits/cbr03"
+  },
+  {
+    "id": "elp02",
+    "name": "阿三",
+    "englishName": "Big Top",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp02",
+    "portrait": "portraits/elp02"
+  },
+  {
+    "id": "duk10",
+    "name": "阿守",
+    "englishName": "Scoot",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk10",
+    "portrait": "portraits/duk10"
+  },
+  {
+    "id": "shp10",
+    "name": "阿司",
+    "englishName": "Timbra",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp10",
+    "portrait": "portraits/shp10"
+  },
+  {
+    "id": "gor09",
+    "name": "阿四",
+    "englishName": "Rocket",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor09",
+    "portrait": "portraits/gor09"
+  },
+  {
+    "id": "npc-seo",
+    "name": "阿獭",
+    "englishName": "Pascal",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-seo",
+    "portrait": "portraits/npc-seo"
+  },
+  {
+    "id": "flg09",
+    "name": "阿田",
+    "englishName": "Tad",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg09",
+    "portrait": "portraits/flg09"
+  },
+  {
+    "id": "cbr16",
+    "name": "阿西",
+    "englishName": "Barold",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr16",
+    "portrait": "portraits/cbr16"
+  },
+  {
+    "id": "wol04",
+    "name": "阿研",
+    "englishName": "Dobie",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol04",
+    "portrait": "portraits/wol04"
+  },
+  {
+    "id": "brd00",
+    "name": "阿燕",
+    "englishName": "Jay",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd00",
+    "portrait": "portraits/brd00"
+  },
+  {
+    "id": "cat10",
+    "name": "阿一",
+    "englishName": "Kid Cat",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat10",
+    "portrait": "portraits/cat10"
+  },
+  {
+    "id": "npc-kpg",
+    "name": "阿玉婆婆",
+    "englishName": "Grams",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-kpg",
+    "portrait": "portraits/npc-kpg"
+  },
+  {
+    "id": "elp09",
+    "name": "阿原",
+    "englishName": "Tucker",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp09",
+    "portrait": "portraits/elp09"
+  },
+  {
+    "id": "pig03",
+    "name": "阿猪",
+    "englishName": "Hugh",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig03",
+    "portrait": "portraits/pig03"
+  },
+  {
+    "id": "rhn00",
+    "name": "阿足",
+    "englishName": "Tank",
+    "species": "犀牛",
+    "category": "villager",
+    "model": "companions/rhn00",
+    "portrait": "portraits/rhn00"
+  },
+  {
+    "id": "cbr04",
+    "name": "艾德豪",
+    "englishName": "Kody",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr04",
+    "portrait": "portraits/cbr04"
+  },
+  {
+    "id": "elp03",
+    "name": "艾勒芬",
+    "englishName": "Eloise",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp03",
+    "portrait": "portraits/elp03"
+  },
+  {
+    "id": "squ18",
+    "name": "艾栗丝",
+    "englishName": "Hazel",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ18",
+    "portrait": "portraits/squ18"
+  },
+  {
+    "id": "hip05",
+    "name": "艾咪",
+    "englishName": "Bitty",
+    "species": "河马",
+    "category": "villager",
+    "model": "companions/hip05",
+    "portrait": "portraits/hip05"
+  },
+  {
+    "id": "duk02",
+    "name": "爱哭鬼",
+    "englishName": "Pate",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk02",
+    "portrait": "portraits/duk02"
+  },
+  {
+    "id": "crd07",
+    "name": "爱莉",
+    "englishName": "Gayle",
+    "species": "鳄鱼",
+    "category": "villager",
+    "model": "companions/crd07",
+    "portrait": "portraits/crd07"
+  },
+  {
+    "id": "shp04",
+    "name": "爱睦",
+    "englishName": "Cashmere",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp04",
+    "portrait": "portraits/shp04"
+  },
+  {
+    "id": "ham04",
+    "name": "安安",
+    "englishName": "Soleil",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham04",
+    "portrait": "portraits/ham04"
+  },
+  {
+    "id": "pbr01",
+    "name": "安地斯",
+    "englishName": "Amelia",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr01",
+    "portrait": "portraits/pbr01"
+  },
+  {
+    "id": "ant09",
+    "name": "安东尼",
+    "englishName": "Olaf",
+    "species": "食蚁兽",
+    "category": "villager",
+    "model": "companions/ant09",
+    "portrait": "portraits/ant09"
+  },
+  {
+    "id": "pbr05",
+    "name": "安谷斯",
+    "englishName": "Avery",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr05",
+    "portrait": "portraits/pbr05"
+  },
+  {
+    "id": "duk03",
+    "name": "安妮",
+    "englishName": "Maelle",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk03",
+    "portrait": "portraits/duk03"
+  },
+  {
+    "id": "hrs11",
+    "name": "安索尼",
+    "englishName": "Colton",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs11",
+    "portrait": "portraits/hrs11"
+  },
+  {
+    "id": "kal09",
+    "name": "敖志明",
+    "englishName": "Lyman",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal09",
+    "portrait": "portraits/kal09"
+  },
+  {
+    "id": "cat03",
+    "name": "奥莉",
+    "englishName": "Olivia",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat03",
+    "portrait": "portraits/cat03"
+  },
+  {
+    "id": "bea05",
+    "name": "巴克思",
+    "englishName": "Nate",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea05",
+    "portrait": "portraits/bea05"
+  },
+  {
+    "id": "npc-spn",
+    "name": "巴猎",
+    "englishName": "Harvey",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-spn",
+    "portrait": "portraits/npc-spn"
+  },
+  {
+    "id": "goa08",
+    "name": "芭芭拉",
+    "englishName": "Pashmina",
+    "species": "山羊",
+    "category": "villager",
+    "model": "companions/goa08",
+    "portrait": "portraits/goa08"
+  },
+  {
+    "id": "rbt03",
+    "name": "百川",
+    "englishName": "Snake",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt03",
+    "portrait": "portraits/rbt03"
+  },
+  {
+    "id": "wol09",
+    "name": "百合",
+    "englishName": "Skye",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol09",
+    "portrait": "portraits/wol09"
+  },
+  {
+    "id": "goa06",
+    "name": "班长",
+    "englishName": "Velma",
+    "species": "山羊",
+    "category": "villager",
+    "model": "companions/goa06",
+    "portrait": "portraits/goa06"
+  },
+  {
+    "id": "dog18",
+    "name": "包伯",
+    "englishName": "Shep",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog18",
+    "portrait": "portraits/dog18"
+  },
+  {
+    "id": "pgn05",
+    "name": "宝拉",
+    "englishName": "Gwen",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn05",
+    "portrait": "portraits/pgn05"
+  },
+  {
+    "id": "elp05",
+    "name": "保罗",
+    "englishName": "Paolo",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp05",
+    "portrait": "portraits/elp05"
+  },
+  {
+    "id": "dog10",
+    "name": "贝果",
+    "englishName": "Bea",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog10",
+    "portrait": "portraits/dog10"
+  },
+  {
+    "id": "mus02",
+    "name": "贝拉",
+    "englishName": "Bella",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus02",
+    "portrait": "portraits/mus02"
+  },
+  {
+    "id": "npc-pyn",
+    "name": "蹦蹦",
+    "englishName": "Zipper",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-pyn",
+    "portrait": "portraits/npc-pyn"
+  },
+  {
+    "id": "goa04",
+    "name": "比利",
+    "englishName": "Gruff",
+    "species": "山羊",
+    "category": "villager",
+    "model": "companions/goa04",
+    "portrait": "portraits/goa04"
+  },
+  {
+    "id": "der07",
+    "name": "彼得",
+    "englishName": "Beau",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der07",
+    "portrait": "portraits/der07"
+  },
+  {
+    "id": "wol03",
+    "name": "毕安卡",
+    "englishName": "Whitney",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol03",
+    "portrait": "portraits/wol03"
+  },
+  {
+    "id": "cbr09",
+    "name": "毕克萝",
+    "englishName": "Olive",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr09",
+    "portrait": "portraits/cbr09"
+  },
+  {
+    "id": "rhn05",
+    "name": "碧芊",
+    "englishName": "Azalea",
+    "species": "犀牛",
+    "category": "villager",
+    "model": "companions/rhn05",
+    "portrait": "portraits/rhn05"
+  },
+  {
+    "id": "wol05",
+    "name": "冰冰",
+    "englishName": "Freya",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol05",
+    "portrait": "portraits/wol05"
+  },
+  {
+    "id": "pgn14",
+    "name": "冰莎",
+    "englishName": "Sprinkle",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn14",
+    "portrait": "portraits/pgn14"
+  },
+  {
+    "id": "npc-fsl",
+    "name": "博陆恩",
+    "englishName": "Phineas",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-fsl",
+    "portrait": "portraits/npc-fsl"
+  },
+  {
+    "id": "pig08",
+    "name": "博士",
+    "englishName": "Cobb",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig08",
+    "portrait": "portraits/pig08"
+  },
+  {
+    "id": "pig16",
+    "name": "布兰妮",
+    "englishName": "Pancetti",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig16",
+    "portrait": "portraits/pig16"
+  },
+  {
+    "id": "der03",
+    "name": "布鹿斯",
+    "englishName": "Bruce",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der03",
+    "portrait": "portraits/der03"
+  },
+  {
+    "id": "shp14",
+    "name": "彩星",
+    "englishName": "Étoile",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp14",
+    "portrait": "portraits/shp14"
+  },
+  {
+    "id": "npc-boa",
+    "name": "曹谷",
+    "englishName": "Joan",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-boa",
+    "portrait": "portraits/npc-boa"
+  },
+  {
+    "id": "hip02",
+    "name": "曹珂",
+    "englishName": "Bubbles",
+    "species": "河马",
+    "category": "villager",
+    "model": "companions/hip02",
+    "portrait": "portraits/hip02"
+  },
+  {
+    "id": "npc-boc",
+    "name": "曹卖",
+    "englishName": "Daisy Mae",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-boc",
+    "portrait": "portraits/npc-boc"
+  },
+  {
+    "id": "hrs02",
+    "name": "草斑娜",
+    "englishName": "Savannah",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs02",
+    "portrait": "portraits/hrs02"
+  },
+  {
+    "id": "rhn07",
+    "name": "草莓",
+    "englishName": "Merengue",
+    "species": "犀牛",
+    "category": "villager",
+    "model": "companions/rhn07",
+    "portrait": "portraits/rhn07"
+  },
+  {
+    "id": "der09",
+    "name": "查克",
+    "englishName": "Erik",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der09",
+    "portrait": "portraits/der09"
+  },
+  {
+    "id": "cat20",
+    "name": "茶茶",
+    "englishName": "Rudy",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat20",
+    "portrait": "portraits/cat20"
+  },
+  {
+    "id": "shp15",
+    "name": "茶茶丸",
+    "englishName": "Dom",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp15",
+    "portrait": "portraits/shp15"
+  },
+  {
+    "id": "rhn08",
+    "name": "柴姐",
+    "englishName": "Renée",
+    "species": "犀牛",
+    "category": "villager",
+    "model": "companions/rhn08",
+    "portrait": "portraits/rhn08"
+  },
+  {
+    "id": "bea03",
+    "name": "朝阳",
+    "englishName": "Chow",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea03",
+    "portrait": "portraits/bea03"
+  },
+  {
+    "id": "npc-mnk",
+    "name": "车长叔叔",
+    "englishName": "Porter",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-mnk",
+    "portrait": "portraits/npc-mnk"
+  },
+  {
+    "id": "cow06",
+    "name": "晨曦",
+    "englishName": "Norma",
+    "species": "母牛",
+    "category": "villager",
+    "model": "companions/cow06",
+    "portrait": "portraits/cow06"
+  },
+  {
+    "id": "npc-plo",
+    "name": "程信雄",
+    "englishName": "Pete",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-plo",
+    "portrait": "portraits/npc-plo"
+  },
+  {
+    "id": "flg10",
+    "name": "春卷",
+    "englishName": "Cousteau",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg10",
+    "portrait": "portraits/flg10"
+  },
+  {
+    "id": "cat05",
+    "name": "纯纯",
+    "englishName": "Tangy",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat05",
+    "portrait": "portraits/cat05"
+  },
+  {
+    "id": "pig09",
+    "name": "达利",
+    "englishName": "Boris",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig09",
+    "portrait": "portraits/pig09"
+  },
+  {
+    "id": "pgn03",
+    "name": "达满",
+    "englishName": "Hopper",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn03",
+    "portrait": "portraits/pgn03"
+  },
+  {
+    "id": "bul07",
+    "name": "大常",
+    "englishName": "Coach",
+    "species": "公牛",
+    "category": "villager",
+    "model": "companions/bul07",
+    "portrait": "portraits/bul07"
+  },
+  {
+    "id": "elp06",
+    "name": "大大",
+    "englishName": "Axel",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp06",
+    "portrait": "portraits/elp06"
+  },
+  {
+    "id": "bea11",
+    "name": "大功",
+    "englishName": "Ike",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea11",
+    "portrait": "portraits/bea11"
+  },
+  {
+    "id": "crd04",
+    "name": "大和",
+    "englishName": "Del",
+    "species": "鳄鱼",
+    "category": "villager",
+    "model": "companions/crd04",
+    "portrait": "portraits/crd04"
+  },
+  {
+    "id": "dog02",
+    "name": "大吉",
+    "englishName": "Lucky",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog02",
+    "portrait": "portraits/dog02"
+  },
+  {
+    "id": "rbt07",
+    "name": "大姐头",
+    "englishName": "Tiffany",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt07",
+    "portrait": "portraits/rbt07"
+  },
+  {
+    "id": "kgr08",
+    "name": "袋钢",
+    "englishName": "Walt",
+    "species": "袋鼠",
+    "category": "villager",
+    "model": "companions/kgr08",
+    "portrait": "portraits/kgr08"
+  },
+  {
+    "id": "hip09",
+    "name": "戴维",
+    "englishName": "Hippeux",
+    "species": "河马",
+    "category": "villager",
+    "model": "companions/hip09",
+    "portrait": "portraits/hip09"
+  },
+  {
+    "id": "bea01",
+    "name": "丹丹",
+    "englishName": "Pinky",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea01",
+    "portrait": "portraits/bea01"
+  },
+  {
+    "id": "npc-poo",
+    "name": "刀丽茹",
+    "englishName": "Harriet",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-poo",
+    "portrait": "portraits/npc-poo"
+  },
+  {
+    "id": "mnk08",
+    "name": "德里",
+    "englishName": "Deli",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk08",
+    "portrait": "portraits/mnk08"
+  },
+  {
+    "id": "hrs10",
+    "name": "笛笛",
+    "englishName": "Clyde",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs10",
+    "portrait": "portraits/hrs10"
+  },
+  {
+    "id": "der04",
+    "name": "娣雅",
+    "englishName": "Deirdre",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der04",
+    "portrait": "portraits/der04"
+  },
+  {
+    "id": "pbr09",
+    "name": "蒂芬妮",
+    "englishName": "Celia",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr09",
+    "portrait": "portraits/pbr09"
+  },
+  {
+    "id": "npc-mol",
+    "name": "电源叔叔",
+    "englishName": "Resetti",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-mol",
+    "portrait": "portraits/npc-mol"
+  },
+  {
+    "id": "rbt20",
+    "name": "咚比",
+    "englishName": "Toby",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt20",
+    "portrait": "portraits/rbt20"
+  },
+  {
+    "id": "hip03",
+    "name": "豆沙",
+    "englishName": "Bertha",
+    "species": "河马",
+    "category": "villager",
+    "model": "companions/hip03",
+    "portrait": "portraits/hip03"
+  },
+  {
+    "id": "pig01",
+    "name": "嘟嘟",
+    "englishName": "Truffles",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig01",
+    "portrait": "portraits/pig01"
+  },
+  {
+    "id": "flg04",
+    "name": "毒仔",
+    "englishName": "Drift",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg04",
+    "portrait": "portraits/flg04"
+  },
+  {
+    "id": "mus00",
+    "name": "杜美",
+    "englishName": "Dora",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus00",
+    "portrait": "portraits/mus00"
+  },
+  {
+    "id": "crd01",
+    "name": "鳄罗思",
+    "englishName": "Alli",
+    "species": "鳄鱼",
+    "category": "villager",
+    "model": "companions/crd01",
+    "portrait": "portraits/crd01"
+  },
+  {
+    "id": "cat06",
+    "name": "尔光",
+    "englishName": "Punchy",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat06",
+    "portrait": "portraits/cat06"
+  },
+  {
+    "id": "pbr08",
+    "name": "法兰克",
+    "englishName": "Keaton",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr08",
+    "portrait": "portraits/pbr08"
+  },
+  {
+    "id": "rbt12",
+    "name": "法蓝琪",
+    "englishName": "Francine",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt12",
+    "portrait": "portraits/rbt12"
+  },
+  {
+    "id": "duk13",
+    "name": "番茄酱",
+    "englishName": "Ketchup",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk13",
+    "portrait": "portraits/duk13"
+  },
+  {
+    "id": "wol08",
+    "name": "范妮沙",
+    "englishName": "Vivian",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol08",
+    "portrait": "portraits/wol08"
+  },
+  {
+    "id": "elp11",
+    "name": "啡卡",
+    "englishName": "Chai",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp11",
+    "portrait": "portraits/elp11"
+  },
+  {
+    "id": "duk09",
+    "name": "肥肝",
+    "englishName": "Drake",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk09",
+    "portrait": "portraits/duk09"
+  },
+  {
+    "id": "flg13",
+    "name": "翡翠",
+    "englishName": "Jambette",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg13",
+    "portrait": "portraits/flg13"
+  },
+  {
+    "id": "crd02",
+    "name": "丰年",
+    "englishName": "Boots",
+    "species": "鳄鱼",
+    "category": "villager",
+    "model": "companions/crd02",
+    "portrait": "portraits/crd02"
+  },
+  {
+    "id": "rbt14",
+    "name": "风杰",
+    "englishName": "Hopkins",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt14",
+    "portrait": "portraits/rbt14"
+  },
+  {
+    "id": "brd02",
+    "name": "凤尾",
+    "englishName": "Anchovy",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd02",
+    "portrait": "portraits/brd02"
+  },
+  {
+    "id": "kgr00",
+    "name": "缝缝",
+    "englishName": "Kitt",
+    "species": "袋鼠",
+    "category": "villager",
+    "model": "companions/kgr00",
+    "portrait": "portraits/kgr00"
+  },
+  {
+    "id": "pgn12",
+    "name": "伏特",
+    "englishName": "Tex",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn12",
+    "portrait": "portraits/pgn12"
+  },
+  {
+    "id": "npc-owl",
+    "name": "傅达",
+    "englishName": "Blathers",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-owl",
+    "portrait": "portraits/npc-owl"
+  },
+  {
+    "id": "npc-ows",
+    "name": "傅珂",
+    "englishName": "Celeste",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-ows",
+    "portrait": "portraits/npc-ows"
+  },
+  {
+    "id": "dog05",
+    "name": "傅兰",
+    "englishName": "Portia",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog05",
+    "portrait": "portraits/dog05"
+  },
+  {
+    "id": "npc-tuk",
+    "name": "富蓝",
+    "englishName": "Franklin",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-tuk",
+    "portrait": "portraits/npc-tuk"
+  },
+  {
+    "id": "mus08",
+    "name": "甘油",
+    "englishName": "Candi",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus08",
+    "portrait": "portraits/mus08"
+  },
+  {
+    "id": "kal04",
+    "name": "钢锁",
+    "englishName": "Gonzo",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal04",
+    "portrait": "portraits/kal04"
+  },
+  {
+    "id": "tig01",
+    "name": "戈麦斯",
+    "englishName": "Rowan",
+    "species": "老虎",
+    "category": "villager",
+    "model": "companions/tig01",
+    "portrait": "portraits/tig01"
+  },
+  {
+    "id": "cat09",
+    "name": "戈伍纪",
+    "englishName": "Kabuki",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat09",
+    "portrait": "portraits/cat09"
+  },
+  {
+    "id": "npc-grf",
+    "name": "葛瑞斯",
+    "englishName": "Gracie",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-grf",
+    "portrait": "portraits/npc-grf"
+  },
+  {
+    "id": "npc-kps",
+    "name": "沽沽",
+    "englishName": "Leila",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-kps",
+    "portrait": "portraits/npc-kps"
+  },
+  {
+    "id": "npc-kpm",
+    "name": "沽玉",
+    "englishName": "Leilani",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-kpm",
+    "portrait": "portraits/npc-kpm"
+  },
+  {
+    "id": "pig02",
+    "name": "古烈",
+    "englishName": "Rasher",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig02",
+    "portrait": "portraits/pig02"
+  },
+  {
+    "id": "pig17",
+    "name": "古乃欣",
+    "englishName": "Agnes",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig17",
+    "portrait": "portraits/pig17"
+  },
+  {
+    "id": "tig02",
+    "name": "谷丰",
+    "englishName": "Tybalt",
+    "species": "老虎",
+    "category": "villager",
+    "model": "companions/tig02",
+    "portrait": "portraits/tig02"
+  },
+  {
+    "id": "rhn04",
+    "name": "光雄",
+    "englishName": "Hornsby",
+    "species": "犀牛",
+    "category": "villager",
+    "model": "companions/rhn04",
+    "portrait": "portraits/rhn04"
+  },
+  {
+    "id": "ant06",
+    "name": "贵妃",
+    "englishName": "Snooty",
+    "species": "食蚁兽",
+    "category": "villager",
+    "model": "companions/ant06",
+    "portrait": "portraits/ant06"
+  },
+  {
+    "id": "ost00",
+    "name": "果果",
+    "englishName": "Queenie",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost00",
+    "portrait": "portraits/ost00"
+  },
+  {
+    "id": "ham00",
+    "name": "哈姆",
+    "englishName": "Hamlet",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham00",
+    "portrait": "portraits/ham00"
+  },
+  {
+    "id": "pgn06",
+    "name": "哈奇",
+    "englishName": "Puck",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn06",
+    "portrait": "portraits/pgn06"
+  },
+  {
+    "id": "npc-gulB",
+    "name": "海盗",
+    "englishName": "Gullivarrr",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-gulB",
+    "portrait": "portraits/npc-gulB"
+  },
+  {
+    "id": "crd06",
+    "name": "海德",
+    "englishName": "Sly",
+    "species": "鳄鱼",
+    "category": "villager",
+    "model": "companions/crd06",
+    "portrait": "portraits/crd06"
+  },
+  {
+    "id": "duk05",
+    "name": "海苔裴",
+    "englishName": "Pompom",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk05",
+    "portrait": "portraits/duk05"
+  },
+  {
+    "id": "npc-wrl",
+    "name": "海项",
+    "englishName": "Wendell",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-wrl",
+    "portrait": "portraits/npc-wrl"
+  },
+  {
+    "id": "npc-kpp",
+    "name": "航平",
+    "englishName": "Kapp'n",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-kpp",
+    "portrait": "portraits/npc-kpp"
+  },
+  {
+    "id": "pbr06",
+    "name": "浩克",
+    "englishName": "Frank",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr06",
+    "portrait": "portraits/pbr06"
+  },
+  {
+    "id": "duk17",
+    "name": "何童",
+    "englishName": "Quillson",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk17",
+    "portrait": "portraits/duk17"
+  },
+  {
+    "id": "mus04",
+    "name": "和平",
+    "englishName": "Samson",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus04",
+    "portrait": "portraits/mus04"
+  },
+  {
+    "id": "ost03",
+    "name": "鹤兹",
+    "englishName": "Sprocket",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost03",
+    "portrait": "portraits/ost03"
+  },
+  {
+    "id": "hrs04",
+    "name": "黑马",
+    "englishName": "Roscoe",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs04",
+    "portrait": "portraits/hrs04"
+  },
+  {
+    "id": "flg19",
+    "name": "亨利",
+    "englishName": "Henry",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg19",
+    "portrait": "portraits/flg19"
+  },
+  {
+    "id": "npc-fox",
+    "name": "狐利",
+    "englishName": "Redd",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-fox",
+    "portrait": "portraits/npc-fox"
+  },
+  {
+    "id": "ost09",
+    "name": "胡拉拉",
+    "englishName": "Flora",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost09",
+    "portrait": "portraits/ost09"
+  },
+  {
+    "id": "dog17",
+    "name": "花娜",
+    "englishName": "Cherry",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog17",
+    "portrait": "portraits/dog17"
+  },
+  {
+    "id": "pgn11",
+    "name": "花寿司",
+    "englishName": "Iggly",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn11",
+    "portrait": "portraits/pgn11"
+  },
+  {
+    "id": "shp01",
+    "name": "华尔滋",
+    "englishName": "Baabara",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp01",
+    "portrait": "portraits/shp01"
+  },
+  {
+    "id": "lon01",
+    "name": "皇狮",
+    "englishName": "Elvis",
+    "species": "狮子",
+    "category": "villager",
+    "model": "companions/lon01",
+    "portrait": "portraits/lon01"
+  },
+  {
+    "id": "chn02",
+    "name": "黄金鸡",
+    "englishName": "Egbert",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn02",
+    "portrait": "portraits/chn02"
+  },
+  {
+    "id": "ost10",
+    "name": "火鸟",
+    "englishName": "Phoebe",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost10",
+    "portrait": "portraits/ost10"
+  },
+  {
+    "id": "brd03",
+    "name": "叽叽",
+    "englishName": "Twiggy",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd03",
+    "portrait": "portraits/brd03"
+  },
+  {
+    "id": "ocp04",
+    "name": "吉格尔",
+    "englishName": "Cephalobot",
+    "species": "章鱼",
+    "category": "villager",
+    "model": "companions/ocp04",
+    "portrait": "portraits/ocp04"
+  },
+  {
+    "id": "brd04",
+    "name": "纪诺",
+    "englishName": "Jitters",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd04",
+    "portrait": "portraits/brd04"
+  },
+  {
+    "id": "pbr03",
+    "name": "继光",
+    "englishName": "Buzz",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr03",
+    "portrait": "portraits/pbr03"
+  },
+  {
+    "id": "cbr14",
+    "name": "佳敏",
+    "englishName": "Pekoe",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr14",
+    "portrait": "portraits/cbr14"
+  },
+  {
+    "id": "der11",
+    "name": "佳芝",
+    "englishName": "Shino",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der11",
+    "portrait": "portraits/der11"
+  },
+  {
+    "id": "cbr06",
+    "name": "嘉弼",
+    "englishName": "Vladimir",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr06",
+    "portrait": "portraits/cbr06"
+  },
+  {
+    "id": "flg15",
+    "name": "嘉俊",
+    "englishName": "Raddle",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg15",
+    "portrait": "portraits/flg15"
+  },
+  {
+    "id": "squ10",
+    "name": "嘉治",
+    "englishName": "Ricky",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ10",
+    "portrait": "portraits/squ10"
+  },
+  {
+    "id": "hip04",
+    "name": "贾宝为",
+    "englishName": "Biff",
+    "species": "河马",
+    "category": "villager",
+    "model": "companions/hip04",
+    "portrait": "portraits/hip04"
+  },
+  {
+    "id": "squ06",
+    "name": "贾萝琳",
+    "englishName": "Caroline",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ06",
+    "portrait": "portraits/squ06"
+  },
+  {
+    "id": "shp08",
+    "name": "贾洛斯",
+    "englishName": "Curlos",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp08",
+    "portrait": "portraits/shp08"
+  },
+  {
+    "id": "flg06",
+    "name": "剪刀",
+    "englishName": "Puddles",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg06",
+    "portrait": "portraits/flg06"
+  },
+  {
+    "id": "kal08",
+    "name": "简培菈",
+    "englishName": "Canberra",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal08",
+    "portrait": "portraits/kal08"
+  },
+  {
+    "id": "npc-alp",
+    "name": "健兆",
+    "englishName": "Cyrus",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-alp",
+    "portrait": "portraits/npc-alp"
+  },
+  {
+    "id": "flg02",
+    "name": "江适",
+    "englishName": "Frobert",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg02",
+    "portrait": "portraits/flg02"
+  },
+  {
+    "id": "der06",
+    "name": "洁西卡",
+    "englishName": "Fuchsia",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der06",
+    "portrait": "portraits/der06"
+  },
+  {
+    "id": "chn11",
+    "name": "金阁",
+    "englishName": "Knox",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn11",
+    "portrait": "portraits/chn11"
+  },
+  {
+    "id": "dog14",
+    "name": "金牌",
+    "englishName": "Mac",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog14",
+    "portrait": "portraits/dog14"
+  },
+  {
+    "id": "npc-dga",
+    "name": "警察叔叔",
+    "englishName": "Copper",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-dga",
+    "portrait": "portraits/npc-dga"
+  },
+  {
+    "id": "npc-dgb",
+    "name": "警察叔叔",
+    "englishName": "Booker",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-dgb",
+    "portrait": "portraits/npc-dgb"
+  },
+  {
+    "id": "mus01",
+    "name": "韭菜",
+    "englishName": "Limberg",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus01",
+    "portrait": "portraits/mus01"
+  },
+  {
+    "id": "elp01",
+    "name": "巨巨",
+    "englishName": "Dizzy",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp01",
+    "portrait": "portraits/elp01"
+  },
+  {
+    "id": "npc-hgh",
+    "name": "绢儿",
+    "englishName": "Mabel",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-hgh",
+    "portrait": "portraits/npc-hgh"
+  },
+  {
+    "id": "npc-mob",
+    "name": "开关叔叔",
+    "englishName": "Don",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-mob",
+    "portrait": "portraits/npc-mob"
+  },
+  {
+    "id": "ost07",
+    "name": "凯恩",
+    "englishName": "Phil",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost07",
+    "portrait": "portraits/ost07"
+  },
+  {
+    "id": "chn12",
+    "name": "凯西",
+    "englishName": "Broffina",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn12",
+    "portrait": "portraits/chn12"
+  },
+  {
+    "id": "squ16",
+    "name": "克栗斯",
+    "englishName": "Sheldon",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ16",
+    "portrait": "portraits/squ16"
+  },
+  {
+    "id": "rbt13",
+    "name": "克莉琪",
+    "englishName": "Chrissy",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt13",
+    "portrait": "portraits/rbt13"
+  },
+  {
+    "id": "chn00",
+    "name": "肯肯",
+    "englishName": "Goose",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn00",
+    "portrait": "portraits/chn00"
+  },
+  {
+    "id": "gor05",
+    "name": "空空",
+    "englishName": "Boyd",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor05",
+    "portrait": "portraits/gor05"
+  },
+  {
+    "id": "hip00",
+    "name": "孔在来",
+    "englishName": "Rocco",
+    "species": "河马",
+    "category": "villager",
+    "model": "companions/hip00",
+    "portrait": "portraits/hip00"
+  },
+  {
+    "id": "squ07",
+    "name": "拉拉米",
+    "englishName": "Sally",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ07",
+    "portrait": "portraits/squ07"
+  },
+  {
+    "id": "lon08",
+    "name": "赖恩睿",
+    "englishName": "Lionel",
+    "species": "狮子",
+    "category": "villager",
+    "model": "companions/lon08",
+    "portrait": "portraits/lon08"
+  },
+  {
+    "id": "npc-pge",
+    "name": "老板",
+    "englishName": "Brewster",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-pge",
+    "portrait": "portraits/npc-pge"
+  },
+  {
+    "id": "lon04",
+    "name": "老狮",
+    "englishName": "Leopold",
+    "species": "狮子",
+    "category": "villager",
+    "model": "companions/lon04",
+    "portrait": "portraits/lon04"
+  },
+  {
+    "id": "ost04",
+    "name": "勒内卢",
+    "englishName": "Rio",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost04",
+    "portrait": "portraits/ost04"
+  },
+  {
+    "id": "squ03",
+    "name": "雷贝嘉",
+    "englishName": "Pecan",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ03",
+    "portrait": "portraits/squ03"
+  },
+  {
+    "id": "hrs16",
+    "name": "雷哈娜",
+    "englishName": "Reneigh",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs16",
+    "portrait": "portraits/hrs16"
+  },
+  {
+    "id": "goa09",
+    "name": "雷姆",
+    "englishName": "Sherb",
+    "species": "山羊",
+    "category": "villager",
+    "model": "companions/goa09",
+    "portrait": "portraits/goa09"
+  },
+  {
+    "id": "flg00",
+    "name": "雷妮",
+    "englishName": "Lily",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg00",
+    "portrait": "portraits/flg00"
+  },
+  {
+    "id": "pgn13",
+    "name": "蕾拉",
+    "englishName": "Flo",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn13",
+    "portrait": "portraits/pgn13"
+  },
+  {
+    "id": "duk01",
+    "name": "李察",
+    "englishName": "Joey",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk01",
+    "portrait": "portraits/duk01"
+  },
+  {
+    "id": "brd06",
+    "name": "李彻",
+    "englishName": "Admiral",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd06",
+    "portrait": "portraits/brd06"
+  },
+  {
+    "id": "wol10",
+    "name": "李可",
+    "englishName": "Kyle",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol10",
+    "portrait": "portraits/wol10"
+  },
+  {
+    "id": "lon06",
+    "name": "李克",
+    "englishName": "Mott",
+    "species": "狮子",
+    "category": "villager",
+    "model": "companions/lon06",
+    "portrait": "portraits/lon06"
+  },
+  {
+    "id": "mus19",
+    "name": "理佳",
+    "englishName": "Petri",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus19",
+    "portrait": "portraits/mus19"
+  },
+  {
+    "id": "brd05",
+    "name": "丽婷",
+    "englishName": "Piper",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd05",
+    "portrait": "portraits/brd05"
+  },
+  {
+    "id": "gor11",
+    "name": "莉拉",
+    "englishName": "Rilla",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor11",
+    "portrait": "portraits/gor11"
+  },
+  {
+    "id": "rbt00",
+    "name": "莉莉安",
+    "englishName": "Bunnie",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt00",
+    "portrait": "portraits/rbt00"
+  },
+  {
+    "id": "npc-alw",
+    "name": "莉咏",
+    "englishName": "Reese",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-alw",
+    "portrait": "portraits/npc-alw"
+  },
+  {
+    "id": "npc-rct",
+    "name": "粒狸",
+    "englishName": "Tommy",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/timmy",
+    "portrait": "portraits/npc-rct"
+  },
+  {
+    "id": "bea07",
+    "name": "恋恋",
+    "englishName": "Tutu",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea07",
+    "portrait": "portraits/bea07"
+  },
+  {
+    "id": "flg16",
+    "name": "林妲",
+    "englishName": "Gigi",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg16",
+    "portrait": "portraits/flg16"
+  },
+  {
+    "id": "npc-rei",
+    "name": "铃铃鹿",
+    "englishName": "Jingle",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-rei",
+    "portrait": "portraits/npc-rei"
+  },
+  {
+    "id": "npc-chy",
+    "name": "龙克斯",
+    "englishName": "Flick",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-chy",
+    "portrait": "portraits/npc-chy"
+  },
+  {
+    "id": "npc-chm",
+    "name": "龙山先生",
+    "englishName": "Nat",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-chm",
+    "portrait": "portraits/npc-chm"
+  },
+  {
+    "id": "bul08",
+    "name": "卢尔曼",
+    "englishName": "Vic",
+    "species": "公牛",
+    "category": "villager",
+    "model": "companions/bul08",
+    "portrait": "portraits/bul08"
+  },
+  {
+    "id": "tig03",
+    "name": "卢姿",
+    "englishName": "Bangle",
+    "species": "老虎",
+    "category": "villager",
+    "model": "companions/tig03",
+    "portrait": "portraits/tig03"
+  },
+  {
+    "id": "npc-doc",
+    "name": "陆德里",
+    "englishName": "Wilbur",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-doc",
+    "portrait": "portraits/npc-doc"
+  },
+  {
+    "id": "elp00",
+    "name": "露露",
+    "englishName": "Opal",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp00",
+    "portrait": "portraits/elp00"
+  },
+  {
+    "id": "pig04",
+    "name": "露西",
+    "englishName": "Lucy",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig04",
+    "portrait": "portraits/pig04"
+  },
+  {
+    "id": "npc-gul",
+    "name": "吕游",
+    "englishName": "Gulliver",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-gul",
+    "portrait": "portraits/npc-gul"
+  },
+  {
+    "id": "dog03",
+    "name": "罗宾",
+    "englishName": "Biskit",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog03",
+    "portrait": "portraits/dog03"
+  },
+  {
+    "id": "wol02",
+    "name": "罗博",
+    "englishName": "Wolfgang",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol02",
+    "portrait": "portraits/wol02"
+  },
+  {
+    "id": "bul01",
+    "name": "罗迪欧",
+    "englishName": "Rodeo",
+    "species": "公牛",
+    "category": "villager",
+    "model": "companions/bul01",
+    "portrait": "portraits/bul01"
+  },
+  {
+    "id": "kal10",
+    "name": "罗奇",
+    "englishName": "Eugene",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal10",
+    "portrait": "portraits/kal10"
+  },
+  {
+    "id": "pgn02",
+    "name": "罗斯",
+    "englishName": "Cube",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn02",
+    "portrait": "portraits/pgn02"
+  },
+  {
+    "id": "bul05",
+    "name": "罗宋",
+    "englishName": "T-Bone",
+    "species": "公牛",
+    "category": "villager",
+    "model": "companions/bul05",
+    "portrait": "portraits/bul05"
+  },
+  {
+    "id": "rbt06",
+    "name": "罗塔",
+    "englishName": "Pippy",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt06",
+    "portrait": "portraits/rbt06"
+  },
+  {
+    "id": "mus10",
+    "name": "罗萱儿",
+    "englishName": "Anicotti",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus10",
+    "portrait": "portraits/mus10"
+  },
+  {
+    "id": "npc-cml",
+    "name": "骆岚",
+    "englishName": "Saharah",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-cml",
+    "portrait": "portraits/npc-cml"
+  },
+  {
+    "id": "kgr02",
+    "name": "妈咪",
+    "englishName": "Carrie",
+    "species": "袋鼠",
+    "category": "villager",
+    "model": "companions/kgr02",
+    "portrait": "portraits/kgr02"
+  },
+  {
+    "id": "npc-hgs",
+    "name": "麻儿",
+    "englishName": "Sable",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-hgs",
+    "portrait": "portraits/npc-hgs"
+  },
+  {
+    "id": "dog09",
+    "name": "麻蓉",
+    "englishName": "Maddie",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog09",
+    "portrait": "portraits/dog09"
+  },
+  {
+    "id": "tig05",
+    "name": "马丽莲",
+    "englishName": "Claudia",
+    "species": "老虎",
+    "category": "villager",
+    "model": "companions/tig05",
+    "portrait": "portraits/tig05"
+  },
+  {
+    "id": "hrs05",
+    "name": "马星星",
+    "englishName": "Winnie",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs05",
+    "portrait": "portraits/hrs05"
+  },
+  {
+    "id": "hrs06",
+    "name": "马誉",
+    "englishName": "Ed",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs06",
+    "portrait": "portraits/hrs06"
+  },
+  {
+    "id": "cbr18",
+    "name": "玛丁",
+    "englishName": "Marty",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr18",
+    "portrait": "portraits/cbr18"
+  },
+  {
+    "id": "pig10",
+    "name": "玛格",
+    "englishName": "Maggie",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig10",
+    "portrait": "portraits/pig10"
+  },
+  {
+    "id": "kgr10",
+    "name": "玛莉亚",
+    "englishName": "Marcie",
+    "species": "袋鼠",
+    "category": "villager",
+    "model": "companions/kgr10",
+    "portrait": "portraits/kgr10"
+  },
+  {
+    "id": "rbt01",
+    "name": "玛莎",
+    "englishName": "Dotty",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt01",
+    "portrait": "portraits/rbt01"
+  },
+  {
+    "id": "kgr09",
+    "name": "麦克",
+    "englishName": "Rooney",
+    "species": "袋鼠",
+    "category": "villager",
+    "model": "companions/kgr09",
+    "portrait": "portraits/kgr09"
+  },
+  {
+    "id": "ham02",
+    "name": "麦麦",
+    "englishName": "Graham",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham02",
+    "portrait": "portraits/ham02"
+  },
+  {
+    "id": "shp02",
+    "name": "毛海儿",
+    "englishName": "Eunice",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp02",
+    "portrait": "portraits/shp02"
+  },
+  {
+    "id": "bul03",
+    "name": "毛乐时",
+    "englishName": "Stu",
+    "species": "公牛",
+    "category": "villager",
+    "model": "companions/bul03",
+    "portrait": "portraits/bul03"
+  },
+  {
+    "id": "shp07",
+    "name": "梅丽诺",
+    "englishName": "Willow",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp07",
+    "portrait": "portraits/shp07"
+  },
+  {
+    "id": "cat17",
+    "name": "美佳",
+    "englishName": "Felicity",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat17",
+    "portrait": "portraits/cat17"
+  },
+  {
+    "id": "cbr19",
+    "name": "美玲",
+    "englishName": "Judy",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr19",
+    "portrait": "portraits/cbr19"
+  },
+  {
+    "id": "rbt04",
+    "name": "猛兔",
+    "englishName": "Gaston",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt04",
+    "portrait": "portraits/rbt04"
+  },
+  {
+    "id": "squ14",
+    "name": "孟珮",
+    "englishName": "Sylvana",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ14",
+    "portrait": "portraits/squ14"
+  },
+  {
+    "id": "mnk05",
+    "name": "孟琪",
+    "englishName": "Elise",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk05",
+    "portrait": "portraits/mnk05"
+  },
+  {
+    "id": "npc-tap",
+    "name": "梦美",
+    "englishName": "Luna",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-tap",
+    "portrait": "portraits/npc-tap"
+  },
+  {
+    "id": "rhn01",
+    "name": "梦梦",
+    "englishName": "Rhonda",
+    "species": "犀牛",
+    "category": "villager",
+    "model": "companions/rhn01",
+    "portrait": "portraits/rhn01"
+  },
+  {
+    "id": "npc-lom",
+    "name": "咪露",
+    "englishName": "Katie",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-lom",
+    "portrait": "portraits/npc-lom"
+  },
+  {
+    "id": "squ20",
+    "name": "弥莎",
+    "englishName": "Viché",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ20",
+    "portrait": "portraits/squ20"
+  },
+  {
+    "id": "flg03",
+    "name": "迷仔",
+    "englishName": "Camofrog",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg03",
+    "portrait": "portraits/flg03"
+  },
+  {
+    "id": "ant05",
+    "name": "米粉",
+    "englishName": "Zoe",
+    "species": "食蚁兽",
+    "category": "villager",
+    "model": "companions/ant05",
+    "portrait": "portraits/ant05"
+  },
+  {
+    "id": "duk12",
+    "name": "米兰达",
+    "englishName": "Miranda",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk12",
+    "portrait": "portraits/duk12"
+  },
+  {
+    "id": "ham03",
+    "name": "米米",
+    "englishName": "Rodney",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham03",
+    "portrait": "portraits/ham03"
+  },
+  {
+    "id": "der12",
+    "name": "米涅鲁",
+    "englishName": "Mineru",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der12",
+    "portrait": "portraits/der12"
+  },
+  {
+    "id": "rbt19",
+    "name": "蜜拉",
+    "englishName": "Mira",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt19",
+    "portrait": "portraits/rbt19"
+  },
+  {
+    "id": "rbt21",
+    "name": "蜜雪儿",
+    "englishName": "Sasha",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt21",
+    "portrait": "portraits/rbt21"
+  },
+  {
+    "id": "npc-hgc",
+    "name": "绵儿",
+    "englishName": "Label",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-hgc",
+    "portrait": "portraits/npc-hgc"
+  },
+  {
+    "id": "shp00",
+    "name": "绵绵",
+    "englishName": "Vesta",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp00",
+    "portrait": "portraits/shp00"
+  },
+  {
+    "id": "rbt17",
+    "name": "妙妙",
+    "englishName": "Bonbon",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt17",
+    "portrait": "portraits/rbt17"
+  },
+  {
+    "id": "npc-xct",
+    "name": "陌陌",
+    "englishName": "Rover",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-xct",
+    "portrait": "portraits/npc-xct"
+  },
+  {
+    "id": "kal01",
+    "name": "莫儿",
+    "englishName": "Alice",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal01",
+    "portrait": "portraits/kal01"
+  },
+  {
+    "id": "lon00",
+    "name": "莫敬",
+    "englishName": "Bud",
+    "species": "狮子",
+    "category": "villager",
+    "model": "companions/lon00",
+    "portrait": "portraits/lon00"
+  },
+  {
+    "id": "npc-dod",
+    "name": "莫里",
+    "englishName": "Orville",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-dod",
+    "portrait": "portraits/npc-dod"
+  },
+  {
+    "id": "goa01",
+    "name": "墨墨",
+    "englishName": "Nan",
+    "species": "山羊",
+    "category": "villager",
+    "model": "companions/goa01",
+    "portrait": "portraits/goa01"
+  },
+  {
+    "id": "cow01",
+    "name": "牧牧",
+    "englishName": "Tipper",
+    "species": "母牛",
+    "category": "villager",
+    "model": "companions/cow01",
+    "portrait": "portraits/cow01"
+  },
+  {
+    "id": "bea09",
+    "name": "穆穆",
+    "englishName": "Grizzly",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea09",
+    "portrait": "portraits/bea09"
+  },
+  {
+    "id": "npc-man",
+    "name": "纳提",
+    "englishName": "Wardell",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-man",
+    "portrait": "portraits/npc-man"
+  },
+  {
+    "id": "squ13",
+    "name": "娜塔丽",
+    "englishName": "Tasha",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ13",
+    "portrait": "portraits/squ13"
+  },
+  {
+    "id": "cat13",
+    "name": "男子汗",
+    "englishName": "Stinky",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat13",
+    "portrait": "portraits/cat13"
+  },
+  {
+    "id": "npc-pkn",
+    "name": "南瓜王",
+    "englishName": "Jack",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-pkn",
+    "portrait": "portraits/npc-pkn"
+  },
+  {
+    "id": "bea08",
+    "name": "妮雅",
+    "englishName": "Ursala",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea08",
+    "portrait": "portraits/bea08"
+  },
+  {
+    "id": "npc-mnc",
+    "name": "尼可",
+    "englishName": "Niko",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-mnc",
+    "portrait": "portraits/npc-mnc"
+  },
+  {
+    "id": "der08",
+    "name": "倪家莉",
+    "englishName": "Diana",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der08",
+    "portrait": "portraits/der08"
+  },
+  {
+    "id": "squ19",
+    "name": "霓莎",
+    "englishName": "Cece",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ19",
+    "portrait": "portraits/squ19"
+  },
+  {
+    "id": "cat18",
+    "name": "柠檬娜",
+    "englishName": "Lolly",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat18",
+    "portrait": "portraits/cat18"
+  },
+  {
+    "id": "dog00",
+    "name": "牛奶糖",
+    "englishName": "Goldie",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog00",
+    "portrait": "portraits/dog00"
+  },
+  {
+    "id": "pgn00",
+    "name": "欧若拉",
+    "englishName": "Aurora",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn00",
+    "portrait": "portraits/pgn00"
+  },
+  {
+    "id": "hip08",
+    "name": "欧世豪",
+    "englishName": "Harry",
+    "species": "河马",
+    "category": "villager",
+    "model": "companions/hip08",
+    "portrait": "portraits/hip08"
+  },
+  {
+    "id": "chn10",
+    "name": "帕塔雅",
+    "englishName": "Plucky",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn10",
+    "portrait": "portraits/chn10"
+  },
+  {
+    "id": "wol01",
+    "name": "潘奇隆",
+    "englishName": "Lobo",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol01",
+    "portrait": "portraits/wol01"
+  },
+  {
+    "id": "elp12",
+    "name": "庞克斯",
+    "englishName": "Cyd",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp12",
+    "portrait": "portraits/elp12"
+  },
+  {
+    "id": "cbr15",
+    "name": "胖达",
+    "englishName": "Chester",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr15",
+    "portrait": "portraits/cbr15"
+  },
+  {
+    "id": "ham09",
+    "name": "胖督",
+    "englishName": "Marlo",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham09",
+    "portrait": "portraits/ham09"
+  },
+  {
+    "id": "elp07",
+    "name": "泡芙",
+    "englishName": "Ellie",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp07",
+    "portrait": "portraits/elp07"
+  },
+  {
+    "id": "chn01",
+    "name": "沛希",
+    "englishName": "Benedict",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn01",
+    "portrait": "portraits/chn01"
+  },
+  {
+    "id": "ant02",
+    "name": "佩希",
+    "englishName": "Pango",
+    "species": "食蚁兽",
+    "category": "villager",
+    "model": "companions/ant02",
+    "portrait": "portraits/ant02"
+  },
+  {
+    "id": "dog08",
+    "name": "珮琳",
+    "englishName": "Cookie",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog08",
+    "portrait": "portraits/dog08"
+  },
+  {
+    "id": "rbt05",
+    "name": "珮琪",
+    "englishName": "Gabi",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt05",
+    "portrait": "portraits/rbt05"
+  },
+  {
+    "id": "cat02",
+    "name": "彭花",
+    "englishName": "Rosie",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat02",
+    "portrait": "portraits/cat02"
+  },
+  {
+    "id": "shp12",
+    "name": "彭澎",
+    "englishName": "Muffy",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp12",
+    "portrait": "portraits/shp12"
+  },
+  {
+    "id": "cbr02",
+    "name": "蓬蓬",
+    "englishName": "Poncho",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr02",
+    "portrait": "portraits/cbr02"
+  },
+  {
+    "id": "duk00",
+    "name": "皮蛋",
+    "englishName": "Bill",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk00",
+    "portrait": "portraits/duk00"
+  },
+  {
+    "id": "mnk04",
+    "name": "皮猴",
+    "englishName": "Monty",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk04",
+    "portrait": "portraits/mnk04"
+  },
+  {
+    "id": "crd05",
+    "name": "皮隆孔",
+    "englishName": "Roswell",
+    "species": "鳄鱼",
+    "category": "villager",
+    "model": "companions/crd05",
+    "portrait": "portraits/crd05"
+  },
+  {
+    "id": "shp13",
+    "name": "皮耶罗",
+    "englishName": "Pietro",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp13",
+    "portrait": "portraits/shp13"
+  },
+  {
+    "id": "ham01",
+    "name": "苹果",
+    "englishName": "Apple",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham01",
+    "portrait": "portraits/ham01"
+  },
+  {
+    "id": "mnk01",
+    "name": "七七",
+    "englishName": "Nana",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk01",
+    "portrait": "portraits/mnk01"
+  },
+  {
+    "id": "pgn01",
+    "name": "企鹅达",
+    "englishName": "Roald",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn01",
+    "portrait": "portraits/pgn01"
+  },
+  {
+    "id": "mus18",
+    "name": "起司",
+    "englishName": "Chadder",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus18",
+    "portrait": "portraits/mus18"
+  },
+  {
+    "id": "bea12",
+    "name": "恰咪",
+    "englishName": "Charlise",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea12",
+    "portrait": "portraits/bea12"
+  },
+  {
+    "id": "pig11",
+    "name": "千惠",
+    "englishName": "Peggy",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig11",
+    "portrait": "portraits/pig11"
+  },
+  {
+    "id": "mus12",
+    "name": "茜蓝",
+    "englishName": "Broccolo",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus12",
+    "portrait": "portraits/mus12"
+  },
+  {
+    "id": "flg01",
+    "name": "锵锵",
+    "englishName": "Ribbot",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg01",
+    "portrait": "portraits/flg01"
+  },
+  {
+    "id": "mus09",
+    "name": "悄俊",
+    "englishName": "Rizzo",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus09",
+    "portrait": "portraits/mus09"
+  },
+  {
+    "id": "rbt16",
+    "name": "巧蔻",
+    "englishName": "Carmen",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt16",
+    "portrait": "portraits/rbt16"
+  },
+  {
+    "id": "npc-otg",
+    "name": "巧美",
+    "englishName": "Lottie",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-otg",
+    "portrait": "portraits/npc-otg"
+  },
+  {
+    "id": "cat21",
+    "name": "巧巧",
+    "englishName": "Katt",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat21",
+    "portrait": "portraits/cat21"
+  },
+  {
+    "id": "flg12",
+    "name": "青呱",
+    "englishName": "Prince",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg12",
+    "portrait": "portraits/flg12"
+  },
+  {
+    "id": "duk11",
+    "name": "卿德",
+    "englishName": "Weber",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk11",
+    "portrait": "portraits/duk11"
+  },
+  {
+    "id": "lon02",
+    "name": "晴天",
+    "englishName": "Rex",
+    "species": "狮子",
+    "category": "villager",
+    "model": "companions/lon02",
+    "portrait": "portraits/lon02"
+  },
+  {
+    "id": "brd20",
+    "name": "丘栗",
+    "englishName": "Tulin",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd20",
+    "portrait": "portraits/brd20"
+  },
+  {
+    "id": "duk04",
+    "name": "球藻",
+    "englishName": "Deena",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk04",
+    "portrait": "portraits/duk04"
+  },
+  {
+    "id": "der10",
+    "name": "雀儿喜",
+    "englishName": "Chelsea",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der10",
+    "portrait": "portraits/der10"
+  },
+  {
+    "id": "cbr17",
+    "name": "然姐",
+    "englishName": "Tammy",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr17",
+    "portrait": "portraits/cbr17"
+  },
+  {
+    "id": "npc-slo",
+    "name": "然然",
+    "englishName": "Leif",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-slo",
+    "portrait": "portraits/npc-slo"
+  },
+  {
+    "id": "cat08",
+    "name": "仁平",
+    "englishName": "Moe",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat08",
+    "portrait": "portraits/cat08"
+  },
+  {
+    "id": "pig05",
+    "name": "肉肉",
+    "englishName": "Spork",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig05",
+    "portrait": "portraits/pig05"
+  },
+  {
+    "id": "mus16",
+    "name": "如意",
+    "englishName": "Greta",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus16",
+    "portrait": "portraits/mus16"
+  },
+  {
+    "id": "rbt08",
+    "name": "儒林",
+    "englishName": "Genji",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt08",
+    "portrait": "portraits/rbt08"
+  },
+  {
+    "id": "squ15",
+    "name": "软糖",
+    "englishName": "Poppy",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ15",
+    "portrait": "portraits/squ15"
+  },
+  {
+    "id": "squ02",
+    "name": "瑞奇",
+    "englishName": "Filbert",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ02",
+    "portrait": "portraits/squ02"
+  },
+  {
+    "id": "bea10",
+    "name": "瑞秋",
+    "englishName": "Paula",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea10",
+    "portrait": "portraits/bea10"
+  },
+  {
+    "id": "rbt15",
+    "name": "桑托斯",
+    "englishName": "O'Hare",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt15",
+    "portrait": "portraits/rbt15"
+  },
+  {
+    "id": "der02",
+    "name": "森森",
+    "englishName": "Zell",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der02",
+    "portrait": "portraits/der02"
+  },
+  {
+    "id": "elp04",
+    "name": "莎莉",
+    "englishName": "Margie",
+    "species": "大象",
+    "category": "villager",
+    "model": "companions/elp04",
+    "portrait": "portraits/elp04"
+  },
+  {
+    "id": "cat16",
+    "name": "莎莎",
+    "englishName": "Merry",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat16",
+    "portrait": "portraits/cat16"
+  },
+  {
+    "id": "flg05",
+    "name": "山姆",
+    "englishName": "Wart Jr.",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg05",
+    "portrait": "portraits/flg05"
+  },
+  {
+    "id": "squ08",
+    "name": "闪电",
+    "englishName": "Static",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ08",
+    "portrait": "portraits/squ08"
+  },
+  {
+    "id": "hrs01",
+    "name": "圣萝",
+    "englishName": "Victoria",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs01",
+    "portrait": "portraits/hrs01"
+  },
+  {
+    "id": "pig00",
+    "name": "胜利",
+    "englishName": "Curly",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig00",
+    "portrait": "portraits/pig00"
+  },
+  {
+    "id": "wol00",
+    "name": "施傅",
+    "englishName": "Chief",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol00",
+    "portrait": "portraits/wol00"
+  },
+  {
+    "id": "bul00",
+    "name": "施万德",
+    "englishName": "Angus",
+    "species": "公牛",
+    "category": "villager",
+    "model": "companions/bul00",
+    "portrait": "portraits/bul00"
+  },
+  {
+    "id": "gor10",
+    "name": "史奈鲁",
+    "englishName": "Hans",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor10",
+    "portrait": "portraits/gor10"
+  },
+  {
+    "id": "wol06",
+    "name": "史培亚",
+    "englishName": "Fang",
+    "species": "狼",
+    "category": "villager",
+    "model": "companions/wol06",
+    "portrait": "portraits/wol06"
+  },
+  {
+    "id": "npc-ttlA",
+    "name": "寿伯",
+    "englishName": "Tortimer",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-ttlA",
+    "portrait": "portraits/npc-ttlA"
+  },
+  {
+    "id": "hrs09",
+    "name": "舒芙蕾",
+    "englishName": "Annalise",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs09",
+    "portrait": "portraits/hrs09"
+  },
+  {
+    "id": "brd15",
+    "name": "摔角鸦",
+    "englishName": "Lucha",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd15",
+    "portrait": "portraits/brd15"
+  },
+  {
+    "id": "kal03",
+    "name": "思颖",
+    "englishName": "Sydney",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal03",
+    "portrait": "portraits/kal03"
+  },
+  {
+    "id": "mnk03",
+    "name": "四月",
+    "englishName": "Tammi",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk03",
+    "portrait": "portraits/mnk03"
+  },
+  {
+    "id": "npc-plm",
+    "name": "宋信美",
+    "englishName": "Phyllis",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-plm",
+    "portrait": "portraits/npc-plm"
+  },
+  {
+    "id": "npc-plk",
+    "name": "宋信子",
+    "englishName": "Pelly",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-plk",
+    "portrait": "portraits/npc-plk"
+  },
+  {
+    "id": "duk06",
+    "name": "苏米",
+    "englishName": "Mallary",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk06",
+    "portrait": "portraits/duk06"
+  },
+  {
+    "id": "hrs03",
+    "name": "酥饼",
+    "englishName": "Elmer",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs03",
+    "portrait": "portraits/hrs03"
+  },
+  {
+    "id": "duk15",
+    "name": "素返真",
+    "englishName": "Gloria",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk15",
+    "portrait": "portraits/duk15"
+  },
+  {
+    "id": "squ21",
+    "name": "穗星",
+    "englishName": "Ione",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ21",
+    "portrait": "portraits/squ21"
+  },
+  {
+    "id": "bea00",
+    "name": "太平",
+    "englishName": "Teddy",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea00",
+    "portrait": "portraits/bea00"
+  },
+  {
+    "id": "flg17",
+    "name": "太子",
+    "englishName": "Croque",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg17",
+    "portrait": "portraits/flg17"
+  },
+  {
+    "id": "der05",
+    "name": "汤姆",
+    "englishName": "Lopez",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der05",
+    "portrait": "portraits/der05"
+  },
+  {
+    "id": "bea15",
+    "name": "糖果",
+    "englishName": "Megan",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea15",
+    "portrait": "portraits/bea15"
+  },
+  {
+    "id": "chn05",
+    "name": "陶米咕",
+    "englishName": "Ava",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn05",
+    "portrait": "portraits/chn05"
+  },
+  {
+    "id": "mnk09",
+    "name": "天圣",
+    "englishName": "Tiansheng",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk09",
+    "portrait": "portraits/mnk09"
+  },
+  {
+    "id": "mnk06",
+    "name": "天佑",
+    "englishName": "Flip",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk06",
+    "portrait": "portraits/mnk06"
+  },
+  {
+    "id": "bea02",
+    "name": "铁熊",
+    "englishName": "Curt",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea02",
+    "portrait": "portraits/bea02"
+  },
+  {
+    "id": "kgr05",
+    "name": "童儿",
+    "englishName": "Astrid",
+    "species": "袋鼠",
+    "category": "villager",
+    "model": "companions/kgr05",
+    "portrait": "portraits/kgr05"
+  },
+  {
+    "id": "pig14",
+    "name": "豚皇",
+    "englishName": "Chops",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig14",
+    "portrait": "portraits/pig14"
+  },
+  {
+    "id": "cbr00",
+    "name": "娃娃",
+    "englishName": "Bluebear",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr00",
+    "portrait": "portraits/cbr00"
+  },
+  {
+    "id": "mus15",
+    "name": "丸子",
+    "englishName": "Bettina",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus15",
+    "portrait": "portraits/mus15"
+  },
+  {
+    "id": "gor02",
+    "name": "万泰",
+    "englishName": "Boone",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor02",
+    "portrait": "portraits/gor02"
+  },
+  {
+    "id": "hrs00",
+    "name": "威亚",
+    "englishName": "Buck",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs00",
+    "portrait": "portraits/hrs00"
+  },
+  {
+    "id": "shp11",
+    "name": "温蒂",
+    "englishName": "Frita",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp11",
+    "portrait": "portraits/shp11"
+  },
+  {
+    "id": "goa07",
+    "name": "文青",
+    "englishName": "Kidd",
+    "species": "山羊",
+    "category": "villager",
+    "model": "companions/goa07",
+    "portrait": "portraits/goa07"
+  },
+  {
+    "id": "brd17",
+    "name": "文雄",
+    "englishName": "Peck",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd17",
+    "portrait": "portraits/brd17"
+  },
+  {
+    "id": "dog15",
+    "name": "文字烧",
+    "englishName": "Marcel",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog15",
+    "portrait": "portraits/dog15"
+  },
+  {
+    "id": "chn13",
+    "name": "乌骨鸡",
+    "englishName": "Ken",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn13",
+    "portrait": "portraits/chn13"
+  },
+  {
+    "id": "npc-mka",
+    "name": "无脸猫",
+    "englishName": "Blanca",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-mka",
+    "portrait": "portraits/npc-mka"
+  },
+  {
+    "id": "gor07",
+    "name": "吴紫眉",
+    "englishName": "Violet",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor07",
+    "portrait": "portraits/gor07"
+  },
+  {
+    "id": "flg11",
+    "name": "吸管",
+    "englishName": "Huck",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg11",
+    "portrait": "portraits/flg11"
+  },
+  {
+    "id": "mus03",
+    "name": "西瓜皮",
+    "englishName": "Bree",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus03",
+    "portrait": "portraits/mus03"
+  },
+  {
+    "id": "npc-szo",
+    "name": "西施德",
+    "englishName": "Digby",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-szo",
+    "portrait": "portraits/npc-szo"
+  },
+  {
+    "id": "kgr06",
+    "name": "希薇亚",
+    "englishName": "Sylvia",
+    "species": "袋鼠",
+    "category": "villager",
+    "model": "companions/kgr06",
+    "portrait": "portraits/kgr06"
+  },
+  {
+    "id": "pbr10",
+    "name": "席恩",
+    "englishName": "Quinn",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr10",
+    "portrait": "portraits/pbr10"
+  },
+  {
+    "id": "ost01",
+    "name": "仙仙",
+    "englishName": "Gladys",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost01",
+    "portrait": "portraits/ost01"
+  },
+  {
+    "id": "cbr07",
+    "name": "宪雄",
+    "englishName": "Murphy",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr07",
+    "portrait": "portraits/cbr07"
+  },
+  {
+    "id": "dog07",
+    "name": "香草",
+    "englishName": "Daisy",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog07",
+    "portrait": "portraits/dog07"
+  },
+  {
+    "id": "dog11",
+    "name": "祥平",
+    "englishName": "Frett",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog11",
+    "portrait": "portraits/dog11"
+  },
+  {
+    "id": "npc-ttlB",
+    "name": "橡伯",
+    "englishName": "Cornimer",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-ttlB",
+    "portrait": "portraits/npc-ttlB"
+  },
+  {
+    "id": "dog16",
+    "name": "小八",
+    "englishName": "Benjamin",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog16",
+    "portrait": "portraits/dog16"
+  },
+  {
+    "id": "ost08",
+    "name": "小偲",
+    "englishName": "Blanche",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost08",
+    "portrait": "portraits/ost08"
+  },
+  {
+    "id": "ham07",
+    "name": "小仓",
+    "englishName": "Hamphrey",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham07",
+    "portrait": "portraits/ham07"
+  },
+  {
+    "id": "cbr01",
+    "name": "小枫",
+    "englishName": "Maple",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr01",
+    "portrait": "portraits/cbr01"
+  },
+  {
+    "id": "hrs12",
+    "name": "小冈",
+    "englishName": "Papi",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs12",
+    "portrait": "portraits/hrs12"
+  },
+  {
+    "id": "cat12",
+    "name": "小虎",
+    "englishName": "Tabby",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat12",
+    "portrait": "portraits/cat12"
+  },
+  {
+    "id": "der01",
+    "name": "小健",
+    "englishName": "Bam",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der01",
+    "portrait": "portraits/der01"
+  },
+  {
+    "id": "flg18",
+    "name": "小睫",
+    "englishName": "Diva",
+    "species": "青蛙",
+    "category": "villager",
+    "model": "companions/flg18",
+    "portrait": "portraits/flg18"
+  },
+  {
+    "id": "mus17",
+    "name": "小啾",
+    "englishName": "Penelope",
+    "species": "老鼠",
+    "category": "villager",
+    "model": "companions/mus17",
+    "portrait": "portraits/mus17"
+  },
+  {
+    "id": "brd08",
+    "name": "小酒窝",
+    "englishName": "Midge",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd08",
+    "portrait": "portraits/brd08"
+  },
+  {
+    "id": "ost02",
+    "name": "小岚",
+    "englishName": "Sandy",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost02",
+    "portrait": "portraits/ost02"
+  },
+  {
+    "id": "squ09",
+    "name": "小敏",
+    "englishName": "Mint",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ09",
+    "portrait": "portraits/squ09"
+  },
+  {
+    "id": "squ11",
+    "name": "小芹",
+    "englishName": "Cally",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ11",
+    "portrait": "portraits/squ11"
+  },
+  {
+    "id": "squ00",
+    "name": "小桃",
+    "englishName": "Peanut",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ00",
+    "portrait": "portraits/squ00"
+  },
+  {
+    "id": "duk07",
+    "name": "小鲔",
+    "englishName": "Freckles",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk07",
+    "portrait": "portraits/duk07"
+  },
+  {
+    "id": "tig06",
+    "name": "小雪",
+    "englishName": "Bianca",
+    "species": "老虎",
+    "category": "villager",
+    "model": "companions/tig06",
+    "portrait": "portraits/tig06"
+  },
+  {
+    "id": "hrs08",
+    "name": "小薰",
+    "englishName": "Peaches",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs08",
+    "portrait": "portraits/hrs08"
+  },
+  {
+    "id": "pig13",
+    "name": "小芽",
+    "englishName": "Gala",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig13",
+    "portrait": "portraits/pig13"
+  },
+  {
+    "id": "ant08",
+    "name": "小雅",
+    "englishName": "Annalisa",
+    "species": "食蚁兽",
+    "category": "villager",
+    "model": "companions/ant08",
+    "portrait": "portraits/ant08"
+  },
+  {
+    "id": "squ01",
+    "name": "小影",
+    "englishName": "Blaire",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ01",
+    "portrait": "portraits/squ01"
+  },
+  {
+    "id": "hrs07",
+    "name": "小铀",
+    "englishName": "Cleo",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs07",
+    "portrait": "portraits/hrs07"
+  },
+  {
+    "id": "cat07",
+    "name": "小玉",
+    "englishName": "Purrl",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat07",
+    "portrait": "portraits/cat07"
+  },
+  {
+    "id": "npc-upa",
+    "name": "笑匠",
+    "englishName": "Shrunk",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-upa",
+    "portrait": "portraits/npc-upa"
+  },
+  {
+    "id": "pgn04",
+    "name": "谢宾娜",
+    "englishName": "Friga",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn04",
+    "portrait": "portraits/pgn04"
+  },
+  {
+    "id": "pbr02",
+    "name": "谢博强",
+    "englishName": "Pierce",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr02",
+    "portrait": "portraits/pbr02"
+  },
+  {
+    "id": "pgn07",
+    "name": "信雄",
+    "englishName": "Chabwick",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn07",
+    "portrait": "portraits/pgn07"
+  },
+  {
+    "id": "npc-bpt",
+    "name": "星薇",
+    "englishName": "Katrina",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-bpt",
+    "portrait": "portraits/npc-bpt"
+  },
+  {
+    "id": "bea13",
+    "name": "熊大叔",
+    "englishName": "Beardo",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea13",
+    "portrait": "portraits/bea13"
+  },
+  {
+    "id": "bea14",
+    "name": "熊战士",
+    "englishName": "Klaus",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea14",
+    "portrait": "portraits/bea14"
+  },
+  {
+    "id": "pgn10",
+    "name": "秀益",
+    "englishName": "Boomer",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn10",
+    "portrait": "portraits/pgn10"
+  },
+  {
+    "id": "npc-skk",
+    "name": "薛革",
+    "englishName": "Kicks",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-skk",
+    "portrait": "portraits/npc-skk"
+  },
+  {
+    "id": "goa00",
+    "name": "雪儿",
+    "englishName": "Chevre",
+    "species": "山羊",
+    "category": "villager",
+    "model": "companions/goa00",
+    "portrait": "portraits/goa00"
+  },
+  {
+    "id": "shp09",
+    "name": "雪花",
+    "englishName": "Wendy",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp09",
+    "portrait": "portraits/shp09"
+  },
+  {
+    "id": "mnk07",
+    "name": "雪莉",
+    "englishName": "Shari",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk07",
+    "portrait": "portraits/mnk07"
+  },
+  {
+    "id": "ham06",
+    "name": "雪美",
+    "englishName": "Flurry",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham06",
+    "portrait": "portraits/ham06"
+  },
+  {
+    "id": "gor01",
+    "name": "哑铃",
+    "englishName": "Peewee",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor01",
+    "portrait": "portraits/gor01"
+  },
+  {
+    "id": "duk16",
+    "name": "亚美",
+    "englishName": "Molly",
+    "species": "鸭子",
+    "category": "villager",
+    "model": "companions/duk16",
+    "portrait": "portraits/duk16"
+  },
+  {
+    "id": "lon07",
+    "name": "亚瑟",
+    "englishName": "Rory",
+    "species": "狮子",
+    "category": "villager",
+    "model": "companions/lon07",
+    "portrait": "portraits/lon07"
+  },
+  {
+    "id": "kgr01",
+    "name": "亚莎",
+    "englishName": "Mathilda",
+    "species": "袋鼠",
+    "category": "villager",
+    "model": "companions/kgr01",
+    "portrait": "portraits/kgr01"
+  },
+  {
+    "id": "goa02",
+    "name": "亚星",
+    "englishName": "Billy",
+    "species": "山羊",
+    "category": "villager",
+    "model": "companions/goa02",
+    "portrait": "portraits/goa02"
+  },
+  {
+    "id": "cat19",
+    "name": "艳后",
+    "englishName": "Ankha",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat19",
+    "portrait": "portraits/cat19"
+  },
+  {
+    "id": "ant00",
+    "name": "阳明",
+    "englishName": "Cyrano",
+    "species": "食蚁兽",
+    "category": "villager",
+    "model": "companions/ant00",
+    "portrait": "portraits/ant00"
+  },
+  {
+    "id": "rbt02",
+    "name": "仰韶",
+    "englishName": "Coco",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt02",
+    "portrait": "portraits/rbt02"
+  },
+  {
+    "id": "squ04",
+    "name": "咬咬",
+    "englishName": "Nibbles",
+    "species": "松鼠",
+    "category": "villager",
+    "model": "companions/squ04",
+    "portrait": "portraits/squ04"
+  },
+  {
+    "id": "pig15",
+    "name": "伊比利",
+    "englishName": "Kevin",
+    "species": "猪",
+    "category": "villager",
+    "model": "companions/pig15",
+    "portrait": "portraits/pig15"
+  },
+  {
+    "id": "der00",
+    "name": "音音",
+    "englishName": "Fauna",
+    "species": "小鹿",
+    "category": "villager",
+    "model": "companions/der00",
+    "portrait": "portraits/der00"
+  },
+  {
+    "id": "pbr07",
+    "name": "银阁",
+    "englishName": "Sterling",
+    "species": "雕",
+    "category": "villager",
+    "model": "companions/pbr07",
+    "portrait": "portraits/pbr07"
+  },
+  {
+    "id": "cbr10",
+    "name": "樱桃",
+    "englishName": "Cheri",
+    "species": "小熊",
+    "category": "villager",
+    "model": "companions/cbr10",
+    "portrait": "portraits/cbr10"
+  },
+  {
+    "id": "chn09",
+    "name": "咏旋",
+    "englishName": "Becky",
+    "species": "鸡",
+    "category": "villager",
+    "model": "companions/chn09",
+    "portrait": "portraits/chn09"
+  },
+  {
+    "id": "npc-gstA",
+    "name": "幽幽",
+    "englishName": "Wisp",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-gstA",
+    "portrait": "portraits/npc-gstA"
+  },
+  {
+    "id": "kal00",
+    "name": "尤嘉莉",
+    "englishName": "Yuka",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal00",
+    "portrait": "portraits/kal00"
+  },
+  {
+    "id": "kal07",
+    "name": "游琪",
+    "englishName": "Faith",
+    "species": "树袋熊",
+    "category": "villager",
+    "model": "companions/kal07",
+    "portrait": "portraits/kal07"
+  },
+  {
+    "id": "ant03",
+    "name": "有美",
+    "englishName": "Anabelle",
+    "species": "食蚁兽",
+    "category": "villager",
+    "model": "companions/ant03",
+    "portrait": "portraits/ant03"
+  },
+  {
+    "id": "brd11",
+    "name": "余板",
+    "englishName": "Jacob",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd11",
+    "portrait": "portraits/brd11"
+  },
+  {
+    "id": "cat04",
+    "name": "余子酱",
+    "englishName": "Kiki",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat04",
+    "portrait": "portraits/cat04"
+  },
+  {
+    "id": "npc-bey",
+    "name": "俞司廷",
+    "englishName": "C.J.",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-bey",
+    "portrait": "portraits/npc-bey"
+  },
+  {
+    "id": "npc-bev",
+    "name": "俞正",
+    "englishName": "Chip",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-bev",
+    "portrait": "portraits/npc-bev"
+  },
+  {
+    "id": "brd09",
+    "name": "羽毛",
+    "englishName": "Ace",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd09",
+    "portrait": "portraits/brd09"
+  },
+  {
+    "id": "cow07",
+    "name": "玉兰",
+    "englishName": "Naomi",
+    "species": "母牛",
+    "category": "villager",
+    "model": "companions/cow07",
+    "portrait": "portraits/cow07"
+  },
+  {
+    "id": "cat01",
+    "name": "圆圆",
+    "englishName": "Mitzi",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat01",
+    "portrait": "portraits/cat01"
+  },
+  {
+    "id": "mnk02",
+    "name": "远仁",
+    "englishName": "Simon",
+    "species": "猴子",
+    "category": "villager",
+    "model": "companions/mnk02",
+    "portrait": "portraits/mnk02"
+  },
+  {
+    "id": "dog01",
+    "name": "约翰",
+    "englishName": "Butch",
+    "species": "狗",
+    "category": "villager",
+    "model": "companions/dog01",
+    "portrait": "portraits/dog01"
+  },
+  {
+    "id": "rbt09",
+    "name": "月兔",
+    "englishName": "Ruby",
+    "species": "兔子",
+    "category": "villager",
+    "model": "companions/rbt09",
+    "portrait": "portraits/rbt09"
+  },
+  {
+    "id": "brd01",
+    "name": "喳喳",
+    "englishName": "Robin",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd01",
+    "portrait": "portraits/brd01"
+  },
+  {
+    "id": "shp03",
+    "name": "毡毡",
+    "englishName": "Stella",
+    "species": "绵羊",
+    "category": "villager",
+    "model": "companions/shp03",
+    "portrait": "portraits/shp03"
+  },
+  {
+    "id": "ocp00",
+    "name": "张瑜",
+    "englishName": "Octavian",
+    "species": "章鱼",
+    "category": "villager",
+    "model": "companions/ocp00",
+    "portrait": "portraits/ocp00"
+  },
+  {
+    "id": "ocp01",
+    "name": "章立娜",
+    "englishName": "Marina",
+    "species": "章鱼",
+    "category": "villager",
+    "model": "companions/ocp01",
+    "portrait": "portraits/ocp01"
+  },
+  {
+    "id": "bea06",
+    "name": "爪爪",
+    "englishName": "Groucho",
+    "species": "熊",
+    "category": "villager",
+    "model": "companions/bea06",
+    "portrait": "portraits/bea06"
+  },
+  {
+    "id": "brd16",
+    "name": "赵奇",
+    "englishName": "Jacques",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd16",
+    "portrait": "portraits/brd16"
+  },
+  {
+    "id": "cat11",
+    "name": "珍珍",
+    "englishName": "Monique",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat11",
+    "portrait": "portraits/cat11"
+  },
+  {
+    "id": "brd18",
+    "name": "周之翔",
+    "englishName": "Sparro",
+    "species": "鸟",
+    "category": "villager",
+    "model": "companions/brd18",
+    "portrait": "portraits/brd18"
+  },
+  {
+    "id": "cat14",
+    "name": "朱古莉",
+    "englishName": "Kitty",
+    "species": "猫",
+    "category": "villager",
+    "model": "companions/cat14",
+    "portrait": "portraits/cat14"
+  },
+  {
+    "id": "hrs13",
+    "name": "朱黎",
+    "englishName": "Julian",
+    "species": "马",
+    "category": "villager",
+    "model": "companions/hrs13",
+    "portrait": "portraits/hrs13"
+  },
+  {
+    "id": "ost05",
+    "name": "朱莉亚",
+    "englishName": "Julia",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost05",
+    "portrait": "portraits/ost05"
+  },
+  {
+    "id": "ost06",
+    "name": "朱禄",
+    "englishName": "Cranston",
+    "species": "鸵鸟",
+    "category": "villager",
+    "model": "companions/ost06",
+    "portrait": "portraits/ost06"
+  },
+  {
+    "id": "tig00",
+    "name": "朱穆朗",
+    "englishName": "Rolf",
+    "species": "老虎",
+    "category": "villager",
+    "model": "companions/tig00",
+    "portrait": "portraits/tig00"
+  },
+  {
+    "id": "pgn09",
+    "name": "竹轮",
+    "englishName": "Wade",
+    "species": "企鹅",
+    "category": "villager",
+    "model": "companions/pgn09",
+    "portrait": "portraits/pgn09"
+  },
+  {
+    "id": "gor04",
+    "name": "壮壮",
+    "englishName": "Louie",
+    "species": "猩猩",
+    "category": "villager",
+    "model": "companions/gor04",
+    "portrait": "portraits/gor04"
+  },
+  {
+    "id": "ham05",
+    "name": "子墨",
+    "englishName": "Clay",
+    "species": "仓鼠",
+    "category": "villager",
+    "model": "companions/ham05",
+    "portrait": "portraits/ham05"
+  },
+  {
+    "id": "npc-tkkB",
+    "name": "DJ KK",
+    "englishName": "DJ KK",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-tkkA",
+    "portrait": "portraits/npc-tkkB"
+  },
+  {
+    "id": "npc-tkkA",
+    "name": "K.K.",
+    "englishName": "K.K.",
+    "species": "特殊角色",
+    "category": "special",
+    "model": "companions/npc-tkkA",
+    "portrait": "portraits/npc-tkkA"
+  }
+]

@@ -11,7 +11,7 @@ const installer = fileURLToPath(new URL("../install.sh", import.meta.url));
 const { version } = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 const rawBase = `https://api.github.com/repos/kinglisky/codex-aquarium/contents/v${version}`;
 
-async function fixture(t, { node = true } = {}) {
+async function fixture(t, { node = true, multipart = false } = {}) {
   const directory = await mkdtemp(path.join(tmpdir(), "aquarium-shell-"));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const bin = path.join(directory, "bin");
@@ -55,15 +55,24 @@ exec "$SHELL_REAL_NODE" --import "$SHELL_FIXTURE/version.mjs" "$@"
   }
   const helper = `${log}
 if (args[0] !== '--archive' || !existsSync(args[1])) throw new Error('Archive was not downloaded');
+if (readFileSync(args[1], 'utf8') !== 'fixture archive') throw new Error('Archive was not reconstructed');
 writeFileSync(path.join(root, 'installed.json'), JSON.stringify(args));
 `;
   await writeFile(path.join(files, "install.mjs"), helper);
   await writeFile(path.join(files, "codex-aquarium.tgz"), "fixture archive");
-  const sums = await Promise.all(["install.mjs", "codex-aquarium.tgz"].map(async file => {
-    const digest = createHash("sha256").update(await readFile(path.join(files, file))).digest("hex");
-    return `${digest}  ${file}`;
-  }));
-  await writeFile(path.join(files, "SHA256SUMS"), `${sums.join("\n")}\n`);
+  const parts = multipart ? ['codex-aquarium.tgz.part-000', 'codex-aquarium.tgz.part-001'] : [];
+  if (multipart) {
+    await writeFile(path.join(files, parts[0]), 'fixture ');
+    await writeFile(path.join(files, parts[1]), 'archive');
+  }
+  async function checksum(names = ["install.mjs", "codex-aquarium.tgz", ...parts]) {
+    const sums = await Promise.all(names.map(async file => {
+      const digest = createHash("sha256").update(await readFile(path.join(files, file))).digest("hex");
+      return `${digest}  ${file}`;
+    }));
+    await writeFile(path.join(files, "SHA256SUMS"), `${sums.join("\n")}\n`);
+  }
+  await checksum();
   const env = { ...process.env, PATH: bin, TMPDIR: temporary, SHELL_FIXTURE: directory, SHELL_REAL_NODE: process.execPath };
   function run(extraEnv = {}) {
     return spawnSync("/bin/bash", [installer], { env: { ...env, ...extraEnv }, encoding: "utf8", timeout: 10_000 });
@@ -72,7 +81,7 @@ writeFileSync(path.join(root, 'installed.json'), JSON.stringify(args));
     await assert.rejects(readFile(path.join(directory, "installed.json")), { code: "ENOENT" });
     assert.deepEqual(await readdir(temporary), []);
   }
-  return { directory, files, bin, temporary, run, assertNoInstall };
+  return { directory, files, bin, temporary, parts, checksum, run, assertNoInstall };
 }
 
 test("没有 Node.js 时提示安装并在下载之前退出", async t => {
@@ -151,4 +160,55 @@ test("直接从固定版本 raw 下载并校验后调用内部安装器", async 
   assert.deepEqual(await readdir(f.temporary), []);
   const codex = await readFile(path.join(f.directory, "codex.jsonl"), "utf8");
   assert.deepEqual(JSON.parse(codex.trim()), ["plugin", "add", "--help"]);
+});
+
+test("分片安装逐片下载校验并重组整包，不请求超过 raw 限制的完整归档", async t => {
+  const f = await fixture(t, { multipart: true });
+  const result = f.run();
+  assert.equal(result.status, 0, result.stderr);
+  const downloads = (await readFile(path.join(f.directory, "downloads.jsonl"), "utf8")).trim().split("\n").map(line => JSON.parse(line));
+  assert.deepEqual(downloads.map(args => args.at(-1)), ["SHA256SUMS", "install.mjs", ...f.parts].map(file => `${rawBase}/${file}?ref=distribution`));
+  assert.deepEqual(await readdir(f.temporary), []);
+  assert.ok(await readFile(path.join(f.directory, "installed.json"), "utf8"));
+});
+
+test("分片校验失败立即停止，不下载后续分片或执行安装", async t => {
+  const f = await fixture(t, { multipart: true });
+  await writeFile(path.join(f.files, f.parts[0]), "tampered");
+  const result = f.run();
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /part-000.*SHA-256/);
+  const downloads = await readFile(path.join(f.directory, "downloads.jsonl"), "utf8");
+  assert.ok(!downloads.includes('part-001'));
+  await f.assertNoInstall();
+});
+
+test("各分片校验通过但重组归档校验不符时拒绝安装", async t => {
+  const f = await fixture(t, { multipart: true });
+  await writeFile(path.join(f.files, "codex-aquarium.tgz"), "different archive");
+  await f.checksum();
+  const result = f.run();
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /codex-aquarium\.tgz 的 SHA-256/);
+  await f.assertNoInstall();
+});
+
+test("校验清单缺少中间分片时不开始下载分片", async t => {
+  const f = await fixture(t, { multipart: true });
+  await f.checksum(["install.mjs", "codex-aquarium.tgz", f.parts[1]]);
+  const result = f.run();
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /校验清单格式无效/);
+  const downloads = await readFile(path.join(f.directory, "downloads.jsonl"), "utf8");
+  assert.ok(!downloads.includes('part-'));
+  await f.assertNoInstall();
+});
+
+test("校验清单含重复分片时拒绝安装", async t => {
+  const f = await fixture(t, { multipart: true });
+  await f.checksum(["install.mjs", "codex-aquarium.tgz", ...f.parts, f.parts[0]]);
+  const result = f.run();
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /校验清单格式无效/);
+  await f.assertNoInstall();
 });

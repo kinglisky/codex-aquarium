@@ -88,6 +88,10 @@ async function bindHookRuntime(directory) {
   for (const groups of Object.values(configuration.hooks ?? {})) {
     for (const hook of groups.flatMap(group => group.hooks)) {
       if (hook.type !== "command") continue;
+      if (hook.command === '/bin/sh "${PLUGIN_ROOT}/hooks/run.sh"') {
+        hook.command = `${runtime} "\${PLUGIN_ROOT}/hooks/observe.mjs"`;
+        continue;
+      }
       hook.command = hook.command.replace(/^node(?=\s)/, () => runtime);
     }
   }

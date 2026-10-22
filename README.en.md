@@ -1,109 +1,97 @@
-# Codex Aquarium · 泊
+# Codex Aquarium
 
 [中文](README.md) · English
 
-I've been tinkering with aquariums lately. Waiting for an agent to finish gets boring, so I turned those sessions into a little fish tank. The agent works; I get to slack off and watch fish. Works for me.
+**Your agent works. You watch fish.**
 
-The tank now lives in an ocean gallery: one visitor stands before a huge aquarium, watching fish swim through deep blue water as the agent works. The viewing angle follows Animal Crossing's museum. Fish and the visitor now use original Animal Crossing: New Horizons meshes and textures, alongside this project's gallery, glass and water lighting.
+Turn active Codex sessions into fish in a 3D aquarium. Bring an Animal Crossing companion and watch the fish while your agent works.
 
-**Local aquarium: [http://127.0.0.1:43187/](http://127.0.0.1:43187/)**
+![Current gallery: a visitor in a floral dress and Isabelle watch fish among plants and reefs](docs/screenshots/museum-gallery.jpg)
 
-After automatic startup is configured on macOS, opening Codex starts the aquarium silently, usually within 5 seconds. No chat prompt is needed, and no page opens automatically. Use the address printed by the installer.
+*Rendered locally with the current version, using demo fish.*
 
-![Local ocean gallery render: one visitor before the aquarium, with demo fish inside](docs/screenshots/museum-gallery.jpg)
-
-The screenshot uses demo fish, not live session data.
-
-Each active session gets a fish; concurrent tools and subagents become smaller followers. When work ends, the fish hides; resume that session and the same fish returns. Opening a chat, switching tabs or focusing its input does not count as activity. There are 10 fish converted from original Animal Crossing assets. With no active sessions, the live gallery has no fish.
-
-Press A / D, the arrow keys or the on-screen left and right buttons to walk along the glass. Use the approach button for a closer view. Drag to look around, scroll to zoom and click a fish to see its session. The gallery handbook shows live status and a fish guide, with controls for lighting and current. Deep blue water, overhead light beams and floor caustics move slowly around the tank. You can also pause the fish or enter native fullscreen.
+- **Live schools**: an active session is a large fish; tools and subagents are smaller followers. Fish leave when idle, and the same fish returns when the session resumes.
+- **Free swimming**: 80 Animal Crossing fish models roam and avoid obstacles, independently of the visitor. Live sessions use medium or large species; demo mode includes all species.
+- **Animal companions**: choose a girl or boy and one of 482 companions. Run sideways along the glass or stop to watch.
+- **Six scenery presets**: the complete garden, tall plants, coral reefs, rocks, a grass carpet or a bare tank. Plants sway in the current.
 
 <details>
-<summary>Earlier planted tank screenshots and demo</summary>
+<summary>See the tall plant meadow</summary>
 
-These show the 0.1.x planted tank, kept for comparison.
-
-![Earlier planted tank: feathery plants, a foreground carpet and live session fish](docs/screenshots/aquarium-live.png)
-
-![Earlier planted tank: opening the aquarium from Codex, at 4× speed](docs/videos/demo-4x.webp)
-
-Earlier demo at 4× speed, about 23 seconds · [Higher-resolution WebM video](docs/videos/demo-4x.webm)
+![Current tall plant meadow: layered green plants and swimming fish](docs/screenshots/museum-meadow.jpg)
 
 </details>
 
-The gallery includes great white shark, whale shark, ocean sunfish, oarfish, red snapper, anchovy, barreleye, koi, goldfish and horse mackerel. Converted GLB files retain original meshes, UVs, skeletons and embedded textures. Swimming, turning and walking are procedural, rather than original game animation clips. The visitor uses an original clothing mesh and texture with a custom blue tint. Assets load locally with the page; no asset website connection is needed at runtime.
+## Install
 
-Fish anticipate relative motion, slow down and steer around one another, the glass and the rocks. In tight spaces, they briefly move aside or back up to make room before turning. Followers keep space according to their size. Rapier handles collisions, with each fish and its collider turning together. Species have distinct tail and fin movements, and their bodies bend gently through turns.
+Requires Node.js 22.12+, Codex Desktop with plugin and Hooks support, the Codex CLI, Bash, curl, tar and a WebGL 2 browser. Verified on macOS; Linux still needs testing.
 
-Sources include [Models Resource](https://models.spriters-resource.com/nintendo_switch/animalcrossingnewhorizons/) and public Animal Crossing asset mirrors. See the [asset notice](public/models/acnh/NOTICE.md) for provenance and conversion details. Game models and textures belong to Nintendo and their respective owners; the code's MIT license does not cover them.
+### Install from a Codex plugin source
 
-## Get a tank
+Add the GitHub source:
 
-You'll need Codex Desktop with plugin and Hooks support, the Codex CLI, Node.js 22.12+ and a browser with WebGL 2. Verified on macOS; other desktop platforms still need testing.
+```bash
+codex plugin marketplace add kinglisky/codex-aquarium --ref marketplace
+```
 
-### Let Codex install it
+Restart Codex, select the **Codex Aquarium** source on the Plugins page and install the aquarium. Run its **Setup** skill once, or ask Codex to "Complete the initial setup for Codex Aquarium", then personally review and trust Hooks. The marketplace package includes the built interface and models; no compilation is needed.
+
+Refresh the source, then update the plugin in Codex:
+
+```bash
+codex plugin marketplace upgrade codex-aquarium-local
+```
+
+If you installed with the script below, you can keep using it to update. To switch to the GitHub source, first run `codex plugin marketplace remove codex-aquarium-local`, then add the source above.
+
+### Ask your agent
 
 Copy this into a local Codex session:
 
 ```text
-Please install or update Codex Aquarium: https://github.com/kinglisky/codex-aquarium
-Check Node.js 22.12+, the Codex CLI, Bash, curl and tar, and confirm codex plugin add --help works.
-If Node.js is missing or too old, direct me to https://nodejs.org/. Do not install system software automatically.
-Download in a temporary directory. After a successful download, read the script, then run bash aquarium-install.sh:
+Install or update Codex Aquarium: https://github.com/kinglisky/codex-aquarium
+Check Node.js 22.12+, the Codex CLI, Bash, curl, tar and codex plugin add --help.
+If Node.js is missing or too old, direct me to https://nodejs.org/.
+Download this script in a temporary directory, read it, then run bash aquarium-install.sh:
 curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh
-Keep SHA-256 verification and use codex plugin list --json to confirm codex-aquarium@codex-aquarium-local is installed.
-Use the same Node.js executable that ran the installer to run server/cli.mjs status from the installation directory, then check /api/health at the actual address.
-On macOS, also confirm automatic startup was configured successfully.
-Open the aquarium in my existing default browser. Report the version, installation directory and address without displaying stop credentials.
+Keep SHA-256 verification and confirm codex-aquarium@codex-aquarium-local is installed.
+From the installation directory, use the same Node.js executable as the installer to check server/cli.mjs status and /api/health at the actual address. On macOS, also check automatic startup.
 Remind me to restart Codex, enable Aquarium and personally review and trust Hooks. Do not confirm trust for me.
-After trust is confirmed, verify real session fish and concurrent tool and subagent followers.
-Fish should hide when idle and return with the same appearance when the session resumes.
-Report failures, including automatic startup failures. Do not substitute demo fish for real verification.
+After trust is confirmed, verify real task fish and concurrent tool and subagent followers. Do not substitute demo fish.
+Open the aquarium in my existing default browser. Report the version from the plugin manifest, the installation directory and the address. Do not display stop credentials.
 ```
 
-### Or run one command
-
-Paste into a macOS / Linux terminal:
+### Install with curl
 
 ```bash
 curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh && bash aquarium-install.sh
 ```
 
-This installs a prebuilt plugin from GitHub raw files and checks SHA-256; no local build is needed. If Node.js is missing or too old, the script asks you to install it and exits. Use the same prompt or command to update older versions. Version 0.1.5 adds macOS automatic startup while preserving runtime data and Hooks trust records.
+Installs a prebuilt package from GitHub raw files with SHA-256 verification. No local build is needed. The script exits with installation guidance if a suitable Node.js is missing. Use the same prompt or command to update. Keep the installation directory: `~/.codex/aquarium-install/codex-aquarium` by default, or under your custom `CODEX_HOME`.
 
-Keep the installation directory, normally `~/.codex/aquarium-install/codex-aquarium`, or under your custom `CODEX_HOME`. If automatic startup configuration fails, run `node server/autostart.mjs enable` from that directory to retry. If GitHub reports an API rate limit, try again later; keep SHA-256 verification enabled.
+## Watch the fish
 
-The installer binds Hooks to the Node.js executable that successfully runs the installation, so background hooks do not pick another broken runtime. Reinstall the plugin if you move Node.js. When its executable path changes, review and trust the updated hooks in Codex.
+1. Restart Codex. Under **Customize → Plugins → Codex Aquarium**, enable Aquarium and use the Hooks gear to review and trust the hooks yourself.
+2. After initial setup on macOS, opening Codex starts the service silently within about 5 seconds, without opening a page. On other systems, a trusted session-start Hook starts it; you can also use `$aquarium`.
+3. Open the **[local aquarium](http://127.0.0.1:43187/)**; use the address printed by the installer. Give your agent a task and fish swim in. No active tasks means no fish; focusing the input does not count as activity.
 
-## Connect your sessions
+**Language**: the interface starts in your browser's language and supports Chinese and English. Use the menu in the top right to switch; your choice is saved.
 
-Restart Codex → **Customize → Plugins → Codex Aquarium · 会话鱼缸** → enable Aquarium → click the Hooks gear to review and trust the hooks.
-
-![Plugin settings: enable Aquarium and use the Hooks gear to review trust](docs/screenshots/plugin-configuration.png)
-
-Open the local link above and give the agent some work. You can also use `$aquarium` to open the page; on Linux, use it to start the service first.
-
-On macOS, if you stop the aquarium manually, it stays stopped until you fully quit and reopen Codex. An empty tank usually means no sessions are active. Check that Hooks are trusted, then continue a session and trigger a tool call.
-
-If a task is running but no fish appear, check Hooks trust, confirm that the absolute Node.js path in the command still works, and check whether `/api/state` updates `lastEventAt` during tool calls. A page that opens confirms the server is running; it does not confirm that session events are connected.
-
-Local sessions only. No API key, no saved chat content, no history scanning and no uploaded runtime data.
+**Controls**: A / D or Left/Right arrow keys to run sideways, drag to look around, scroll to zoom, and click a fish to see its session. The handbook lets you choose characters, scenery and demo mode. In native fullscreen, move the pointer or press Tab to reveal controls.
 
 <details>
-<summary>Stopping and uninstalling</summary>
+<summary>Settings screenshot and troubleshooting</summary>
 
-To stop only the aquarium, run `node server/cli.mjs stop` from the installation directory. Before uninstalling, disable automatic startup and stop the service, then remove the plugin:
+![Plugin settings: Aquarium skill toggle and Hooks gear; the screenshot shows an earlier display name](docs/screenshots/plugin-configuration.png)
 
-```bash
-aquarium_root="${CODEX_HOME:-$HOME/.codex}/aquarium-install/codex-aquarium"
-node "$aquarium_root/server/autostart.mjs" disable
-node "$aquarium_root/server/cli.mjs" stop
-codex plugin remove codex-aquarium@codex-aquarium-local
-codex plugin marketplace remove codex-aquarium-local
-```
-
-You can then delete the installation directory. Runtime data is not removed automatically.
+- **Page will not open**: start with `$aquarium`. If macOS automatic startup failed, run `node server/autostart.mjs enable` from the installation directory.
+- **Task running, but no fish**: check Hooks trust and their Node.js path. Confirm `/api/state` updates `lastEventAt` during tool calls. An open page alone does not confirm session events are connected.
+- **Stop manually**: run `node server/cli.mjs stop` from the installation directory. On macOS, it stays stopped until you fully quit and reopen Codex.
+- **Node.js moved**: reinstall the plugin, then review and trust the updated hooks.
+- **GitHub API rate limit**: retry once your quota resets; keep SHA-256 verification enabled.
 
 </details>
 
-[Changelog](CHANGELOG.md) · [Code license: MIT](LICENSE) · [Game asset notice](public/models/acnh/NOTICE.md)
+Local sessions only. No API key, saved chat content, history scanning or uploaded runtime data.
+
+Code is [MIT licensed](LICENSE). Animal Crossing models and textures belong to Nintendo and their respective owners; see the [asset notice](public/models/acnh/NOTICE.md).

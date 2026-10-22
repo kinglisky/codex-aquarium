@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ES2022", "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext", "moduleResolution": "Bundler", "strict": true,
-    "skipLibCheck": true, "verbatimModuleSyntax": true, "noEmit": true
+    "skipLibCheck": true, "verbatimModuleSyntax": true, "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src", "shared"]
 }

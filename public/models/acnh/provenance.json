@@ -95,7 +95,7 @@
   ],
   "character": {
     "file": "character.glb",
-    "sha256": "3331ee7a18e95f0709018d347d02661937d0f1be3ac6c8fee028a6091bf76b5c",
+    "sha256": "d1a03eafac17fc461e4906fd1ca7fcfcfe2bd60b48549dc0eb5fe38ad3fa0974",
     "meshSource": "https://drive.google.com/drive/folders/1LrMZhtm5gdCf-LQesMfEgTvmxDwlkgyo",
     "textureSources": [
       {

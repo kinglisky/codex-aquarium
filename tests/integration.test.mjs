@@ -36,7 +36,7 @@ test("正式服务提供完整 GLB，允许内嵌贴图与 WebAssembly，保持 
 
 async function observe(directory, event, sessionId, fields = {}) {
   const child = spawn(process.execPath, [observer], {
-    env: { ...process.env, AQUARIUM_DATA_DIR: directory },
+    env: { ...process.env, AQUARIUM_DATA_DIR: directory, AQUARIUM_AUTOSTART: "0" },
     stdio: ["pipe", "pipe", "pipe"],
   });
   let stdout = "";

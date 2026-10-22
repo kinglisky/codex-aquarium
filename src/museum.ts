@@ -1,6 +1,10 @@
 import * as THREE from "three";
-import { mergeVertices } from "three/addons/utils/BufferGeometryUtils.js";
-import { createMuseumVisitor } from "./museum-visitor";
+import { createMuseumVisitor } from "./museum-visitor.ts";
+import { createCompanionFollowing } from "./companion-following.ts";
+import { createMuseumScenery, sandHeight, SCENERY_MODELS } from "./museum-scenery.ts";
+import { DEFAULT_SCENERY_STYLE } from "./scenery-presets.ts";
+import type { SceneryStyle } from "./scenery-presets.ts";
+import { GALLERY_FLOOR, TANK_DEPTH, TANK_HALF_WIDTH, TANK_WIDTH, VISITOR_DEPTH } from "./aquarium-layout.ts";
 
 const worldVertex = `
   varying vec2 vUv;
@@ -31,11 +35,13 @@ function random(seed: number) {
   return value - Math.floor(value);
 }
 
-export function createMuseum(visitorTemplate: THREE.Group) {
+export function createMuseum(visitorTemplate: THREE.Group, companionTemplate: THREE.Group | null = null, sceneryTemplates: Map<string, THREE.Group> = new Map(), sceneryStyle: SceneryStyle = DEFAULT_SCENERY_STYLE) {
   const group = new THREE.Group();
   group.name = "Moonlit aquarium hall";
   const resources = new Set<{ dispose(): void }>();
-  const obstacles: THREE.Mesh[] = [];
+  let scenery = createMuseumScenery(sceneryTemplates, sceneryStyle);
+  group.add(scenery.group);
+  const obstacles: THREE.Mesh[] = [...scenery.obstacles];
   const uniforms = { time: { value: 0 }, light: { value: 1 } };
   function mesh<G extends THREE.BufferGeometry, M extends THREE.Material>(geometry: G, material: M, parent: THREE.Object3D = group) {
     resources.add(geometry);
@@ -77,15 +83,15 @@ export function createMuseum(visitorTemplate: THREE.Group) {
   const dark = standard("#080f25", .8);
   const silver = standard("#698a9d", .32, .8);
   const glow = new THREE.MeshBasicMaterial({ color: "#68b8f0", transparent: true, opacity: .5, toneMapped: false });
-  box([20.3, .72, 7.1], [0, .08, -2.85], stone);
-  box([20.5, .16, 7.3], [0, -.2, -2.85], dark);
-  box([18.45, .12, .32], [0, .49, .02], trim);
-  box([18.25, .024, .035], [0, .565, .19], glow);
-  box([20.3, .8, 7.1], [0, 8.85, -2.85], dark);
+  box([TANK_WIDTH + 2.3, .72, 7.1], [0, .08, -2.85], stone);
+  box([TANK_WIDTH + 2.5, .16, 7.3], [0, -.2, -2.85], dark);
+  box([TANK_WIDTH + .45, .12, .32], [0, .49, .02], trim);
+  box([TANK_WIDTH + .25, .024, .035], [0, .565, .19], glow);
+  box([TANK_WIDTH + 2.3, .8, 7.1], [0, 8.85, -2.85], dark);
   for (const side of [-1, 1]) {
-    box([.65, 9.3, 7.5], [side * 9.65, 4.25, -2.9], dark);
-    box([.16, 8.2, .2], [side * 9.22, 4.55, .08], trim);
-    box([.018, 7.95, .018], [side * 9.12, 4.5, .15], glow);
+    box([.65, 9.3, 7.5], [side * (TANK_HALF_WIDTH + .65), 4.25, -2.9], dark);
+    box([.16, 8.2, .2], [side * (TANK_HALF_WIDTH + .22), 4.55, .08], trim);
+    box([.018, 7.95, .018], [side * (TANK_HALF_WIDTH + .12), 4.5, .15], glow);
   }
 
   const wallMaterial = new THREE.ShaderMaterial({
@@ -107,11 +113,12 @@ export function createMuseum(visitorTemplate: THREE.Group) {
       }
     `,
   });
-  box([18.7, 8.1, .18], [0, 4.5, -6.12], wallMaterial);
+  box([TANK_WIDTH + .7, 8.1, .18], [0, 4.5, -6.12], wallMaterial);
   const portholeInterior = standard("#101a3a", .55, .15);
   const portholeRim = standard("#7c8c92", .36, .7);
-  for (let index = 0; index < 7; index += 1) {
-    const x = -7.5 + index * 2.5;
+  const portholes = Math.floor(TANK_WIDTH / 2.5);
+  for (let index = 0; index < portholes; index += 1) {
+    const x = (index - (portholes - 1) / 2) * 2.5;
     const radius = .48 + Math.sin(index * .9) * .055;
     const opening = mesh(new THREE.CircleGeometry(radius, 48), portholeInterior);
     opening.position.set(x, 6.85, -5.99);
@@ -125,54 +132,59 @@ export function createMuseum(visitorTemplate: THREE.Group) {
       bolt.scale.z = .45;
     }
   }
-  for (const x of [-6.25, -3.75, -1.25, 1.25, 3.75, 6.25]) {
+  for (let index = 1; index < portholes; index += 1) {
+    const x = (index - portholes / 2) * 2.5;
     box([.016, 7.7, .025], [x, 4.5, -6], trim);
   }
 
-  const bed = mesh(new THREE.PlaneGeometry(18.1, 5.95, 64, 24), surface("#374d6e", .3));
+  const sandMaterial = surface("#ffffff", .34);
+  sandMaterial.vertexColors = true;
+  sceneryTemplates.get(SCENERY_MODELS.sand)?.traverse(object => {
+    if (!(object instanceof THREE.Mesh)) return;
+    const material = Array.isArray(object.material) ? object.material[0] : object.material;
+    if (!(material instanceof THREE.MeshStandardMaterial) || !material.map) return;
+    const texture = material.map.clone();
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(TANK_WIDTH / 3, 2);
+    texture.needsUpdate = true;
+    resources.add(texture);
+    sandMaterial.map = texture;
+  });
+  const bed = mesh(new THREE.PlaneGeometry(TANK_WIDTH + .1, 5.95, Math.ceil(TANK_WIDTH * 3.5), 24), sandMaterial);
   const bedPositions = bed.geometry.getAttribute("position");
+  const bedColors = new Float32Array(bedPositions.count * 3);
+  const sandTint = new THREE.Color("#bdc9be");
+  const reefTint = new THREE.Color("#647e7b");
   for (let index = 0; index < bedPositions.count; index += 1) {
     const x = bedPositions.getX(index);
-    const y = bedPositions.getY(index);
-    bedPositions.setZ(index, Math.sin(x * .8 + y * .7) * .035 + Math.cos(x * .4 - y) * .025);
+    const z = -bedPositions.getY(index) - 3.04;
+    const height = sandHeight(x, z);
+    bedPositions.setZ(index, height - .46);
+    const shoulder = THREE.MathUtils.clamp((height - .51) / .26, 0, 1);
+    const depth = 1 - THREE.MathUtils.smoothstep(z, -5.9, -.8);
+    sandTint.clone().lerp(reefTint, shoulder * .55 + depth * .24).toArray(bedColors, index * 3);
   }
+  bed.geometry.setAttribute("color", new THREE.BufferAttribute(bedColors, 3));
   bed.geometry.computeVertexNormals();
   bed.rotation.x = -Math.PI / 2;
   bed.position.set(0, .46, -3.04);
+  bed.name = "Undulating sand bed";
+  const bareMaterial = surface("#20365c", .4);
+  bareMaterial.roughness = .2;
+  bareMaterial.metalness = .15;
+  const bareFloor = mesh(new THREE.BoxGeometry(TANK_WIDTH, .04, 5.98), bareMaterial);
+  bareFloor.position.set(0, .53, -3.01);
+  bareFloor.name = "Bare glass tank floor";
+  bed.visible = sceneryStyle !== "bare";
+  bareFloor.visible = sceneryStyle === "bare";
+  obstacles.push(sceneryStyle === "bare" ? bareFloor : bed);
 
-  const rockMaterial = surface("#1e3155", .55);
-  const rockLayouts = [
-    [-6.9, .75, -4.7, 1.7, .65, 1.05], [-5.4, .64, -4.95, .85, .5, .7],
-    [-2.9, .9, -4.1, 1.65, .9, 1.25], [-1.55, .8, -4.8, 1.35, .9, .8],
-    [-3.7, .68, -3.25, .95, .55, .7], [.3, .64, -5.1, 1.1, .45, .75],
-    [5.7, .76, -4.45, 1.6, .75, 1.15], [7.1, .68, -4.9, 1., .55, .85],
-  ];
-  for (const [index, layout] of rockLayouts.entries()) {
-    const original = new THREE.IcosahedronGeometry(1, 2);
-    const vertices = original.getAttribute("position");
-    for (let vertex = 0; vertex < vertices.count; vertex += 1) {
-      const point = new THREE.Vector3().fromBufferAttribute(vertices, vertex);
-      const distortion = .88 + Math.sin(point.x * 4.1 + index) * Math.cos(point.z * 5.3 + point.y) * .13;
-      vertices.setXYZ(vertex, point.x * distortion, point.y * distortion, point.z * distortion);
-    }
-    original.deleteAttribute("normal");
-    original.deleteAttribute("uv");
-    const geometry = mergeVertices(original);
-    original.dispose();
-    geometry.computeVertexNormals();
-    const rock = mesh(geometry, rockMaterial);
-    obstacles.push(rock);
-    rock.position.set(layout[0], layout[1], layout[2]);
-    rock.scale.set(layout[3], layout[4], layout[5]);
-    rock.rotation.set(.06 * index, index * 1.2, Math.sin(index) * .16);
-  }
-
-  const floor = mesh(new THREE.PlaneGeometry(40, 32), standard("#0b173b", .72, .12));
+  const floor = mesh(new THREE.PlaneGeometry(GALLERY_FLOOR.width, GALLERY_FLOOR.depth), standard("#0b173b", .72, .12));
   floor.rotation.x = -Math.PI / 2;
-  floor.position.set(0, -.225, 6);
+  floor.position.set(0, GALLERY_FLOOR.y, GALLERY_FLOOR.z);
   const tileLines: number[] = [];
-  for (let x = -18; x <= 18; x += 3) tileLines.push(x, -.219, -.5, x, -.219, 20);
-  for (let z = 1; z <= 20; z += 3) tileLines.push(-20, -.219, z, 20, -.219, z);
+  for (let x = -TANK_HALF_WIDTH - 9; x <= TANK_HALF_WIDTH + 9; x += 3) tileLines.push(x, -.219, -.5, x, -.219, 20);
+  for (let z = 1; z <= 20; z += 3) tileLines.push(-TANK_HALF_WIDTH - 11, -.219, z, TANK_HALF_WIDTH + 11, -.219, z);
   const tileGeometry = new THREE.BufferGeometry();
   tileGeometry.setAttribute("position", new THREE.Float32BufferAttribute(tileLines, 3));
   const tileMaterial = new THREE.LineBasicMaterial({ color: "#11213c", transparent: true, opacity: .3 });
@@ -180,9 +192,9 @@ export function createMuseum(visitorTemplate: THREE.Group) {
   resources.add(tileMaterial);
   group.add(new THREE.LineSegments(tileGeometry, tileMaterial));
   for (const side of [-1, 1]) {
-    box([4.5, 10.5, 9], [side * 12.1, 4.95, 2.5], standard("#111d37", .9));
-    box([.1, 3.2, 9], [side * 9.81, 1.38, 2.4], trim);
-    box([.08, .04, 9], [side * 9.74, 3.02, 2.4], silver);
+    box([4.5, 10.5, 9], [side * (TANK_HALF_WIDTH + 3.1), 4.95, 2.5], standard("#111d37", .9));
+    box([.1, 3.2, 9], [side * (TANK_HALF_WIDTH + .81), 1.38, 2.4], trim);
+    box([.08, .04, 9], [side * (TANK_HALF_WIDTH + .74), 3.02, 2.4], silver);
   }
   const causticMaterial = new THREE.ShaderMaterial({
     uniforms, vertexShader: worldVertex,
@@ -194,11 +206,12 @@ export function createMuseum(visitorTemplate: THREE.Group) {
       void main() {
         vec2 p = vWorld.xz;
         vec2 drift = vec2(sin(p.y * .64 + time * .13), cos(p.x * .53 - time * .11)) * .55;
-        vec2 central = (p - vec2(-.4, 2.5) + drift) * vec2(.28, .5);
-        vec2 left = (p - vec2(-5.5, 1.) - drift) * vec2(.36, .44);
-        vec2 right = (p - vec2(5.2, 1.7) + drift.yx) * vec2(.4, .48);
+        vec2 poolPosition = vec2(p.x * ${(18 / TANK_WIDTH).toFixed(3)}, p.y);
+        vec2 central = (poolPosition - vec2(-.4, 2.5) + drift) * vec2(.28, .5);
+        vec2 left = (poolPosition - vec2(-5.5, 1.) - drift) * vec2(.36, .44);
+        vec2 right = (poolPosition - vec2(5.2, 1.7) + drift.yx) * vec2(.4, .48);
         float pools = exp(-dot(central, central)) + exp(-dot(left, left)) * .7 + exp(-dot(right, right)) * .65;
-        float edge = exp(-pow(abs(p.x / 9.5), 6.)) * (1. - smoothstep(5., 10., p.y));
+        float edge = exp(-pow(abs(p.x / ${(TANK_HALF_WIDTH + .5).toFixed(1)}), 6.)) * (1. - smoothstep(5., 10., p.y));
         float pattern = caustic(p * .83, time);
         float ripples = .6 + .4 * sin(p.x * 1.2 + sin(p.y * 1.7 + time * .2));
         vec3 color = mix(vec3(.025, .08, .85), vec3(.07, .32, 1.), pattern);
@@ -208,7 +221,7 @@ export function createMuseum(visitorTemplate: THREE.Group) {
       }
     `,
   });
-  const caustics = mesh(new THREE.PlaneGeometry(30, 19), causticMaterial);
+  const caustics = mesh(new THREE.PlaneGeometry(TANK_WIDTH + 12, 19), causticMaterial);
   caustics.rotation.x = -Math.PI / 2;
   caustics.position.set(0, -.212, 5.5);
   caustics.renderOrder = 1;
@@ -240,11 +253,14 @@ export function createMuseum(visitorTemplate: THREE.Group) {
     pane.rotation.y = rotation;
     pane.renderOrder = 12;
   }
-  glass(18.2, 0, .085, 0);
-  glass(6.05, -9.09, -2.95, -Math.PI / 2);
-  glass(6.05, 9.09, -2.95, Math.PI / 2);
+  glass(TANK_WIDTH + .2, 0, .085, 0);
+  glass(TANK_DEPTH + .05, -TANK_HALF_WIDTH - .09, -2.95, -Math.PI / 2);
+  glass(TANK_DEPTH + .05, TANK_HALF_WIDTH + .09, -2.95, Math.PI / 2);
   const seam = new THREE.MeshBasicMaterial({ color: "#80b8df", transparent: true, opacity: .15, depthWrite: false });
-  for (const x of [-6.8, 6.8]) box([.014, 7.95, .025], [x, 4.5, .108], seam);
+  for (let x = -TANK_HALF_WIDTH + 5; x < TANK_HALF_WIDTH; x += 5) {
+    if (x === 0) continue;
+    box([.014, 7.95, .025], [x, 4.5, .108], seam);
+  }
 
   const waterMaterial = new THREE.ShaderMaterial({
     uniforms, vertexShader: worldVertex,
@@ -260,11 +276,11 @@ export function createMuseum(visitorTemplate: THREE.Group) {
       }
     `,
   });
-  const water = mesh(new THREE.PlaneGeometry(18.1, 6), waterMaterial);
+  const water = mesh(new THREE.PlaneGeometry(TANK_WIDTH + .1, TANK_DEPTH), waterMaterial);
   water.rotation.x = -Math.PI / 2;
   water.position.set(0, 8.4, -3);
   water.renderOrder = 5;
-  box([18.1, .024, .023], [0, 8.4, .04], glow);
+  box([TANK_WIDTH + .1, .024, .023], [0, 8.4, .04], glow);
 
   const beamMaterial = new THREE.ShaderMaterial({
     uniforms, vertexShader: worldVertex,
@@ -281,7 +297,9 @@ export function createMuseum(visitorTemplate: THREE.Group) {
       }
     `,
   });
-  for (const [x, radius] of [[-5.8, 2.7], [.6, 3.4], [6.1, 2.4]]) {
+  const lightPositions = Array.from({ length: Math.ceil(TANK_WIDTH / 6) }, (_, index) => -TANK_HALF_WIDTH + 3 + index * 6);
+  for (const [index, x] of lightPositions.entries()) {
+    const radius = 2.7 + random(index + 900) * .7;
     const beam = mesh(new THREE.ConeGeometry(radius, 8, 32, 1, true), beamMaterial);
     beam.position.set(x, 4.55, -3.35);
     beam.renderOrder = 4;
@@ -292,13 +310,16 @@ export function createMuseum(visitorTemplate: THREE.Group) {
   const visitorLight = new THREE.PointLight("#9fbcf0", 9, 9, 2);
   visitorLight.position.set(-1, 3, 5.2);
   group.add(visitorLight);
-  const tankLight = new THREE.PointLight("#547de0", 26, 18, 2);
-  tankLight.position.set(1, 4.4, -1.5);
-  group.add(tankLight);
+  for (const x of [-TANK_WIDTH / 3, 0, TANK_WIDTH / 3]) {
+    const tankLight = new THREE.PointLight("#547de0", 20, 14, 2);
+    tankLight.position.set(x, 4.4, -1.5);
+    group.add(tankLight);
+  }
 
-  const particlePositions = new Float32Array(180 * 3);
-  for (let index = 0; index < 180; index += 1) {
-    particlePositions[index * 3] = (random(index + 10) - .5) * 17.5;
+  const particleCount = Math.round(TANK_WIDTH * 10);
+  const particlePositions = new Float32Array(particleCount * 3);
+  for (let index = 0; index < particleCount; index += 1) {
+    particlePositions[index * 3] = (random(index + 10) - .5) * (TANK_WIDTH - .5);
     particlePositions[index * 3 + 1] = random(index + 200) * 7.8;
     particlePositions[index * 3 + 2] = -random(index + 400) * 5.5 - .25;
   }
@@ -325,22 +346,34 @@ export function createMuseum(visitorTemplate: THREE.Group) {
   particles.renderOrder = 3;
   group.add(particles);
 
-  const visitorRig = createMuseumVisitor(visitorTemplate);
-  const visitor = visitorRig.group;
-  visitor.position.set(0, -.2, 2.4);
+  let visitorRig = createMuseumVisitor(visitorTemplate);
+  const visitor = new THREE.Group();
+  visitor.add(visitorRig.group);
+  visitor.position.set(0, -.2, VISITOR_DEPTH);
   group.add(visitor);
 
-  const shadow = mesh(new THREE.PlaneGeometry(1.8, 1.2), new THREE.ShaderMaterial({
-    transparent: true, depthWrite: false,
-    vertexShader: worldVertex,
-    fragmentShader: "varying vec2 vUv; void main() { float a = exp(-dot((vUv - .5) * 4., (vUv - .5) * 4.)); gl_FragColor = vec4(.015, .025, .07, a * .42); }",
-  }));
-  shadow.rotation.x = -Math.PI / 2;
-  shadow.position.set(0, -.205, 2.42);
-  shadow.renderOrder = 2;
+  function createShadow() {
+    const object = mesh(new THREE.PlaneGeometry(1.8, 1.2), new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false,
+      vertexShader: worldVertex,
+      fragmentShader: "varying vec2 vUv; void main() { float a = exp(-dot((vUv - .5) * 4., (vUv - .5) * 4.)); gl_FragColor = vec4(.015, .025, .07, a * .42); }",
+    }));
+    object.rotation.x = -Math.PI / 2;
+    object.position.y = -.205;
+    object.renderOrder = 2;
+    return object;
+  }
+  const shadow = createShadow();
+  const companionShadow = createShadow();
+  const following = createCompanionFollowing();
+  const companion = new THREE.Group();
+  let companionRig = companionTemplate ? createMuseumVisitor(companionTemplate) : null;
+  if (companionRig) companion.add(companionRig.group);
+  group.add(companion);
+  let companionPhase = 0;
 
   const plaque = new THREE.Group();
-  plaque.position.set(7.6, -.2, 1.05);
+  plaque.position.set(TANK_HALF_WIDTH - 1.4, -.2, 1.05);
   group.add(plaque);
   box([.32, .045, .31], [0, .025, 0], trim, plaque);
   box([.075, .55, .075], [0, .3, 0], silver, plaque);
@@ -354,33 +387,78 @@ export function createMuseum(visitorTemplate: THREE.Group) {
   }
 
   const lights = group.children.flatMap((child) => child instanceof THREE.PointLight ? [{ light: child, intensity: child.intensity }] : []);
+  const visitorRotation = new THREE.Quaternion();
+  const up = new THREE.Vector3(0, 1, 0);
   let walkPhase = 0;
+  let visitorRun = 0;
+  let companionRun = 0;
+  let visitorTime = 0;
   let previousTime: number | undefined;
   return {
     group, obstacles,
+    setScenery(style: SceneryStyle) {
+      const next = createMuseumScenery(sceneryTemplates, style);
+      group.remove(scenery.group);
+      scenery.dispose();
+      scenery = next;
+      group.add(scenery.group);
+      bed.visible = style !== "bare";
+      bareFloor.visible = style === "bare";
+      obstacles.splice(0, obstacles.length, ...scenery.obstacles, style === "bare" ? bareFloor : bed);
+    },
+    setPlayer(template: THREE.Group) {
+      visitor.remove(visitorRig.group);
+      visitorRig.dispose();
+      visitorRig = createMuseumVisitor(template);
+      visitor.add(visitorRig.group);
+    },
+    setCompanion(template: THREE.Group | null) {
+      if (companionRig) { companion.remove(companionRig.group); companionRig.dispose(); }
+      companionRig = template ? createMuseumVisitor(template) : null;
+      if (companionRig) companion.add(companionRig.group);
+    },
     update(time: number, flow: number) {
       const delta = previousTime === undefined ? 0 : Math.max(0, time - previousTime);
       previousTime = time;
       uniforms.time.value += delta * flow;
-      visitorRig.look(time);
+      scenery.animate(uniforms.time.value);
     },
     setLight(value: number) {
       uniforms.light.value = THREE.MathUtils.clamp(value, .15, 2);
       for (const item of lights) item.light.intensity = item.intensity * uniforms.light.value;
     },
-    setVisitorPosition(x: number, walking: boolean, delta: number) {
-      const target = THREE.MathUtils.clamp(x, -7.3, 7.3);
-      const direction = Math.sign(target - visitor.position.x);
-      visitor.position.x = THREE.MathUtils.damp(visitor.position.x, target, 12, delta);
-      visitor.rotation.y = THREE.MathUtils.damp(visitor.rotation.y, walking ? direction * -.35 : 0, 8, delta);
-      walkPhase += walking ? delta * 8 : 0;
-      const step = walking ? Math.sin(walkPhase) : 0;
-      visitor.position.y = -.2 + Math.abs(step) * .026;
-      visitorRig.walk(step, delta);
+    setVisitorPosition(position: THREE.Vector2, heading: number, distance: number, delta: number) {
+      visitorLight.position.x = position.x - 1;
+      visitorTime += delta;
+      const direction = Math.sign(position.x - visitor.position.x);
+      visitor.position.x = position.x;
+      visitor.position.z = position.y;
+      visitor.quaternion.slerp(visitorRotation.setFromAxisAngle(up, distance > 1e-6 ? heading : 0), 1 - Math.exp(-10 * delta));
+      const speed = delta > 0 ? distance / delta : 0;
+      visitorRun = THREE.MathUtils.damp(visitorRun, Math.min(1, speed / 4), 10, delta);
+      walkPhase += distance * 4;
+      const step = distance > 1e-6 ? Math.sin(walkPhase) : 0;
+      visitor.position.y = -.2 + Math.abs(Math.sin(walkPhase)) * (.018 + visitorRun * .045) * visitorRun;
+      visitorRig.animate(visitorTime, step, delta, distance > 1e-6, speed);
       shadow.position.x = visitor.position.x;
+      shadow.position.z = visitor.position.z + .02;
+      following.update(position.x, direction, delta);
+      companion.position.set(following.position.x, -.2, following.position.y);
+      companion.quaternion.slerp(visitorRotation.setFromAxisAngle(up, following.distance > 1e-6 ? following.heading : 0), 1 - Math.exp(-10 * delta));
+      const companionSpeed = delta > 0 ? following.distance / delta : 0;
+      companionRun = THREE.MathUtils.damp(companionRun, Math.min(1, companionSpeed / 4), 10, delta);
+      companionPhase += following.distance * 4.6;
+      const companionStep = following.distance > 1e-6 ? Math.sin(companionPhase) : 0;
+      companion.position.y += Math.abs(Math.sin(companionPhase)) * (.012 + companionRun * .035) * companionRun;
+      companionRig?.animate(visitorTime + 6.7, companionStep, delta, following.distance > 1e-6, companionSpeed);
+      companionShadow.visible = companionRig !== null;
+      companionShadow.position.x = companion.position.x;
+      companionShadow.position.z = companion.position.z + .02;
     },
     dispose() {
+      scenery.dispose();
       visitorRig.dispose();
+      companionRig?.dispose();
       for (const resource of resources) resource.dispose();
       resources.clear();
       group.clear();

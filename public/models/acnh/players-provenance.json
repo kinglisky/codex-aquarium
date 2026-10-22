@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "game": "Animal Crossing: New Horizons",
+  "rights": "Nintendo and respective owners; excluded from the project MIT license.",
+  "scope": "Two assembled player outfits: a girl and a boy. This is not the complete set of game character customizations.",
+  "players": [
+    {
+      "id": "islander",
+      "name": "小女孩",
+      "file": "character.glb",
+      "parts": [
+        "PlayerBody",
+        "PlayerHair07",
+        "PlayerTopsOnepieceBoxmydesignN"
+      ],
+      "provenance": "provenance.json#character",
+      "sha256": "d1a03eafac17fc461e4906fd1ca7fcfcfe2bd60b48549dc0eb5fe38ad3fa0974",
+      "outfit": {
+        "description": "Warm ivory ditsy-floral dress with dusty coral wildflowers, butter-yellow centers and sage leaves; warm rose lining and taupe legwear.",
+        "palette": {
+          "ground": "#f2e7ce",
+          "flowers": "#d28d72",
+          "leaves": "#929773",
+          "lining": "#b57462",
+          "legwear": "#8b7965"
+        },
+        "processing": "Custom floral albedo replaces the original grayscale cloth map. Original mesh, UVs, skeleton and skin weights unchanged. Embedded PNG, 512 × 512, no additional runtime image requests.",
+        "pattern": {
+          "generator": "Built-in imagegen",
+          "prompt": "Seamless small ditsy floral cotton texture, warm ivory ground, dusty coral and muted terracotta five-petal wildflowers, butter-yellow centers, subdued sage leaves. Naturally scattered spacing, approximately 8–10 flower motifs across the tile. Soft hand-painted game textile, uniform flat albedo, no folds, lighting, shadows, seams, borders, text or logos.",
+          "sha256": "96a7cfe7fea4ca898aee11e26191b71f1f753594cb802da2d5645232cbf37cdb"
+        }
+      }
+    },
+    {
+      "id": "boy",
+      "name": "小男孩",
+      "file": "players/boy.glb",
+      "sha256": "143f9a34fa6fc6a7ebc93ee92c1b852baf9d5044f279dcb0346f2f06d831e8a4",
+      "differences": "Original short side-parted PlayerHair08 mesh, short-sleeved striped T-shirt mesh and cargo-shorts mesh. Shared original PlayerBody with the existing girl; this is an outfit choice, not a different body type.",
+      "parts": [
+        "PlayerBody",
+        "PlayerHair08",
+        "PlayerTopsTopTshirtsH",
+        "PlayerBottomsPantsHalf"
+      ],
+      "bodyAndFaceProvenance": "provenance.json#character",
+      "additionalSources": [
+        {
+          "file": "PlayerHair08.Nin_NX_NVN.zs",
+          "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/PlayerHair08.Nin_NX_NVN.zs",
+          "sha256": "3773854b7c1247de703232f9b8c37536f5c98f9ac9ded3fb8fe10feea56d2191"
+        },
+        {
+          "file": "PlayerTopsTopTshirtsH.Nin_NX_NVN.zs",
+          "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/PlayerTopsTopTshirtsH.Nin_NX_NVN.zs",
+          "sha256": "0727c56dccfc06d3f95fcd3f658b52dbc30d956ebac07df7e932c70da0ef068e"
+        },
+        {
+          "file": "PlayerBottomsPantsHalf.Nin_NX_NVN.zs",
+          "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/PlayerBottomsPantsHalf.Nin_NX_NVN.zs",
+          "sha256": "866158848a506e0dc6d23056a9cd497cd3d76dee3727f7ab138498aeb8177d9b"
+        },
+        {
+          "file": "TopsTexTopTshirtsHBorder0.Nin_NX_NVN.zs",
+          "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/TopsTexTopTshirtsHBorder0.Nin_NX_NVN.zs",
+          "sha256": "779dcb11ded57ea0644430cbe27da8b648bf5b0e6b2663033589d6b8d5f4233a"
+        },
+        {
+          "file": "BottomsTexPantsHalfCargo0.Nin_NX_NVN.zs",
+          "source": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/BottomsTexPantsHalfCargo0.Nin_NX_NVN.zs",
+          "sha256": "5e084874f650980e972cdf6dd1643d2ba6d6d01bbe507bfd1b53a58557b761ea"
+        }
+      ],
+      "conversion": {
+        "tools": "nintoolbox wmdlt and wszst for original BFRES meshes and BNTX textures; Three.js GLTFLoader and GLTFExporter for assembly.",
+        "jointCorrection": "Original BFRES rotations use ZYX radians. The intermediate converter incorrectly treats them as degrees; restore each Euler angle in ZYX order before binding.",
+        "rig": "PlayerBody skeleton retained; clothing meshes rebound to shared body bones, short hair attached to Head.",
+        "textures": "Original striped T-shirt albedo recolored cream and sage, original cargo-shorts albedo retained; all textures embedded. Hair curve texture tinted dark brown.",
+        "height": 1.9,
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "origin": "feet, centered in X/Z",
+        "meshes": 12,
+        "skins": 11,
+        "embeddedImages": 9,
+        "bytes": 1468944
+      },
+      "outfit": {
+        "description": "Cream and sage striped T-shirt with khaki cargo shorts and warm brown legwear.",
+        "palette": {
+          "shirt": "#e7dfc9",
+          "stripes": "#788371",
+          "legwear": "#75604c"
+        },
+        "processing": "Original shirt stripe pattern recolored with preserved shading and antialiased edges; original khaki shorts, mesh, UVs, skeleton and skin weights unchanged."
+      }
+    }
+  ]
+}

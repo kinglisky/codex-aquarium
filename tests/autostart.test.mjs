@@ -188,7 +188,7 @@ test("启动配置保留路径空格并正确转义 XML", { skip: process.platfo
   const plist = JSON.parse(stdout);
   assert.deepEqual(plist.ProgramArguments, [options.node, path.join(options.installation, "server", "autostart.mjs"), "watch"]);
   assert.equal(plist.EnvironmentVariables.CODEX_HOME, options.env.CODEX_HOME);
-  assert.equal(plist.EnvironmentVariables.PATH, options.env.PATH);
+  assert.equal(plist.EnvironmentVariables.PATH, `${path.dirname(options.node)}${path.delimiter}${options.env.PATH}`);
   assert.equal(plist.EnvironmentVariables.AQUARIUM_PORT, options.env.AQUARIUM_PORT);
   assert.equal(plist.StandardOutPath, "/dev/null");
   assert.equal(plist.RunAtLoad, true);

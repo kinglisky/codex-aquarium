@@ -2,8 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { Mesh } from "three";
-import { createFishModel } from "../src/fish.ts";
-import { FISH_TYPES } from "../src/sessions.ts";
+import { createFishModel, SPECIES } from "../src/fish.ts";
 
 function appearance(model) {
   const hash = createHash("sha256");
@@ -22,7 +21,7 @@ function appearance(model) {
 
 test("all ten fish have distinct finite geometry and restore the same appearance", () => {
   const appearances = new Set();
-  for (const species of FISH_TYPES) {
+  for (const species of Object.keys(SPECIES)) {
     const original = createFishModel(species);
     const restored = createFishModel(species);
     try {
@@ -38,5 +37,5 @@ test("all ten fish have distinct finite geometry and restore the same appearance
       restored.dispose();
     }
   }
-  assert.equal(appearances.size, FISH_TYPES.length);
+  assert.equal(appearances.size, Object.keys(SPECIES).length);
 });

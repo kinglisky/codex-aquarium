@@ -1,0 +1,1657 @@
+{
+  "sourceRepository": "https://github.com/969981/ACNH_Resources",
+  "sourceCommit": "9e5d6855fb1216fd8bfd03fba9148a374729112b",
+  "copyright": "Animal Crossing: New Horizons models and textures © Nintendo. Original game assets converted for this aquarium.",
+  "sources": [
+    {
+      "modelId": "IdrMuseumFish0Obj",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj.Nin_NX_NVN.zs",
+      "gitBlob": "efbd7c8ddca3da42fae229eca4df4b62d63fa48f",
+      "bytes": 2091682,
+      "sha256": "305fb97a203752120d1f4d8b05b01b384775c054428f995e2919fa574f745dbc"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj.Nin_NX_NVN.zs",
+      "gitBlob": "898f95b5b3678aaf1c26a01681bebe5e6e7ac26b",
+      "bytes": 1190224,
+      "sha256": "440b3535182aec3aa74725b5a4821d81490bab6e178c03df9e347e748d60aba4"
+    },
+    {
+      "modelId": "DiveFishWakameMuseum",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishWakameMuseum.Nin_NX_NVN.zs",
+      "gitBlob": "dea8ed0249f098b3766197b4c1be565ac50bee59",
+      "bytes": 266450,
+      "sha256": "f7406937a3ca43556eef582952bf7356b18c1e5e7977289f35fe849b80e75660"
+    },
+    {
+      "modelId": "DiveFishUmibudouMuseum",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishUmibudouMuseum.Nin_NX_NVN.zs",
+      "gitBlob": "a5268b6dfc7cef3c05570a43614c40e32c97b6ba",
+      "bytes": 46501,
+      "sha256": "a1d3b69046f2d6a87195a8e534d2cbdb46542bb7c640240724a4d2e80653cc2c"
+    },
+    {
+      "modelId": "DiveFishIsogintyakuMuseum",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishIsogintyakuMuseum.Nin_NX_NVN.zs",
+      "gitBlob": "09f1281743d3354106801504b49668e541c7c52b",
+      "bytes": 179493,
+      "sha256": "a23f388065dcbad54c28832a1fafc5ce2d3791f2f49d675990ca92c399ea1724"
+    },
+    {
+      "modelId": "DiveFishHitode",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishHitode.Nin_NX_NVN.zs",
+      "gitBlob": "de0b39f076b3de72f499c5374a5a85e49d3dc9a4",
+      "bytes": 52942,
+      "sha256": "b6432c6e0f7cde3dac2a9666ff092f6695e2be4455800439575f843dc3bffaad"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralSet_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralSet_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "05ee4176b338074de0ef367d699c8f2d026d149a",
+      "bytes": 79168,
+      "sha256": "5b6c48952b2187090c3e6f083f10c50a8a75449e03ce96cfd85f047e062c5de6"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralSet_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralSet_OP.Nin_NX_NVN.zs",
+      "gitBlob": "87f7f5a55e72429bd744ce9f27675018b0d3f68f",
+      "bytes": 7280,
+      "sha256": "2f771cdfdf5553bd214c8ae9e3794bc152bf65f66a5f63754f42beaafa1a7aa8"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralSet2_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralSet2_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "5c45033a04e3ddaaed30c4560721a978ed3bae36",
+      "bytes": 86462,
+      "sha256": "e4cdd657d9772dbbf86ef0a848c5b85eb647e7e231f1e9cdcc9d37180e665b35"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralSet2_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralSet2_OP.Nin_NX_NVN.zs",
+      "gitBlob": "43f4cae4059173eb2d344d5734c088ae71c4e925",
+      "bytes": 7893,
+      "sha256": "61287dddff4d2734f1c127412a4cb99a862dff13c982c468738ae321f6b4bac1"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralMamenasu_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralMamenasu_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "a977ef62bcfcf82435e2de787965653e76ee3b1a",
+      "bytes": 34419,
+      "sha256": "23e48502a816167f45117c678c17650fc28e928581925c4d7f20bc8ae15c3afe"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralMamenasu_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralMamenasu_OP.Nin_NX_NVN.zs",
+      "gitBlob": "4199e9840aff7fabd39a79415fdb401426cd9d96",
+      "bytes": 503,
+      "sha256": "390179befe0471cb8ed530d644758112cf73607889ec0ae08b0940d1f5a3ad40"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralMamenasu2_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralMamenasu2_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "4e634dba17e1b5f2846faa5db6d998e3f9610ff8",
+      "bytes": 33553,
+      "sha256": "888a2a0cfebd2012ba486dafba1e86eb25081e35fadc97d5bbe5349cc2fa21c1"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mCoralMamenasu2_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mCoralMamenasu2_OP.Nin_NX_NVN.zs",
+      "gitBlob": "f5e616abc90a4634e63297343c06ace8d44ba35b",
+      "bytes": 504,
+      "sha256": "df7e1ec7728f3a9041eab0c279280d1aaf3a4a043d29d8d0a1fb2f6cbb46d7d4"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj_Tex_mAquariumPlant_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj_Tex_mAquariumPlant_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "5898867f7a9c81b164d8726449cfed1c06a95801",
+      "bytes": 23084,
+      "sha256": "1e05e3b71799a184f6bdbb4fe9ec159c872c82ba9302449069b69ad31530d998"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj_Tex_mAquariumPlant_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj_Tex_mAquariumPlant_OP.Nin_NX_NVN.zs",
+      "gitBlob": "8b5e5debe3a30586367a64284b5371c741ac3c8c",
+      "bytes": 12595,
+      "sha256": "c1be3c5f6287ec8cf0191d2bba39d6217dba3039b60385fa986359c7e6f6c100"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj_Tex_mLakePlant_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj_Tex_mLakePlant_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "92bc131ba189bbb59701c5a6b3f56dc7edd3d098",
+      "bytes": 27911,
+      "sha256": "1d9b760b4a5d20ad659c2fc9bd4d10f90effb609b4926561993b828ecde8b831"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj_Tex_mLakePlant_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj_Tex_mLakePlant_OP.Nin_NX_NVN.zs",
+      "gitBlob": "d5bf98af6c30482c2221444e8d71684bd7345473",
+      "bytes": 14877,
+      "sha256": "1f46cdcfa2b85fb94244ca174559792ce29e1f77a6fe637285dadebb0eda159e"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj_Tex_mRiverPlant_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj_Tex_mRiverPlant_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "481d05d13cb9ec10519099f09fc854fe01c4c3cb",
+      "bytes": 19728,
+      "sha256": "5975297f56fcded00f1bbad3ee082d07712cecd4e4773139779468603b14ed3f"
+    },
+    {
+      "modelId": "IdrMuseumFish2Obj_Tex_mRiverPlant_OP",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish2Obj_Tex_mRiverPlant_OP.Nin_NX_NVN.zs",
+      "gitBlob": "165b446029ed005f865339ee0a6896177c8da669",
+      "bytes": 10827,
+      "sha256": "c55b58af22cdfb376561bd524b28774a471f16fba2bf5afa87827ac8716329a2"
+    },
+    {
+      "modelId": "DiveFishUni",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishUni.Nin_NX_NVN.zs",
+      "gitBlob": "04f38a704f54a68bd1fa582ddeec0f5f37b4a83d",
+      "bytes": 52368,
+      "sha256": "5d3636694b016d4f61912fd28da9dc5c1762bdec5bc4ebfed92a53fff154b0b1"
+    },
+    {
+      "modelId": "DiveFishPaipuuni",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishPaipuuni.Nin_NX_NVN.zs",
+      "gitBlob": "9515f8a71d154678bed3e90770a20800e49189e8",
+      "bytes": 160634,
+      "sha256": "284a49e5fd9f3f38604451a9f0126169a8c64121263725a8dd21f02a8c9d3c27"
+    },
+    {
+      "modelId": "DiveFishHotate",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishHotate.Nin_NX_NVN.zs",
+      "gitBlob": "94fa9ae55af34aaeddb792e13532f8ae7ba90876",
+      "bytes": 89376,
+      "sha256": "51b4feeb4036cd02398eb2783ca87cc45e6d7a9551d15b966cad6aa7a018f7e5"
+    },
+    {
+      "modelId": "DiveFishMuhrugaiMuseum",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishMuhrugaiMuseum.Nin_NX_NVN.zs",
+      "gitBlob": "b3b5410e6de0058204355ad8727bb598ef892dad",
+      "bytes": 77753,
+      "sha256": "ec38ce5f4892fdf06006d7fa0ae4d4af63cd6a791fad8efab810528802f50540"
+    },
+    {
+      "modelId": "DiveFishOysterMuseum",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishOysterMuseum.Nin_NX_NVN.zs",
+      "gitBlob": "b2928f275f329d26b4cd19c80153c00f32f7e79a",
+      "bytes": 81227,
+      "sha256": "53b5aae92ce8dd420fa50678dbb0438cf88876b48067d0979399bddae7fd8a98"
+    },
+    {
+      "modelId": "DiveFishFujitsuboMuseum",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishFujitsuboMuseum.Nin_NX_NVN.zs",
+      "gitBlob": "5c08ba75cd4aa7af8e851d3e8735fc93478e7691",
+      "bytes": 99729,
+      "sha256": "fa5f5326f71af625b376fa5b139b093e941922562a57bf32038c2a057c6d9000"
+    },
+    {
+      "modelId": "DiveFishShakogai",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishShakogai.Nin_NX_NVN.zs",
+      "gitBlob": "b6b062f5963b07670eddffe40c02e8619bc3d800",
+      "bytes": 362331,
+      "sha256": "19d58e0582bc82f5c92087a1c0041658be17d650bc8b18c53b76ca37b78b3f10"
+    },
+    {
+      "modelId": "DiveFishAkoyagaiMuseum",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishAkoyagaiMuseum.Nin_NX_NVN.zs",
+      "gitBlob": "82395bbc5a8152af5b1bb4191efef3a069991f2a",
+      "bytes": 90441,
+      "sha256": "1740c71ef80b1ad478061c533d0c044fac3e5ecc4daca86a3fffef8198a58327"
+    },
+    {
+      "modelId": "DiveFishNamako",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishNamako.Nin_NX_NVN.zs",
+      "gitBlob": "6ecff180407e1b93e9c4bb81fdf8550d14988798",
+      "bytes": 41011,
+      "sha256": "4bcf677d810d9035b7d258fe0450bf29578045da40c9311d8b6d0e562748130e"
+    },
+    {
+      "modelId": "DiveFishKairoudouketsu",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishKairoudouketsu.Nin_NX_NVN.zs",
+      "gitBlob": "c061cb46b7e30c4f98325ee22b6be6639661950d",
+      "bytes": 164159,
+      "sha256": "123ddba8d103fe4fd66045a6101d1b9f7862856c6ccca5111403c4a0ebcc221c"
+    },
+    {
+      "modelId": "DiveFishHoya",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishHoya.Nin_NX_NVN.zs",
+      "gitBlob": "370c334bc4c29eec50998e1d3488525caa106e29",
+      "bytes": 187023,
+      "sha256": "525e06c55ac9e7edfa0f4607e01a3d035fb25b9a4734a502a9df875c3f6bb5bd"
+    },
+    {
+      "modelId": "DiveFishWakame",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishWakame.Nin_NX_NVN.zs",
+      "gitBlob": "20f173fee6709e3a6d01f458ecec50c2a317fc5e",
+      "bytes": 180950,
+      "sha256": "ed199f5cacd4105497a80445175d6e6d4eea30adc27079362143fb110c8ea70c"
+    },
+    {
+      "modelId": "DiveFishUmibudou",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishUmibudou.Nin_NX_NVN.zs",
+      "gitBlob": "3c689abcbdf02bf4783f9dea77640fb534f3d09d",
+      "bytes": 49629,
+      "sha256": "24d626588db39dea45de2e5e8b13cfcb6565427a0796ddc8caf043a556dbea3b"
+    },
+    {
+      "modelId": "DiveFishIsogintyaku",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/DiveFishIsogintyaku.Nin_NX_NVN.zs",
+      "gitBlob": "9848e9e77899a008e72b19e49608615d968e69f8",
+      "bytes": 180136,
+      "sha256": "f021608fc92eb79fd32fb53b90f1a8adb9d1aff1ac0a8e7033dcf2dc3d339ed5"
+    },
+    {
+      "modelId": "IdrMuseumFish0Obj_Tex_mKazari_Alb",
+      "url": "https://raw.githubusercontent.com/969981/ACNH_Resources/9e5d6855fb1216fd8bfd03fba9148a374729112b/e10617820db06889e1638499478da0de_NCA/1/Model/IdrMuseumFish0Obj_Tex_mKazari_Alb.Nin_NX_NVN.zs",
+      "gitBlob": "13f7115c7f93511ccd1de25d581cd939dac446f0",
+      "bytes": 17640,
+      "sha256": "1b96c97198f4310e0f569ed794f9f64bbc884d9c72fd07cbfaecb2c54e798c1c"
+    }
+  ],
+  "models": [
+    {
+      "id": "coral-branch",
+      "source": "IdrMuseumFish0Obj",
+      "node": "BubbleDiscBlue_2__mCoralSet",
+      "material": "mCoralSet",
+      "component": 0,
+      "file": "scenery/coral-branch.glb",
+      "bytes": 242480,
+      "sha256": "b636d3c9dade641346503fd802dc20af4f26534ad6a8fc080992bee3260b2b21",
+      "sourceNode": "BubbleDiscBlue_2__mCoralSet",
+      "vertices": 2184,
+      "bounds": {
+        "min": [
+          -0.43151652812957764,
+          0,
+          -0.30370545387268066
+        ],
+        "max": [
+          0.43151652812957764,
+          1,
+          0.30370545387268066
+        ]
+      },
+      "texture": {
+        "name": "mCoralSet_Alb",
+        "sourceSha256": "9c3156661232c5f6905397615a33e6150207621bed90081d995f4b84086a3681",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "coral-fan",
+      "source": "IdrMuseumFish0Obj",
+      "node": "BubbleDiscBlue2__mCoralSet2",
+      "material": "mCoralSet2",
+      "component": 0,
+      "file": "scenery/coral-fan.glb",
+      "bytes": 288372,
+      "sha256": "710b396a9747306c8d41b1ace41743f4b09fd3652b9bea700df15289d1a64355",
+      "sourceNode": "BubbleDiscBlue2__mCoralSet2",
+      "vertices": 2184,
+      "bounds": {
+        "min": [
+          -0.4408687949180603,
+          0,
+          -0.32981976866722107
+        ],
+        "max": [
+          0.4408687949180603,
+          1,
+          0.32981976866722107
+        ]
+      },
+      "texture": {
+        "name": "mCoralSet2_Alb",
+        "sourceSha256": "a42256770fc19879e4f343f366882b05726ca5d033674db465d5fe2818fe6c7a",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "coral-disc",
+      "source": "IdrMuseumFish0Obj",
+      "node": "pPlatonic1_1__mCoralMamenasu",
+      "material": "mCoralMamenasu",
+      "component": 0,
+      "file": "scenery/coral-disc.glb",
+      "bytes": 96768,
+      "sha256": "ca63bb43fd8e28aedec68e6fdaa95a87ec7a85a733510e3371cc651d8f80e996",
+      "sourceNode": "pPlatonic1_1__mCoralMamenasu",
+      "vertices": 288,
+      "bounds": {
+        "min": [
+          -0.4911212921142578,
+          0,
+          -0.5
+        ],
+        "max": [
+          0.4911212921142578,
+          0.4897156059741974,
+          0.5
+        ]
+      },
+      "texture": {
+        "name": "mCoralMamenasu_Alb",
+        "sourceSha256": "c76e3948f3f3b4f979f9d3b0baf5bb58f8642b40cc63dbb0cfa80508b0657b61",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "aquarium-plant",
+      "source": "IdrMuseumFish2Obj",
+      "node": "Minimassyurumu49__mAquariumPlant",
+      "material": "mAquariumPlant",
+      "file": "scenery/aquarium-plant.glb",
+      "bytes": 82352,
+      "sha256": "72d2f5a63991a604e42fe79bccd54003d354d6522619e00e6ce5375e7ac2753c",
+      "sourceNode": "Minimassyurumu49__mAquariumPlant",
+      "vertices": 1296,
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.39765796065330505
+        ],
+        "max": [
+          0.5,
+          0.3315654993057251,
+          0.39765796065330505
+        ]
+      },
+      "texture": {
+        "name": "mAquariumPlant_Alb",
+        "sourceSha256": "c3842a9bbd7c2b854dc8ba8d156c2cf9f7b2d80cd60577b2c1ee248ceb56fde0",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "seaweed",
+      "source": "DiveFishWakameMuseum",
+      "material": "mWakameMuseum",
+      "file": "scenery/seaweed.glb",
+      "bytes": 125952,
+      "sha256": "78e2e5d9853048e14010f16c2dd913e3c6b604ceb124774fd34e217a0014388f",
+      "sourceNode": "DiveFishWakameMuseum__mWakameMuseum",
+      "vertices": 1800,
+      "bounds": {
+        "min": [
+          -0.4984245300292969,
+          0,
+          -0.13187097012996674
+        ],
+        "max": [
+          0.4984245300292969,
+          1,
+          0.13187097012996674
+        ]
+      },
+      "texture": {
+        "name": "mWakameMuseum_Alb",
+        "sourceSha256": "d57120c6dc4fbf20d68abe1083c4a1ac5cc16841399224e1aa2b986f4129bb85",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "sea-grapes",
+      "source": "DiveFishUmibudouMuseum",
+      "material": "mUmibudou",
+      "file": "scenery/sea-grapes.glb",
+      "bytes": 72680,
+      "sha256": "37a031b7b30166376eee04ef918e2fea55ed9c6715f57590dce0ea713e787be0",
+      "sourceNode": "DiveFishUmibudou1__mUmibudou",
+      "vertices": 1953,
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.3347531855106354
+        ],
+        "max": [
+          0.5,
+          0.8331940174102783,
+          0.3347531855106354
+        ]
+      },
+      "texture": {
+        "name": "mUmibudou_Alb",
+        "sourceSha256": "e3059884d4a35d6f1da0942e58543e6994a80ab988bfa892aa6ecb32d96043dd",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "anemone",
+      "source": "DiveFishIsogintyakuMuseum",
+      "material": "mIsogintyakuMuseum",
+      "file": "scenery/anemone.glb",
+      "bytes": 143468,
+      "sha256": "af49ff72703de6fb71fe0c299fe26b7fa20b2ccc9a0075a03e0dd9318da19def",
+      "sourceNode": "DiveFishIsogintyakuMuseum__mIsogintyakuMuseum",
+      "vertices": 2598,
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.47094741463661194
+        ],
+        "max": [
+          0.5,
+          0.7389069199562073,
+          0.47094741463661194
+        ]
+      },
+      "texture": {
+        "name": "mIsogintyakuMuseum_Alb",
+        "sourceSha256": "75e33effef8eb8d05213fa067e34bc779ab3be472d57d450929ba74567ebacbc",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "starfish",
+      "source": "DiveFishHitode",
+      "material": "mHitode",
+      "file": "scenery/starfish.glb",
+      "bytes": 62196,
+      "sha256": "1ea6e75b4f94015f395207cb27d37aae58a4490f89f133e01f6ef04480b7d073",
+      "sourceNode": "DiveFishHitode__mHitode",
+      "vertices": 1200,
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.4803984463214874
+        ],
+        "max": [
+          0.5,
+          0.22220586240291595,
+          0.4803984463214874
+        ]
+      },
+      "texture": {
+        "name": "mHitode_Alb",
+        "sourceSha256": "770c932e999d9261aba6768de95e32095a4e1c1ee9d999ec4349771246e9b24b",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "kelp-tuft",
+      "name": "短叶海带簇",
+      "source": "IdrMuseumFish0Obj",
+      "node": "mizukusaC010__mKazari",
+      "material": "mKazari",
+      "file": "scenery/kelp-tuft.glb",
+      "bytes": 42668,
+      "sha256": "005f232515922af634165e73c49a334c2653ebb0101c1b425f89225ccd57b4cc",
+      "sourceNode": "mizukusaC010__mKazari",
+      "vertices": 636,
+      "originalBounds": {
+        "min": [
+          -3.9033432006835938,
+          0.16943740844726562,
+          -4.770008087158203
+        ],
+        "max": [
+          0.9228744506835938,
+          6.317655086517334,
+          -1.7564506530761719
+        ]
+      },
+      "originalDimensions": [
+        4.8262176513671875,
+        6.148217678070068,
+        3.0135574340820312
+      ],
+      "bounds": {
+        "min": [
+          -0.39248916506767273,
+          0,
+          -0.24507568776607513
+        ],
+        "max": [
+          0.39248916506767273,
+          1,
+          0.24507568776607513
+        ]
+      },
+      "texture": {
+        "name": "mKazari_Alb",
+        "sourceSha256": "0b0644b9bfaa0b380269c94dc98ccda90aae8a9eb3d07aefcf68dbb9307d3af5",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "kelp-ribbon-a",
+      "name": "高海带长叶 A",
+      "source": "IdrMuseumFish0Obj",
+      "node": "mizukusaA010__mKazari",
+      "material": "mKazari",
+      "component": 0,
+      "file": "scenery/kelp-ribbon-a.glb",
+      "bytes": 32772,
+      "sha256": "1ce4e820f6916351b21abbb2fbc32d798be2f5815a604925126451ba4ae12edc",
+      "sourceNode": "mizukusaA010__mKazari",
+      "vertices": 324,
+      "originalBounds": {
+        "min": [
+          -66.5999755859375,
+          -9.836158752441406,
+          -15.383417129516602
+        ],
+        "max": [
+          -58.95370101928711,
+          43.583770751953125,
+          -11.046868324279785
+        ]
+      },
+      "originalDimensions": [
+        7.646274566650391,
+        53.41992950439453,
+        4.336548805236816
+      ],
+      "bounds": {
+        "min": [
+          -0.07156762480735779,
+          0,
+          -0.040589239448308945
+        ],
+        "max": [
+          0.07156762480735779,
+          1,
+          0.040589239448308945
+        ]
+      },
+      "texture": {
+        "name": "mKazari_Alb",
+        "sourceSha256": "0b0644b9bfaa0b380269c94dc98ccda90aae8a9eb3d07aefcf68dbb9307d3af5",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "kelp-ribbon-b",
+      "name": "高海带长叶 B",
+      "source": "IdrMuseumFish0Obj",
+      "node": "mizukusaA010__mKazari",
+      "material": "mKazari",
+      "component": 1,
+      "file": "scenery/kelp-ribbon-b.glb",
+      "bytes": 32772,
+      "sha256": "93ce85af364977844a26992d58a183e2daa3ea5f878c508e7431a2781fbabf34",
+      "sourceNode": "mizukusaA010__mKazari",
+      "vertices": 324,
+      "originalBounds": {
+        "min": [
+          -94.96900939941406,
+          -7.7754740715026855,
+          -27.88690185546875
+        ],
+        "max": [
+          -91.16001892089844,
+          44.051761627197266,
+          -21.792448043823242
+        ]
+      },
+      "originalDimensions": [
+        3.808990478515625,
+        51.82723569869995,
+        6.094453811645508
+      ],
+      "bounds": {
+        "min": [
+          -0.03674699738621712,
+          0,
+          -0.05879586189985275
+        ],
+        "max": [
+          0.03674699738621712,
+          1,
+          0.05879586189985275
+        ]
+      },
+      "texture": {
+        "name": "mKazari_Alb",
+        "sourceSha256": "0b0644b9bfaa0b380269c94dc98ccda90aae8a9eb3d07aefcf68dbb9307d3af5",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "kelp-ribbon-c",
+      "name": "中海带长叶 C",
+      "source": "IdrMuseumFish0Obj",
+      "node": "mizukusaA010__mKazari",
+      "material": "mKazari",
+      "component": 4,
+      "file": "scenery/kelp-ribbon-c.glb",
+      "bytes": 31044,
+      "sha256": "d910eb00576c0f032a3d424f0975a1e31079d3147ccb553882f35ad7f8426136",
+      "sourceNode": "mizukusaA010__mKazari",
+      "vertices": 270,
+      "originalBounds": {
+        "min": [
+          -18.851633071899414,
+          -9.192825317382812,
+          -15.545693397521973
+        ],
+        "max": [
+          -14.97121524810791,
+          28.930824279785156,
+          -10.593384742736816
+        ]
+      },
+      "originalDimensions": [
+        3.880417823791504,
+        38.12364959716797,
+        4.952308654785156
+      ],
+      "bounds": {
+        "min": [
+          -0.050892528146505356,
+          0,
+          -0.0649506077170372
+        ],
+        "max": [
+          0.050892528146505356,
+          1,
+          0.0649506077170372
+        ]
+      },
+      "texture": {
+        "name": "mKazari_Alb",
+        "sourceSha256": "0b0644b9bfaa0b380269c94dc98ccda90aae8a9eb3d07aefcf68dbb9307d3af5",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "eelgrass-tuft",
+      "name": "细长苦草簇",
+      "source": "IdrMuseumFish2Obj",
+      "node": "pPlane209_0_1__mAquariumPlant",
+      "material": "mAquariumPlant",
+      "radius": 3.2,
+      "file": "scenery/eelgrass-tuft.glb",
+      "bytes": 54824,
+      "sha256": "3a04886f12b8eb12e969b9c8712505140546ba65a0eee0e4f4f8df77c9168b87",
+      "sourceNode": "pPlane209_0_1__mAquariumPlant",
+      "vertices": 435,
+      "originalBounds": {
+        "min": [
+          -126.53543853759766,
+          5.226614475250244,
+          49.65264129638672
+        ],
+        "max": [
+          -121.87699890136719,
+          21.879756927490234,
+          56.36686325073242
+        ]
+      },
+      "originalDimensions": [
+        4.658439636230469,
+        16.65314245223999,
+        6.714221954345703
+      ],
+      "bounds": {
+        "min": [
+          -0.1398666799068451,
+          0,
+          -0.20159024000167847
+        ],
+        "max": [
+          0.1398666799068451,
+          1,
+          0.20159024000167847
+        ]
+      },
+      "texture": {
+        "name": "mAquariumPlant_Alb",
+        "sourceSha256": "c3842a9bbd7c2b854dc8ba8d156c2cf9f7b2d80cd60577b2c1ee248ceb56fde0",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "vallisneria-tuft",
+      "name": "河流苦草簇",
+      "source": "IdrMuseumFish2Obj",
+      "node": "Sekisyoumo10__mRiverPlant",
+      "material": "mRiverPlant",
+      "radius": 4.5,
+      "file": "scenery/vallisneria-tuft.glb",
+      "bytes": 47588,
+      "sha256": "5a7667af2e3d7658d76db15bd9c1f2ba3988c53df64f3221c244f4f3f04c0e03",
+      "sourceNode": "Sekisyoumo10__mRiverPlant",
+      "vertices": 333,
+      "originalBounds": {
+        "min": [
+          -9.176658630371094,
+          6.908857822418213,
+          -40.899349212646484
+        ],
+        "max": [
+          -0.7784352898597717,
+          18.998554229736328,
+          -38.202178955078125
+        ]
+      },
+      "originalDimensions": [
+        8.398223340511322,
+        12.089696407318115,
+        2.6971702575683594
+      ],
+      "bounds": {
+        "min": [
+          -0.3473297655582428,
+          0,
+          -0.11154830455780029
+        ],
+        "max": [
+          0.3473297655582428,
+          1,
+          0.11154830455780029
+        ]
+      },
+      "texture": {
+        "name": "mRiverPlant_Alb",
+        "sourceSha256": "1dbf7fc8b3a0bd8f7bdf8cdfdd9ce6b10147c87774da60e45687b686cc287118",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "hydrilla-tuft",
+      "name": "湖底黑藻簇",
+      "source": "IdrMuseumFish2Obj",
+      "node": "Kuromo21__mLakePlant",
+      "material": "mLakePlant",
+      "radius": 4.5,
+      "file": "scenery/hydrilla-tuft.glb",
+      "bytes": 143224,
+      "sha256": "4f1d04548c0e8b71b3da8af20628f91739f8c8329a1a189f77aa09eb8603332a",
+      "sourceNode": "Kuromo21__mLakePlant",
+      "vertices": 3066,
+      "originalBounds": {
+        "min": [
+          22.73317527770996,
+          -23.800315856933594,
+          24.803632736206055
+        ],
+        "max": [
+          38.53131866455078,
+          -6.645923137664795,
+          34.62077713012695
+        ]
+      },
+      "originalDimensions": [
+        15.79814338684082,
+        17.1543927192688,
+        9.817144393920898
+      ],
+      "bounds": {
+        "min": [
+          -0.4604693353176117,
+          0,
+          -0.2861408293247223
+        ],
+        "max": [
+          0.4604693353176117,
+          1,
+          0.2861408293247223
+        ]
+      },
+      "texture": {
+        "name": "mLakePlant_Alb",
+        "sourceSha256": "362ac14e39dac42e311f199907d0c956fe827362182a5faeda938d47d37bb0f3",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "aquatic-stem-tuft",
+      "name": "水族缸茎叶草簇",
+      "source": "IdrMuseumFish2Obj",
+      "node": "Minimassyurumu28__mAquariumPlant",
+      "material": "mAquariumPlant",
+      "radius": 3.8,
+      "file": "scenery/aquatic-stem-tuft.glb",
+      "bytes": 117428,
+      "sha256": "bae14f09b20d083ea02e07e84e843668a6aa6ab2f759ed8ee88bbb7e3bac9627",
+      "sourceNode": "Minimassyurumu28__mAquariumPlant",
+      "vertices": 2391,
+      "originalBounds": {
+        "min": [
+          -117.3585433959961,
+          5.0095086097717285,
+          58.395729064941406
+        ],
+        "max": [
+          -108.87799072265625,
+          19.410476684570312,
+          67.11422729492188
+        ]
+      },
+      "originalDimensions": [
+        8.480552673339844,
+        14.400968074798584,
+        8.718498229980469
+      ],
+      "bounds": {
+        "min": [
+          -0.29444384574890137,
+          0,
+          -0.3027052879333496
+        ],
+        "max": [
+          0.29444384574890137,
+          1,
+          0.3027052879333496
+        ]
+      },
+      "texture": {
+        "name": "mAquariumPlant_Alb",
+        "sourceSha256": "c3842a9bbd7c2b854dc8ba8d156c2cf9f7b2d80cd60577b2c1ee248ceb56fde0",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "roundleaf-carpet-tuft",
+      "name": "低矮圆叶地被簇",
+      "source": "IdrMuseumFish2Obj",
+      "node": "Minimassyurumu49__mAquariumPlant",
+      "material": "mAquariumPlant",
+      "radius": 6.5,
+      "file": "scenery/roundleaf-carpet-tuft.glb",
+      "bytes": 79864,
+      "sha256": "683c29d260bad0e12713da052199b195a1daf9f6a9c09def036a02e0de788e8f",
+      "sourceNode": "Minimassyurumu49__mAquariumPlant",
+      "vertices": 1218,
+      "originalBounds": {
+        "min": [
+          -89.2530746459961,
+          5.415914535522461,
+          67.6344985961914
+        ],
+        "max": [
+          -80.55561828613281,
+          9.811634063720703,
+          74.01712799072266
+        ]
+      },
+      "originalDimensions": [
+        8.697456359863281,
+        4.395719528198242,
+        6.38262939453125
+      ],
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.36692506074905396
+        ],
+        "max": [
+          0.5,
+          0.5054028630256653,
+          0.36692506074905396
+        ]
+      },
+      "texture": {
+        "name": "mAquariumPlant_Alb",
+        "sourceSha256": "c3842a9bbd7c2b854dc8ba8d156c2cf9f7b2d80cd60577b2c1ee248ceb56fde0",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "broadleaf-tuft",
+      "name": "湖泊宽叶水草",
+      "source": "IdrMuseumFish2Obj",
+      "node": "GamaLeaf1_10__mLakePlant",
+      "material": "mLakePlant",
+      "radius": 8.5,
+      "file": "scenery/broadleaf-tuft.glb",
+      "bytes": 103836,
+      "sha256": "66350f463bbb1ecc35debd4a32d024083b5fabde1a43f51443f7b7a8072575f0",
+      "sourceNode": "GamaLeaf1_10__mLakePlant",
+      "vertices": 1836,
+      "originalBounds": {
+        "min": [
+          -42.15152359008789,
+          -16.088153839111328,
+          6.461179733276367
+        ],
+        "max": [
+          -17.35031509399414,
+          3.3225040435791016,
+          24.217994689941406
+        ]
+      },
+      "originalDimensions": [
+        24.80120849609375,
+        19.41065788269043,
+        17.75681495666504
+      ],
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.3579828441143036
+        ],
+        "max": [
+          0.5,
+          0.7826496958732605,
+          0.3579828441143036
+        ]
+      },
+      "texture": {
+        "name": "mLakePlant_Alb",
+        "sourceSha256": "362ac14e39dac42e311f199907d0c956fe827362182a5faeda938d47d37bb0f3",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "seaweed-wild",
+      "name": "裙带菜",
+      "source": "DiveFishWakame",
+      "material": "mWakame",
+      "file": "scenery/seaweed-wild.glb",
+      "bytes": 131720,
+      "sha256": "bd557c5ab9808c5abe3cde27114e2e08e73bdb7d93c5a93aa4fb0f96b10214d5",
+      "sourceNode": "DiveFishWakame__mWakame",
+      "vertices": 2382,
+      "originalBounds": {
+        "min": [
+          -1.5058526992797852,
+          -5.852344989776611,
+          -0.5979306697845459
+        ],
+        "max": [
+          1.8485734462738037,
+          5.760440826416016,
+          1.512741208076477
+        ]
+      },
+      "originalDimensions": [
+        3.354426145553589,
+        11.612785816192627,
+        2.110671877861023
+      ],
+      "bounds": {
+        "min": [
+          -0.14442814886569977,
+          0,
+          -0.09087707102298737
+        ],
+        "max": [
+          0.14442814886569977,
+          0.9999999403953552,
+          0.09087707102298737
+        ]
+      },
+      "texture": {
+        "name": "mWakame_Alb",
+        "sourceSha256": "5a76d4d0beee9c12b6b3a173077233bdb9f7dd02f48beabc3d6dd8fa0a8ba90e",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "sea-grapes-tuft",
+      "name": "海葡萄簇",
+      "source": "DiveFishUmibudou",
+      "material": "mUmibudou",
+      "file": "scenery/sea-grapes-tuft.glb",
+      "bytes": 83644,
+      "sha256": "0a32676247f3aa264996a67ddcdb4d7968b75d25a397fd52d5c8bb159f7607a2",
+      "sourceNode": "DiveFishUmibudou__mUmibudou",
+      "vertices": 2295,
+      "originalBounds": {
+        "min": [
+          -1.5679931640625,
+          -0.5784626007080078,
+          -1.3140678405761719
+        ],
+        "max": [
+          1.775607705116272,
+          3.2778232097625732,
+          0.30778539180755615
+        ]
+      },
+      "originalDimensions": [
+        3.343600869178772,
+        3.856285810470581,
+        1.621853232383728
+      ],
+      "bounds": {
+        "min": [
+          -0.43352606892585754,
+          0,
+          -0.2102869600057602
+        ],
+        "max": [
+          0.43352606892585754,
+          1,
+          0.2102869600057602
+        ]
+      },
+      "texture": {
+        "name": "mUmibudou_Alb",
+        "sourceSha256": "e3059884d4a35d6f1da0942e58543e6994a80ab988bfa892aa6ecb32d96043dd",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "anemone-wild",
+      "name": "海葵",
+      "source": "DiveFishIsogintyaku",
+      "material": "mIsogintyaku",
+      "file": "scenery/anemone-wild.glb",
+      "bytes": 146140,
+      "sha256": "83c286ad249699adb367d688794b7571ef67464df612011893f64399a2cd5cc9",
+      "sourceNode": "DiveFishIsogintyaku__mIsogintyaku",
+      "vertices": 2682,
+      "originalBounds": {
+        "min": [
+          -2.5481536388397217,
+          -0.07074809074401855,
+          -3.1321091651916504
+        ],
+        "max": [
+          2.685786008834839,
+          3.1805591583251953,
+          2.3660435676574707
+        ]
+      },
+      "originalDimensions": [
+        5.2339396476745605,
+        3.251307249069214,
+        5.498152732849121
+      ],
+      "bounds": {
+        "min": [
+          -0.47597256302833557,
+          0,
+          -0.5
+        ],
+        "max": [
+          0.47597256302833557,
+          0.5913453698158264,
+          0.5
+        ]
+      },
+      "texture": {
+        "name": "mIsogintyaku_Alb",
+        "sourceSha256": "75e33effef8eb8d05213fa067e34bc779ab3be472d57d450929ba74567ebacbc",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "sea-urchin",
+      "name": "海胆",
+      "source": "DiveFishUni",
+      "material": "mUni",
+      "file": "scenery/sea-urchin.glb",
+      "bytes": 73340,
+      "sha256": "1fe2cadedb1063aa10b695b26a63d4b847ada2aa7f951de2da75d400b7cb65f5",
+      "sourceNode": "DiveFishUni__mUni",
+      "vertices": 1800,
+      "originalBounds": {
+        "min": [
+          -1.6665406227111816,
+          -0.9965011477470398,
+          -1.7406949996948242
+        ],
+        "max": [
+          1.6665406227111816,
+          1.288506031036377,
+          1.6579911708831787
+        ]
+      },
+      "originalDimensions": [
+        3.3330812454223633,
+        2.2850071787834167,
+        3.398686170578003
+      ],
+      "bounds": {
+        "min": [
+          -0.4903484880924225,
+          0,
+          -0.5
+        ],
+        "max": [
+          0.4903484880924225,
+          0.6723207235336304,
+          0.5
+        ]
+      },
+      "texture": {
+        "name": "mUni_Alb",
+        "sourceSha256": "fabf9e42e62867c89ef137409f7007230bf59a33e9b59e54001ca4e580d688b8",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "slate-pencil-urchin",
+      "name": "石笔海胆",
+      "source": "DiveFishPaipuuni",
+      "material": "mPaipuuni",
+      "file": "scenery/slate-pencil-urchin.glb",
+      "bytes": 131804,
+      "sha256": "615bfbc5bcbc7816146ed1a5b17af2edeebf90b8c9f07ca0d078c2110cdcfd8f",
+      "sourceNode": "DiveFishPaipuuni__mPaipuuni",
+      "vertices": 2391,
+      "originalBounds": {
+        "min": [
+          -3.1665713787078857,
+          0.011478990316390991,
+          -2.774930477142334
+        ],
+        "max": [
+          3.1665713787078857,
+          3.1658592224121094,
+          3.2738566398620605
+        ]
+      },
+      "originalDimensions": [
+        6.3331427574157715,
+        3.1543802320957184,
+        6.0487871170043945
+      ],
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.477550208568573
+        ],
+        "max": [
+          0.5,
+          0.49807503819465637,
+          0.477550208568573
+        ]
+      },
+      "texture": {
+        "name": "mPaipuuni_Alb",
+        "sourceSha256": "a6b2bf53ba167dd704715c7994edbf914345679200916c01dcbe0c50242bd56f",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "scallop",
+      "name": "扇贝",
+      "source": "DiveFishHotate",
+      "material": "mHotate",
+      "file": "scenery/scallop.glb",
+      "bytes": 95464,
+      "sha256": "eaaea9a6260637c51e5a0fce049fa3c2de5c42ca4ffb28066b12a39dfecb8c93",
+      "sourceNode": "DiveFishHotate__mHotate",
+      "vertices": 1806,
+      "originalBounds": {
+        "min": [
+          -1.6206450462341309,
+          -0.6904540061950684,
+          -1.5379459857940674
+        ],
+        "max": [
+          1.6206450462341309,
+          0.549597978591919,
+          1.529088020324707
+        ]
+      },
+      "originalDimensions": [
+        3.2412900924682617,
+        1.2400519847869873,
+        3.0670340061187744
+      ],
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.47311931848526
+        ],
+        "max": [
+          0.5,
+          0.3825797736644745,
+          0.47311931848526
+        ]
+      },
+      "texture": {
+        "name": "mHotate_Alb",
+        "sourceSha256": "8d1b77722ce0b633de73a23bd184dca92371d662a3b3fbf6b7ed4f3cb199db3c",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "mussel-cluster",
+      "name": "贻贝簇",
+      "source": "DiveFishMuhrugaiMuseum",
+      "material": "mMuhrugai",
+      "file": "scenery/mussel-cluster.glb",
+      "bytes": 109996,
+      "sha256": "91fe97a00bdaea26ccf09867f2af1e0acca141b1ac6b5ea568f8782dbb1ee0b6",
+      "sourceNode": "DiveFishMuhrugai10__mMuhrugai",
+      "vertices": 2484,
+      "originalBounds": {
+        "min": [
+          -0.6693918108940125,
+          -0.6781725883483887,
+          -2.0005741119384766
+        ],
+        "max": [
+          2.8689048290252686,
+          2.973700523376465,
+          1.3152669668197632
+        ]
+      },
+      "originalDimensions": [
+        3.538296639919281,
+        3.6518731117248535,
+        3.3158410787582397
+      ],
+      "bounds": {
+        "min": [
+          -0.484449565410614,
+          0,
+          -0.4539918303489685
+        ],
+        "max": [
+          0.484449565410614,
+          1,
+          0.4539918303489685
+        ]
+      },
+      "texture": {
+        "name": "mMuhrugai_Alb",
+        "sourceSha256": "571f8c0d2be2f5f38b342ec8fbaafc267bdbf78817d80623f980b7f678c72a95",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "oyster-cluster",
+      "name": "牡蛎簇",
+      "source": "DiveFishOysterMuseum",
+      "material": "mOysterMuseum",
+      "file": "scenery/oyster-cluster.glb",
+      "bytes": 84936,
+      "sha256": "793e47f042b29a3908e6587c63233702d9a63cd91e9a586427938a8ec1677198",
+      "sourceNode": "DiveFishOysterMuseum_A__mOysterMuseum",
+      "vertices": 972,
+      "originalBounds": {
+        "min": [
+          -3.218992233276367,
+          1.606302261352539,
+          -6.396812915802002
+        ],
+        "max": [
+          3.7051963806152344,
+          5.116714954376221,
+          -0.19538533687591553
+        ]
+      },
+      "originalDimensions": [
+        6.924188613891602,
+        3.5104126930236816,
+        6.201427578926086
+      ],
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.4478089511394501
+        ],
+        "max": [
+          0.5,
+          0.5069782137870789,
+          0.4478089511394501
+        ]
+      },
+      "texture": {
+        "name": "mOysterMuseum_Alb",
+        "sourceSha256": "f582c3be71872051f2503acf60e377df910c70072642cea3514887cc7296a8ec",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "barnacle-cluster",
+      "name": "藤壶簇",
+      "source": "DiveFishFujitsuboMuseum",
+      "material": "mFujitsuboMuseum",
+      "file": "scenery/barnacle-cluster.glb",
+      "bytes": 131928,
+      "sha256": "9576ffd0240f1de23b9fbffc17ac517b971f2866b63cee0671872f94d0846e85",
+      "sourceNode": "DiveFishFujitsuboMuseum_A__mFujitsuboMuseum",
+      "vertices": 2958,
+      "originalBounds": {
+        "min": [
+          -4.051819324493408,
+          -5.365019798278809,
+          -1.5042455196380615
+        ],
+        "max": [
+          4.478496074676514,
+          3.79136061668396,
+          6.755520820617676
+        ]
+      },
+      "originalDimensions": [
+        8.530315399169922,
+        9.156380414962769,
+        8.259766340255737
+      ],
+      "bounds": {
+        "min": [
+          -0.465812623500824,
+          0,
+          -0.45103883743286133
+        ],
+        "max": [
+          0.465812623500824,
+          1,
+          0.45103883743286133
+        ]
+      },
+      "texture": {
+        "name": "mFujitsuboMuseum_Alb",
+        "sourceSha256": "1bff350658dcd225275d516d26cd3b632a0f849dda6e37b1cfc7130ad84545bd",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "giant-clam",
+      "name": "砗磲",
+      "source": "DiveFishShakogai",
+      "material": "mShakogai",
+      "file": "scenery/giant-clam.glb",
+      "bytes": 332080,
+      "sha256": "db61d2bc82dc6d7c05be74ef6f302d4526727afde4fd9d0bae3175d1faea0c05",
+      "sourceNode": "DiveFishShakogai__mShakogai",
+      "vertices": 4488,
+      "originalBounds": {
+        "min": [
+          -5.521909236907959,
+          -0.06526730954647064,
+          -3.67926025390625
+        ],
+        "max": [
+          5.379620552062988,
+          7.6685943603515625,
+          3.5780041217803955
+        ]
+      },
+      "originalDimensions": [
+        10.901529788970947,
+        7.733861669898033,
+        7.2572643756866455
+      ],
+      "bounds": {
+        "min": [
+          -0.4999999701976776,
+          0,
+          -0.33285531401634216
+        ],
+        "max": [
+          0.4999999701976776,
+          0.7094290256500244,
+          0.33285531401634216
+        ]
+      },
+      "texture": {
+        "name": "mShakogai_Alb",
+        "sourceSha256": "0c5d5a95ffb747a07d850ca40a274bb8fb96449b6aedd80242f005cc02c3fcec",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "pearl-oyster",
+      "name": "马氏珠母贝",
+      "source": "DiveFishAkoyagaiMuseum",
+      "material": "mAkoyagai",
+      "file": "scenery/pearl-oyster.glb",
+      "bytes": 94736,
+      "sha256": "71e81cc041a9ff1c33fa3bd453865bb339254cf2e572733abeab6f79fabd4b36",
+      "sourceNode": "DiveFishAkoyagai1__mAkoyagai",
+      "vertices": 1746,
+      "originalBounds": {
+        "min": [
+          -1.705676794052124,
+          -2.893939971923828,
+          -1.5360220670700073
+        ],
+        "max": [
+          3.3847908973693848,
+          0.6684272885322571,
+          0.2779711186885834
+        ]
+      },
+      "originalDimensions": [
+        5.090467691421509,
+        3.562367260456085,
+        1.8139931857585907
+      ],
+      "bounds": {
+        "min": [
+          -0.4999999701976776,
+          0,
+          -0.17817549407482147
+        ],
+        "max": [
+          0.4999999701976776,
+          0.6998113989830017,
+          0.17817549407482147
+        ]
+      },
+      "texture": {
+        "name": "mAkoyagai_Alb",
+        "sourceSha256": "456750c8c90cbd1987418ad3a3e675b2f0e66bd3d5bad78a9cc5bdb07eb38301",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "sea-cucumber",
+      "name": "海参",
+      "source": "DiveFishNamako",
+      "material": "mNamako",
+      "file": "scenery/sea-cucumber.glb",
+      "bytes": 70292,
+      "sha256": "4a68eb61d7899d1b92915d178f79230550e1efc315b911029cf82bf0e8644e2a",
+      "sourceNode": "DiveFishNamako__mNamako",
+      "vertices": 1782,
+      "originalBounds": {
+        "min": [
+          -1.2688740491867065,
+          -0.05427946150302887,
+          -2.506819248199463
+        ],
+        "max": [
+          1.2688740491867065,
+          1.5998766422271729,
+          2.5100910663604736
+        ]
+      },
+      "originalDimensions": [
+        2.537748098373413,
+        1.6541561037302017,
+        5.0169103145599365
+      ],
+      "bounds": {
+        "min": [
+          -0.25291940569877625,
+          0,
+          -0.5
+        ],
+        "max": [
+          0.25291940569877625,
+          0.3297160863876343,
+          0.5
+        ]
+      },
+      "texture": {
+        "name": "mNamako_Alb",
+        "sourceSha256": "cd81e7c76b8e76695c5fe06fcdbd2789f63411e32b687063b0e0efb940c03110",
+        "opacityApplied": false
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "venus-flower-basket",
+      "name": "偕老同穴海绵",
+      "source": "DiveFishKairoudouketsu",
+      "material": "mKairoudouketsu",
+      "file": "scenery/venus-flower-basket.glb",
+      "bytes": 154652,
+      "sha256": "98463dd78580cab9160fd0ad27bfdaca114f23898120ec2a82d37c76167fc48d",
+      "sourceNode": "DiveFishKairoudouketsu__mKairoudouketsu",
+      "vertices": 2400,
+      "originalBounds": {
+        "min": [
+          -0.9123098254203796,
+          -0.8175440430641174,
+          -1.020577311515808
+        ],
+        "max": [
+          0.9370926022529602,
+          5.156002044677734,
+          1.0244996547698975
+        ]
+      },
+      "originalDimensions": [
+        1.8494024276733398,
+        5.973546087741852,
+        2.0450769662857056
+      ],
+      "bounds": {
+        "min": [
+          -0.15479937195777893,
+          0,
+          -0.17117778956890106
+        ],
+        "max": [
+          0.15479937195777893,
+          1,
+          0.17117778956890106
+        ]
+      },
+      "texture": {
+        "name": "mKairoudouketsu_Alb",
+        "sourceSha256": "e3aefa006077bb8a03662c67b811edb9cb54ffdd95f925e0ed4628f97be8df93",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "sea-pineapple",
+      "name": "海鞘",
+      "source": "DiveFishHoya",
+      "material": "mHoya",
+      "file": "scenery/sea-pineapple.glb",
+      "bytes": 142448,
+      "sha256": "0812f63dad8b235b031974a16ee6a1274c9c6cd9d3579d4d8ed5b69c43e94589",
+      "sourceNode": "DiveFishHoya__mHoya",
+      "vertices": 1980,
+      "originalBounds": {
+        "min": [
+          -1.1133580207824707,
+          -0.42990991473197937,
+          -1.2233566045761108
+        ],
+        "max": [
+          1.1451809406280518,
+          3.0754308700561523,
+          1.3615139722824097
+        ]
+      },
+      "originalDimensions": [
+        2.2585389614105225,
+        3.5053407847881317,
+        2.5848705768585205
+      ],
+      "bounds": {
+        "min": [
+          -0.3221568167209625,
+          0,
+          -0.368704617023468
+        ],
+        "max": [
+          0.3221568167209625,
+          1,
+          0.368704617023468
+        ]
+      },
+      "texture": {
+        "name": "mHoya_Alb",
+        "sourceSha256": "50dfc06a939be0b7455b3e9a18fa3ed82ebb5eaceb88d62b0debde998b0c6ddf",
+        "opacityApplied": true
+      },
+      "processing": "Original positions, normals and UVs; selected connected component for individual coral; original albedo with original OP mask; static bind pose; centered, grounded and normalized to longest axis = 1."
+    },
+    {
+      "id": "foreground-grass-patch",
+      "name": "贴底小圆叶与矮草",
+      "source": "IdrMuseumFish2Obj",
+      "node": "Minimassyurumu49__mAquariumPlant",
+      "material": "mAquariumPlant",
+      "maximumY": 7.5,
+      "maximumComponentHeight": 1.2,
+      "file": "scenery/foreground-grass-patch.glb",
+      "bytes": 61404,
+      "sha256": "1cc59970c1b6ceac334fbd5f4e26b6a594f044351c8bbedcdde8207349ee0ef4",
+      "sourceNode": "Minimassyurumu49__mAquariumPlant",
+      "vertices": 642,
+      "originalBounds": {
+        "min": [
+          -93.8130874633789,
+          5.7288007736206055,
+          63.47325134277344
+        ],
+        "max": [
+          -82.18034362792969,
+          7.46861457824707,
+          74.01712799072266
+        ]
+      },
+      "originalDimensions": [
+        11.632743835449219,
+        1.7398138046264648,
+        10.543876647949219
+      ],
+      "bounds": {
+        "min": [
+          -0.5,
+          0,
+          -0.4531981647014618
+        ],
+        "max": [
+          0.5,
+          0.1495617777109146,
+          0.4531981647014618
+        ]
+      },
+      "texture": {
+        "name": "mAquariumPlant_Alb",
+        "sourceSha256": "c3842a9bbd7c2b854dc8ba8d156c2cf9f7b2d80cd60577b2c1ee248ceb56fde0",
+        "opacityApplied": true
+      },
+      "processing": "Original complete connected components only: excludes high stems and upper leaves by original source Y bounds. Original relative positions, normals and UVs unchanged; original albedo with original OP mask; centered, grounded and uniformly normalized to longest axis = 1. No flattened or newly generated geometry."
+    }
+  ]
+}

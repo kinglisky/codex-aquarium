@@ -1,4 +1,5 @@
-import { cp, mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, open, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
@@ -7,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outputDirectory = join(root, 'artifacts');
+const partSize = 48 * 1024 * 1024;
 const temporary = await mkdtemp(join(tmpdir(), 'codex-aquarium-package-'));
 const packageRoot = join(temporary, 'codex-aquarium');
 const files = [
@@ -15,8 +17,10 @@ const files = [
   '.codex-plugin/plugin.json',
   '.agents/plugins/marketplace.json',
   'skills/aquarium/SKILL.md',
+  'skills/setup/SKILL.md',
   'scripts/install.mjs',
   'docs/screenshots/museum-gallery.jpg',
+  'docs/screenshots/museum-meadow.jpg',
   'docs/screenshots/aquarium-live.png',
   'docs/screenshots/aquarium-glass.png',
   'docs/screenshots/plugin-configuration.png',
@@ -25,6 +29,34 @@ const files = [
   'CHANGELOG.md',
   'LICENSE',
 ];
+
+async function checksum(file) {
+  const hash = createHash('sha256');
+  for await (const chunk of createReadStream(join(outputDirectory, file))) hash.update(chunk);
+  return `${hash.digest('hex')}  ${file}`;
+}
+
+async function splitArchive(archive) {
+  const parts = [];
+  const source = await open(archive, 'r');
+  try {
+    const buffer = Buffer.allocUnsafe(partSize);
+    for (let index = 0; ; index += 1) {
+      let length = 0;
+      while (length < partSize) {
+        const { bytesRead } = await source.read(buffer, length, partSize - length, null);
+        if (!bytesRead) break;
+        length += bytesRead;
+      }
+      if (!length) return parts;
+      const file = `codex-aquarium.tgz.part-${String(index).padStart(3, '0')}`;
+      await writeFile(join(outputDirectory, file), buffer.subarray(0, length));
+      parts.push(file);
+    }
+  } finally {
+    await source.close();
+  }
+}
 
 try {
   const project = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
@@ -43,7 +75,7 @@ try {
     const files = await readdir(join(root, directory), { withFileTypes: true });
     for (const file of files) {
       if (!file.isFile()) continue;
-      if (!file.name.endsWith('.mjs')) continue;
+      if (!/\.(mjs|sh)$/.test(file.name)) continue;
       await cp(join(root, directory, file.name), join(packageRoot, directory, file.name));
     }
   }
@@ -62,15 +94,19 @@ try {
   if (result.status !== 0) throw new Error(`tar 打包失败，退出码：${result.status}`);
 
   await mkdir(outputDirectory, { recursive: true });
+  for (const file of await readdir(outputDirectory)) {
+    if (/^codex-aquarium\.tgz\.part-\d+$/.test(file)) await rm(join(outputDirectory, file));
+  }
   await cp(archive, join(outputDirectory, 'codex-aquarium.tgz'));
   await cp(join(root, 'scripts/install.mjs'), join(outputDirectory, 'install.mjs'));
   await cp(join(root, 'install.sh'), join(outputDirectory, 'install.sh'));
-  const checksums = await Promise.all(['codex-aquarium.tgz', 'install.mjs', 'install.sh'].map(async (file) => {
-    const content = await readFile(join(outputDirectory, file));
-    return `${createHash('sha256').update(content).digest('hex')}  ${file}`;
-  }));
+  const parts = await splitArchive(archive);
+  const checksums = await Promise.all(['codex-aquarium.tgz', ...parts, 'install.mjs', 'install.sh'].map(checksum));
   await writeFile(join(outputDirectory, 'SHA256SUMS'), `${checksums.join('\n')}\n`);
-  console.log(`插件发行包、Shell 安装入口、内部安装组件和 SHA-256 校验文件：${outputDirectory}`);
+  const marketplace = join(outputDirectory, 'marketplace');
+  await rm(marketplace, { recursive: true, force: true });
+  await cp(packageRoot, marketplace, { recursive: true });
+  console.log(`插件发行包、${parts.length} 个 raw 分片、市场目录和 SHA-256 校验文件：${outputDirectory}`);
 } finally {
   await rm(temporary, { recursive: true, force: true });
 }

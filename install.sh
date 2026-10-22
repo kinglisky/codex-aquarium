@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-VERSION='v0.2.3'
+VERSION='v0.3.0'
 RAW_BASE="https://api.github.com/repos/kinglisky/codex-aquarium/contents/$VERSION"
 
 fail() {
@@ -32,26 +32,70 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 printf '正在下载 Codex Aquarium %s…\n' "$VERSION"
-for file in SHA256SUMS install.mjs codex-aquarium.tgz; do
+download() {
+  local file="$1"
   curl --fail --location --silent --show-error --connect-timeout 10 --max-time 180 --retry 2 \
     -H 'Accept: application/vnd.github.raw+json' -o "$DOWNLOAD_DIR/$file" \
     "$RAW_BASE/$file?ref=distribution" || fail "$file 下载失败，请检查网络后重试。"
-done
+}
 
-node --input-type=module - "$DOWNLOAD_DIR" <<'NODE'
+verify() {
+  node --input-type=module - "$DOWNLOAD_DIR" "$1" <<'NODE'
 import { createHash } from 'node:crypto';
+import { createReadStream } from 'node:fs';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
 const directory = process.argv[2];
+const file = process.argv[3];
 const lines = readFileSync(path.join(directory, 'SHA256SUMS'), 'utf8').split(/\r?\n/);
-for (const file of ['install.mjs', 'codex-aquarium.tgz']) {
-  const entries = lines.map(line => line.match(/^([a-f0-9]{64})\s+\*?(.+)$/i)).filter(entry => entry?.[2] === file);
-  const digest = createHash('sha256').update(readFileSync(path.join(directory, file))).digest('hex');
-  if (entries.length === 1 && entries[0][1].toLowerCase() === digest) continue;
+const entries = lines.map(line => line.match(/^([a-f0-9]{64})\s+\*?(.+)$/i)).filter(entry => entry?.[2] === file);
+const hash = createHash('sha256');
+for await (const chunk of createReadStream(path.join(directory, file))) hash.update(chunk);
+if (entries.length !== 1 || entries[0][1].toLowerCase() !== hash.digest('hex')) {
   console.error(`安装失败：${file} 的 SHA-256 校验失败，请重新下载安装脚本后重试。`);
   process.exit(1);
 }
 NODE
+}
+
+download SHA256SUMS
+download install.mjs
+verify install.mjs
+
+node --input-type=module - "$DOWNLOAD_DIR" > "$DOWNLOAD_DIR/downloads" <<'NODE'
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+const lines = readFileSync(path.join(process.argv[2], 'SHA256SUMS'), 'utf8').split(/\r?\n/).filter(Boolean);
+const files = lines.map(line => line.match(/^[a-f0-9]{64}\s+\*?(.+)$/i)?.[1]);
+const parts = files.filter(file => /^codex-aquarium\.tgz\.part-\d{3,}$/.test(file)).sort();
+const allowed = /^(install\.(mjs|sh)|codex-aquarium\.tgz(?:\.part-\d{3,})?)$/;
+const contiguous = parts.every((file, index) => file === `codex-aquarium.tgz.part-${String(index).padStart(3, '0')}`);
+if (files.some(file => !allowed.test(file)) || new Set(files).size !== files.length || !files.includes('codex-aquarium.tgz') || !contiguous) {
+  console.error('安装失败：SHA-256 校验清单格式无效，请重新下载安装脚本后重试。');
+  process.exit(1);
+}
+process.stdout.write(`${(parts.length ? parts : ['codex-aquarium.tgz']).join('\n')}\n`);
+NODE
+
+while IFS= read -r file; do
+  download "$file"
+  verify "$file"
+done < "$DOWNLOAD_DIR/downloads"
+
+node --input-type=module - "$DOWNLOAD_DIR" <<'NODE'
+import { createReadStream, createWriteStream, readFileSync } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
+import path from 'node:path';
+
+const directory = process.argv[2];
+const files = readFileSync(path.join(directory, 'downloads'), 'utf8').trim().split('\n');
+if (files[0] === 'codex-aquarium.tgz') process.exit(0);
+for (const file of files) {
+  await pipeline(createReadStream(path.join(directory, file)), createWriteStream(path.join(directory, 'codex-aquarium.tgz'), { flags: 'a' }));
+}
+NODE
+verify codex-aquarium.tgz
 
 node "$DOWNLOAD_DIR/install.mjs" --archive "$DOWNLOAD_DIR/codex-aquarium.tgz"

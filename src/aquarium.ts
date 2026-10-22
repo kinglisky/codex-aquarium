@@ -1,33 +1,48 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-import type { ActivityCategory, AquariumSession, SessionStatus } from "../shared/protocol";
-import type { FishSpecies } from "./fish";
+import type { AquariumSession, SessionStatus } from "../shared/protocol";
 import { createMuseumFish } from "./museum-fish";
+import type { MuseumFishSpecies as FishSpecies } from "./museum-fish";
 import { createMuseum } from "./museum";
 import type { loadMuseumAssets } from "./museum-assets";
-import { hashSeed, speciesForSession } from "./sessions";
+import { hashSeed, speciesForExhibit, speciesForSession } from "./sessions";
 import { createSwimmingWorld } from "./swimming";
 import type { SwimmingFish } from "./swimming";
+import { createVisitorMovement, VISITOR_KEYS } from "./visitor-movement";
+import { COMPANION_MODELS, PLAYER_MODELS } from "./museum-characters";
+import type { MuseumAppearance } from "./museum-characters";
+import { createFishFade, createFishPresence } from "./fish-presence";
+import { DEFAULT_SCENERY_STYLE } from "./scenery-presets";
+import type { SceneryStyle } from "./scenery-presets";
+import { ACTIVITY_FISH, scaleForFishRole } from "./fish-roles";
+import { TANK_DEPTH, TANK_HALF_WIDTH } from "./aquarium-layout";
+import { cameraAnchorForViewer, cameraMaxDistance } from "./aquarium-camera";
 
-export const ACTIVITY_FISH: Record<ActivityCategory, FishSpecies> = { read: "neon", write: "swordtail", terminal: "golden", web: "rainbow", agent: "betta", tool: "guppy" };
+export { ACTIVITY_FISH } from "./fish-roles";
 const STATUS_SPEED: Record<SessionStatus, number> = { thinking: 0.65, working: 1, waiting: 0.2, idle: 0.3, interrupted: 0.15, stale: 0.08 };
 type FishModel = ReturnType<typeof createMuseumFish>;
-interface Follower { model: FishModel; species: FishSpecies; motion: SwimmingFish; slot: number; }
-interface School {
-  session: AquariumSession;
+interface Resident {
+  scale: number;
   model: FishModel;
-  followers: Map<string, Follower>;
   motion: SwimmingFish;
+  presence: ReturnType<typeof createFishPresence>;
+  fade: ReturnType<typeof createFishFade>;
+}
+interface Follower extends Resident { species: FishSpecies; slot: number; }
+interface School extends Resident {
+  session: AquariumSession;
+  followers: Map<string, Follower>;
 }
 
-export function createAquarium(container: HTMLElement, onSelect: (id: string) => void, assets: Awaited<ReturnType<typeof loadMuseumAssets>>) {
+export function createAquarium(container: HTMLElement, onSelect: (id: string) => void, assets: Awaited<ReturnType<typeof loadMuseumAssets>>, initialScenery: SceneryStyle = DEFAULT_SCENERY_STYLE) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1;
-  renderer.domElement.setAttribute("aria-label", "海洋馆。拖动观察，滚轮缩放，点击鱼查看会话，方向键或 A、D 沿玻璃散步。");
+  renderer.domElement.setAttribute("aria-label", "A、D 或左右方向键沿玻璃跑动，小动物跟随。拖动观察，滚轮缩放，点击鱼查看会话。");
+  renderer.domElement.setAttribute("data-i18n-label", "canvasHint");
   renderer.domElement.tabIndex = 0;
   container.append(renderer.domElement);
   const scene = new THREE.Scene();
@@ -37,8 +52,8 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.enablePan = false;
-  controls.minDistance = 12;
-  controls.maxDistance = 32;
+  controls.minDistance = 10;
+  controls.maxDistance = cameraMaxDistance(camera);
   controls.minPolarAngle = Math.PI * 0.44;
   controls.maxPolarAngle = Math.PI * 0.52;
   controls.minAzimuthAngle = -0.25;
@@ -57,11 +72,12 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   const rim = new THREE.DirectionalLight("#6384ff", 1.2);
   rim.position.set(4, 6, -5);
   scene.add(rim);
-  const museum = createMuseum(assets.visitor);
+  const museum = createMuseum(assets.visitor, assets.companion, assets.scenery, initialScenery);
   const swimming = createSwimmingWorld(museum.obstacles);
   scene.add(museum.group);
   const schools = new Map<string, School>();
   const keys = new Set<string>();
+  const visitor = createVisitorMovement();
   let selectedId: string | null = null;
   let paused = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let disconnected = false;
@@ -70,69 +86,162 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   let frame = 0;
   let disposed = false;
   let flow = 0.8;
-  let visitorX = 0;
-  let visitorTarget = 0;
   let closeView = false;
   let cameraAnchor = 0;
+  let appearanceRevision = 0;
+  let sceneryStyle = initialScenery;
+  let latestSessions: AquariumSession[] = [];
+  let latestExhibition = false;
+  const pendingFish = new Set<FishSpecies>();
+  let cleanupTimer: ReturnType<typeof setTimeout> | undefined;
 
-  function removeSchool(school: School) {
-    swimming.removeFish(school.motion.id);
-    scene.remove(school.model.group);
-    school.model.dispose();
-    for (const { model, motion } of school.followers.values()) {
-      swimming.removeFish(motion.id);
-      scene.remove(model.group);
-      model.dispose();
+  async function setAppearance(appearance: MuseumAppearance) {
+    const revision = ++appearanceRevision;
+    const playerPath = PLAYER_MODELS[appearance.player].model;
+    const companionPath = appearance.companion === "none" ? null : COMPANION_MODELS[appearance.companion].model;
+    const [player, companion] = await Promise.all([
+      assets.loadCharacter(playerPath),
+      companionPath ? assets.loadCharacter(companionPath) : null,
+    ]);
+    if (disposed || revision !== appearanceRevision) return false;
+    museum.setPlayer(player);
+    museum.setCompanion(companion);
+    assets.retainCharacters(companionPath ? [playerPath, companionPath] : [playerPath]);
+    return true;
+  }
+
+  function setScenery(style: SceneryStyle) {
+    if (disposed || style === sceneryStyle) return;
+    museum.setScenery(style);
+    try {
+      swimming.setObstacles(museum.obstacles);
+      sceneryStyle = style;
+    } catch (error) {
+      museum.setScenery(sceneryStyle);
+      throw error;
     }
   }
 
-  function setSessions(sessions: AquariumSession[]) {
+  function removeFish(resident: Resident) {
+    swimming.removeFish(resident.motion.id);
+    scene.remove(resident.model.group);
+    resident.fade.dispose();
+    resident.model.dispose();
+  }
+
+  function removeSchool(school: School) {
+    for (const follower of school.followers.values()) removeFish(follower);
+    school.followers.clear();
+    removeFish(school);
+  }
+
+  function requestFish(species: FishSpecies) {
+    if (disposed || pendingFish.has(species)) return;
+    pendingFish.add(species);
+    void assets.loadFish(species).then(() => {
+      if (!disposed) setSessions(latestSessions, latestExhibition);
+    }).catch(error => console.warn("鱼模型暂未加载，将在下次会话更新时重试。", species, error))
+      .finally(() => pendingFish.delete(species));
+  }
+
+  function addFish(species: FishSpecies, id: string, sessionId: string, scale = 1, leader?: SwimmingFish, slot = 0): Resident | undefined {
+    const template = assets.fish[species];
+    if (!template) { requestFish(species); return; }
+    const model = createMuseumFish(species, template);
+    const seed = hashSeed(id);
+    const motion = swimming.addFish(id, model.size.clone().multiplyScalar(scale * (leader ? 1 : 1.1)), seed, { leader, slot });
+    if (!motion) { model.dispose(); return; }
+    model.group.userData.sessionId = sessionId;
+    model.group.scale.setScalar(scale);
+    model.group.position.copy(motion.position);
+    model.group.quaternion.copy(motion.quaternion);
+    const fade = createFishFade(model.group);
+    fade.setOpacity(0);
+    scene.add(model.group);
+    return { model, motion, fade, scale, presence: createFishPresence(performance.now() / 1000) };
+  }
+
+  function setFishActive(resident: Resident, active: boolean, now: number) {
+    if (resident.presence.active === active) return;
+    resident.presence.setActive(active, now);
+    if (active) { resident.motion.destination = undefined; return; }
+    const side = resident.motion.position.x < 0 ? -1 : 1;
+    resident.motion.destination = new THREE.Vector3(side * (TANK_HALF_WIDTH - 1.8), Math.max(2.5, resident.motion.position.y), -4.9);
+  }
+
+  function scheduleCleanup() {
+    clearTimeout(cleanupTimer);
+    const deadlines = [...schools.values()].flatMap(school => [school.presence.removeAt, ...[...school.followers.values()].map(follower => follower.presence.removeAt)]);
+    const next = Math.min(...deadlines);
+    if (!Number.isFinite(next)) return;
+    cleanupTimer = setTimeout(() => {
+      cleanupTimer = undefined;
+      updatePresence(performance.now() / 1000);
+      scheduleCleanup();
+    }, Math.max(0, (next - performance.now() / 1000) * 1000) + 10);
+  }
+
+  function updatePresence(now: number) {
+    let removed = false;
+    for (const [id, school] of schools) {
+      if (school.presence.advance(now)) {
+        removeSchool(school);
+        schools.delete(id);
+        removed = true;
+        continue;
+      }
+      school.fade.setOpacity(school.presence.opacity);
+      for (const [activityId, follower] of school.followers) {
+        if (follower.presence.advance(now)) {
+          removeFish(follower);
+          school.followers.delete(activityId);
+          removed = true;
+          continue;
+        }
+        follower.fade.setOpacity(follower.presence.opacity);
+      }
+    }
+    if (removed && !disposed) setSessions(latestSessions, latestExhibition);
+  }
+
+  function setSessions(sessions: AquariumSession[], exhibition = false) {
+    if (disposed) return;
+    latestSessions = sessions;
+    latestExhibition = exhibition;
+    const now = performance.now() / 1000;
     const ids = new Set(sessions.map(session => session.id));
     for (const [id, school] of schools) {
       if (ids.has(id)) continue;
-      removeSchool(school);
-      schools.delete(id);
+      setFishActive(school, false, now);
+      for (const follower of school.followers.values()) setFishActive(follower, false, now);
     }
     for (const session of sessions) {
       let school = schools.get(session.id);
       if (!school) {
-        const species = speciesForSession(session.id);
-        const model = createMuseumFish(species, assets.fish[species]);
-        const seed = hashSeed(session.id);
-        const motion = swimming.addFish(session.id, model.size.clone().multiplyScalar(1.15), seed);
-        if (!motion) { model.dispose(); continue; }
-        model.group.userData.sessionId = session.id;
-        scene.add(model.group);
-        school = { model, followers: new Map(), session, motion };
+        const species = exhibition ? speciesForExhibit(session.id) : speciesForSession(session.id);
+        const resident = addFish(species, session.id, session.id, exhibition ? 1 : scaleForFishRole(species, "session"));
+        if (!resident) continue;
+        school = { ...resident, followers: new Map(), session };
         schools.set(session.id, school);
       }
       school.session = session;
+      setFishActive(school, true, now);
       const activities = new Map(session.activities.map(activity => [activity.id, activity]));
       for (const [id, follower] of school.followers) {
         const activity = activities.get(id);
-        if (activity && ACTIVITY_FISH[activity.category] === follower.species) continue;
-        scene.remove(follower.model.group);
-        swimming.removeFish(follower.motion.id);
-        follower.model.dispose();
-        school.followers.delete(id);
+        setFishActive(follower, !!activity && ACTIVITY_FISH[activity.category] === follower.species, now);
       }
       for (const activity of session.activities) {
         if (school.followers.has(activity.id)) continue;
         const species = ACTIVITY_FISH[activity.category];
-        const model = createMuseumFish(species, assets.fish[species]);
-        const scale = activity.kind === "agent" ? 0.45 : 0.3;
-        model.group.scale.setScalar(scale);
-        const id = `${session.id}:${activity.id}`;
         const occupied = new Set([...school.followers.values()].map(follower => follower.slot));
         let slot = 0;
         while (occupied.has(slot)) slot += 1;
-        const motion = swimming.addFish(id, model.size.clone().multiplyScalar(scale), hashSeed(id), { leader: school.motion, slot });
-        if (!motion) { model.dispose(); continue; }
-        model.group.userData.sessionId = session.id;
-        scene.add(model.group);
-        school.followers.set(activity.id, { model, species, motion, slot });
+        const resident = addFish(species, `${session.id}:${activity.id}`, session.id, scaleForFishRole(species, activity.kind), school.motion, slot);
+        if (resident) school.followers.set(activity.id, { ...resident, species, slot });
       }
     }
+    scheduleCleanup();
   }
 
   function swim(model: FishModel, motion: SwimmingFish) {
@@ -143,12 +252,19 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
 
   function resetView(near = false) {
     closeView = near;
-    cameraAnchor = 0;
-    visitorTarget = 0;
     const aspect = Math.max(0.6, container.clientWidth / Math.max(1, container.clientHeight));
     const distance = Math.max(18.5, 24 / Math.max(1, aspect));
+    controls.maxDistance = cameraMaxDistance(camera);
+    controls.minDistance = Math.min(10, controls.maxDistance * .8);
+    camera.far = controls.maxDistance + TANK_DEPTH + 20;
+    camera.updateProjectionMatrix();
     camera.position.set(0, near ? 4.25 : 4.4, near ? distance * 0.88 : distance);
     controls.target.set(0, near ? 3.25 : 3.5, -2);
+    camera.position.sub(controls.target)
+      .clampLength(controls.minDistance, controls.maxDistance).add(controls.target);
+    cameraAnchor = cameraAnchorForViewer(visitor.position.x, camera);
+    camera.position.x = cameraAnchor;
+    controls.target.x = cameraAnchor;
     controls.update();
   }
   const resize = new ResizeObserver(() => {
@@ -166,7 +282,7 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   const down = new THREE.Vector2();
   const floor = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0.22);
   const destination = new THREE.Vector3();
-  function walk(direction: number) { visitorTarget = THREE.MathUtils.clamp(visitorTarget + direction * 1.2, -6.5, 6.5); }
+  function walk(x: number, z = 0) { visitor.walk(x, z); }
   function pointerDown(event: PointerEvent) { down.set(event.clientX, event.clientY); }
   function pointerUp(event: PointerEvent) {
     if (down.distanceTo(new THREE.Vector2(event.clientX, event.clientY)) > 5) return;
@@ -174,10 +290,11 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
     const bounds = renderer.domElement.getBoundingClientRect();
     pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     raycaster.setFromCamera(pointer, camera);
-    const roots = [...schools.values()].flatMap(school => [school.model.group, ...[...school.followers.values()].map(follower => follower.model.group)]);
+    const roots = [...schools.values()].filter(school => school.presence.active).flatMap(school =>
+      [school, ...school.followers.values()].filter(fish => fish.presence.active && fish.presence.opacity > .2).map(fish => fish.model.group));
     const hit = raycaster.intersectObjects(roots, true)[0];
     if (!hit) {
-      if (raycaster.ray.intersectPlane(floor, destination) && destination.z > 0.8) visitorTarget = THREE.MathUtils.clamp(destination.x, -6.5, 6.5);
+      if (raycaster.ray.intersectPlane(floor, destination) && destination.z >= 1.25) visitor.moveTo(destination.x, destination.z);
       return;
     }
     let object: THREE.Object3D | null = hit.object;
@@ -186,41 +303,45 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   }
   function keyDown(event: KeyboardEvent) {
     if (event.target instanceof HTMLElement && (event.target.matches("input, textarea, select") || event.target.isContentEditable)) return;
-    if (!["ArrowLeft", "ArrowRight", "KeyA", "KeyD"].includes(event.code)) return;
+    if (event.altKey || event.ctrlKey || event.metaKey || !VISITOR_KEYS.has(event.code)) return;
     event.preventDefault();
     keys.add(event.code);
   }
   function keyUp(event: KeyboardEvent) { keys.delete(event.code); }
-  function blur() { keys.clear(); }
+  function blur() { keys.clear(); visitor.stop(); }
+  function visibilityChanged() {
+    if (document.hidden) blur();
+    updatePresence(performance.now() / 1000);
+  }
   renderer.domElement.addEventListener("pointerdown", pointerDown);
   renderer.domElement.addEventListener("pointerup", pointerUp);
   window.addEventListener("keydown", keyDown);
   window.addEventListener("keyup", keyUp);
   window.addEventListener("blur", blur);
+  document.addEventListener("visibilitychange", visibilityChanged);
 
   function animate(now: number) {
     if (disposed) return;
     const delta = Math.min((now - lastFrame) / 1000, 0.05);
     const movement = paused || disconnected ? 0 : delta;
     lastFrame = now;
+    updatePresence(now / 1000);
     time += movement;
-    const direction = Number(keys.has("ArrowRight") || keys.has("KeyD")) - Number(keys.has("ArrowLeft") || keys.has("KeyA"));
-    visitorTarget = THREE.MathUtils.clamp(visitorTarget + direction * delta * 2.4, -6.5, 6.5);
-    visitorX = THREE.MathUtils.damp(visitorX, visitorTarget, 6, delta);
-    museum.setVisitorPosition(visitorX, Math.abs(visitorX - visitorTarget) > 0.025, delta);
+    visitor.update(delta, keys);
+    museum.setVisitorPosition(visitor.position, visitor.heading, visitor.distance, delta);
     for (const school of schools.values()) {
-      school.motion.activity = STATUS_SPEED[school.session.status];
+      school.motion.activity = school.presence.active ? STATUS_SPEED[school.session.status] : .65;
       for (const follower of school.followers.values()) follower.motion.activity = school.motion.activity;
     }
     swimming.update(movement);
     for (const school of schools.values()) {
       swim(school.model, school.motion);
-      school.model.group.scale.setScalar(school.session.id === selectedId ? 1.15 : 1.05);
+      school.model.group.scale.setScalar(school.scale * (school.session.id === selectedId ? 1.08 : 1));
       for (const follower of school.followers.values()) {
         swim(follower.model, follower.motion);
       }
     }
-    const anchor = visitorX * (camera.aspect < 1 ? 0.9 : 0.15);
+    const anchor = THREE.MathUtils.damp(cameraAnchor, cameraAnchorForViewer(visitor.position.x, camera), 5, delta);
     camera.position.x += anchor - cameraAnchor;
     controls.target.x += anchor - cameraAnchor;
     cameraAnchor = anchor;
@@ -231,7 +352,7 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
   }
   frame = requestAnimationFrame(animate);
   return {
-    setSessions, walk, resetView,
+    setSessions, walk, resetView, setAppearance, setScenery,
     select(id: string | null) { selectedId = id; },
     setPaused(value: boolean) { paused = value; },
     setDisconnected(value: boolean) { disconnected = value; },
@@ -240,12 +361,14 @@ export function createAquarium(container: HTMLElement, onSelect: (id: string) =>
     dispose() {
       disposed = true;
       cancelAnimationFrame(frame);
+      clearTimeout(cleanupTimer);
       resize.disconnect();
       renderer.domElement.removeEventListener("pointerdown", pointerDown);
       renderer.domElement.removeEventListener("pointerup", pointerUp);
       window.removeEventListener("keydown", keyDown);
       window.removeEventListener("keyup", keyUp);
       window.removeEventListener("blur", blur);
+      document.removeEventListener("visibilitychange", visibilityChanged);
       controls.dispose();
       for (const school of schools.values()) removeSchool(school);
       schools.clear();
