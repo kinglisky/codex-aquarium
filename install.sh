@@ -3,6 +3,7 @@ set -euo pipefail
 
 VERSION='v0.3.2'
 RAW_BASE="https://api.github.com/repos/kinglisky/codex-aquarium/contents/$VERSION"
+RAW_FALLBACK="https://raw.githubusercontent.com/kinglisky/codex-aquarium/distribution/$VERSION"
 
 fail() {
   printf '安装失败：%s\n' "$1" >&2
@@ -34,9 +35,12 @@ trap 'exit 143' TERM
 printf '正在下载 Codex Aquarium %s…\n' "$VERSION"
 download() {
   local file="$1"
-  curl --fail --location --silent --show-error --connect-timeout 10 --max-time 180 --retry 2 \
-    -H 'Accept: application/vnd.github.raw+json' -o "$DOWNLOAD_DIR/$file" \
-    "$RAW_BASE/$file?ref=distribution" || fail "$file 下载失败，请检查网络后重试。"
+  local url
+  for url in "$RAW_BASE/$file?ref=distribution" "$RAW_FALLBACK/$file"; do
+    curl --http1.1 --fail --location --silent --show-error --connect-timeout 10 --max-time 180 --retry 2 \
+      -H 'Accept: application/vnd.github.raw+json' -o "$DOWNLOAD_DIR/$file" "$url" && return
+  done
+  fail "$file 下载失败，请检查网络后重试。"
 }
 
 verify() {

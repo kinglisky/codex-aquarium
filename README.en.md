@@ -55,7 +55,8 @@ Install or update Codex Aquarium: https://github.com/kinglisky/codex-aquarium
 Check Node.js 22.12+, the Codex CLI, Bash, curl, tar and codex plugin add --help.
 If Node.js is missing or too old, direct me to https://nodejs.org/.
 Download this script in a temporary directory, read it, then run bash aquarium-install.sh:
-curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh
+(curl --http1.1 -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh ||
+  curl --http1.1 -fL 'https://raw.githubusercontent.com/kinglisky/codex-aquarium/master/install.sh' -o aquarium-install.sh)
 Keep SHA-256 verification and confirm codex-aquarium@codex-aquarium-local is installed.
 From the installation directory, use the same Node.js executable as the installer to check server/cli.mjs status and /api/health at the actual address. On macOS, also check automatic startup.
 Remind me to restart Codex, enable Aquarium and personally review and trust Hooks. Do not confirm trust for me.
@@ -66,7 +67,8 @@ Open the aquarium in my existing default browser. Report the version from the pl
 ### Install with curl
 
 ```bash
-curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh && bash aquarium-install.sh
+(curl --http1.1 -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh ||
+  curl --http1.1 -fL 'https://raw.githubusercontent.com/kinglisky/codex-aquarium/master/install.sh' -o aquarium-install.sh) && bash aquarium-install.sh
 ```
 
 Installs a prebuilt package from GitHub raw files with SHA-256 verification. No local build is needed. The script exits with installation guidance if a suitable Node.js is missing. Use the same prompt or command to update. Keep the installation directory: `~/.codex/aquarium-install/codex-aquarium` by default, or under your custom `CODEX_HOME`.
@@ -92,7 +94,7 @@ Installs a prebuilt package from GitHub raw files with SHA-256 verification. No 
 - **Task running, but no fish**: check Hooks trust and their Node.js path. Confirm `/api/state` updates `lastEventAt` during tool calls. An open page alone does not confirm session events are connected.
 - **Stop manually**: run `node server/cli.mjs stop` from the installation directory. On macOS, it stays stopped until you fully quit and reopen Codex.
 - **Node.js moved**: reinstall the plugin, then review and trust the updated hooks.
-- **GitHub API rate limit**: retry once your quota resets; keep SHA-256 verification enabled.
+- **GitHub API rate limit**: the installer and package downloads fall back to raw files automatically, with SHA-256 verification preserved.
 
 </details>
 

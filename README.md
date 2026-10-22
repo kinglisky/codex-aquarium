@@ -55,7 +55,8 @@ codex plugin marketplace upgrade codex-aquarium-local
 检查 Node.js 22.12+、Codex CLI、Bash、curl、tar 和 codex plugin add --help。
 若 Node.js 缺失或过旧，提示我从 https://nodejs.org/ 安装。
 在临时目录下载以下脚本，先阅读再执行 bash aquarium-install.sh：
-curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh
+(curl --http1.1 -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh ||
+  curl --http1.1 -fL 'https://raw.githubusercontent.com/kinglisky/codex-aquarium/master/install.sh' -o aquarium-install.sh)
 保留 SHA-256 校验，确认 codex-aquarium@codex-aquarium-local 安装成功。
 在安装目录，用安装时的同一 Node.js 检查 server/cli.mjs status 和实际地址的 /api/health；macOS 另查自动启动配置。
 提醒我重启 Codex、开启 Aquarium 技能，并亲自审阅和信任 Hooks，不替我确认。
@@ -66,7 +67,8 @@ curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/re
 ### curl 快捷安装
 
 ```bash
-curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh && bash aquarium-install.sh
+(curl --http1.1 -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/repos/kinglisky/codex-aquarium/contents/install.sh?ref=master' -o aquarium-install.sh ||
+  curl --http1.1 -fL 'https://raw.githubusercontent.com/kinglisky/codex-aquarium/master/install.sh' -o aquarium-install.sh) && bash aquarium-install.sh
 ```
 
 从 GitHub raw 安装预构建包并校验 SHA-256，无需本地编译；缺少合适的 Node.js 时提示安装并退出。升级也用同一指引或命令。安装目录默认是 `~/.codex/aquarium-install/codex-aquarium`（遵循 `CODEX_HOME`），请保留。
@@ -92,7 +94,7 @@ curl -fL -H 'Accept: application/vnd.github.raw+json' 'https://api.github.com/re
 - **任务运行却没有鱼**：检查 Hooks 信任与其 Node.js 路径，确认 `/api/state` 的 `lastEventAt` 随工具调用更新。页面打开不等于会话事件接通。
 - **手动停止**：在安装目录执行 `node server/cli.mjs stop`。macOS 下本次 Codex 运行期间保持停止，完全退出再打开后恢复自动启动。
 - **更换 Node.js 路径**：重新安装插件，并重新审阅、信任更新后的 Hooks。
-- **下载提示 API 限流**：等待 GitHub 配额恢复后重试，保留 SHA-256 校验。
+- **GitHub API 限流**：安装入口和包下载会自动回退 raw，保留 SHA-256 校验。
 
 </details>
 

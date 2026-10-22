@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 const installer = fileURLToPath(new URL("../install.sh", import.meta.url));
 const { version } = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 const rawBase = `https://api.github.com/repos/kinglisky/codex-aquarium/contents/v${version}`;
+const rawFallback = `https://raw.githubusercontent.com/kinglisky/codex-aquarium/distribution/v${version}`;
 
 async function fixture(t, { node = true, multipart = false } = {}) {
   const directory = await mkdtemp(path.join(tmpdir(), "aquarium-shell-"));
@@ -37,6 +38,7 @@ const args = process.argv.slice(2);
 ${log}
 appendFileSync(path.join(root, 'downloads.jsonl'), JSON.stringify(args) + '\\n');
 if (process.env.DOWNLOAD_FAILURE) process.exit(35);
+if (process.env.API_FAILURE && new URL(args.at(-1)).hostname === 'api.github.com') process.exit(22);
 const file = new URL(args.at(-1)).pathname.split('/').at(-1);
 writeFileSync(args[args.indexOf('-o') + 1], readFileSync(path.join(root, 'files', file)));
 `);
@@ -122,11 +124,13 @@ test("Codex 不支持插件命令时在下载前退出", async t => {
   await f.assertNoInstall();
 });
 
-test("下载失败不执行安装并清理临时目录", async t => {
+test("两个下载源都失败时不执行安装并清理临时目录", async t => {
   const f = await fixture(t);
   const result = f.run({ DOWNLOAD_FAILURE: "1" });
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /下载失败/);
+  const downloads = (await readFile(path.join(f.directory, "downloads.jsonl"), "utf8")).trim().split("\n").map(line => JSON.parse(line));
+  assert.deepEqual(downloads.map(args => args.at(-1)), [`${rawBase}/SHA256SUMS?ref=distribution`, `${rawFallback}/SHA256SUMS`]);
   await f.assertNoInstall();
 });
 
@@ -148,6 +152,7 @@ test("直接从固定版本 raw 下载并校验后调用内部安装器", async 
   const downloads = (await readFile(path.join(f.directory, "downloads.jsonl"), "utf8")).trim().split("\n").map(line => JSON.parse(line));
   assert.deepEqual(downloads.map(args => args.at(-1)), ["SHA256SUMS", "install.mjs", "codex-aquarium.tgz"].map(file => `${rawBase}/${file}?ref=distribution`));
   for (const args of downloads) {
+    assert.ok(args.includes("--http1.1"));
     assert.ok(args.includes("--fail"));
     assert.ok(args.includes("Accept: application/vnd.github.raw+json"));
     assert.ok(Number(args[args.indexOf("--max-time") + 1]) >= 180);
@@ -172,13 +177,28 @@ test("分片安装逐片下载校验并重组整包，不请求超过 raw 限制
   assert.ok(await readFile(path.join(f.directory, "installed.json"), "utf8"));
 });
 
-test("分片校验失败立即停止，不下载后续分片或执行安装", async t => {
+test("GitHub API 限流时回退同版本 raw 文件并完成分片安装", async t => {
+  const f = await fixture(t, { multipart: true });
+  const result = f.run({ API_FAILURE: "1" });
+  assert.equal(result.status, 0, result.stderr);
+  const downloads = (await readFile(path.join(f.directory, "downloads.jsonl"), "utf8")).trim().split("\n").map(line => JSON.parse(line));
+  const files = ["SHA256SUMS", "install.mjs", ...f.parts];
+  assert.deepEqual(downloads.map(args => args.at(-1)), files.flatMap(file => [
+    `${rawBase}/${file}?ref=distribution`, `${rawFallback}/${file}`,
+  ]));
+  assert.ok(downloads.every(args => args.includes("--http1.1") && args.includes("--fail") && !args.includes("--insecure")));
+  assert.ok(await readFile(path.join(f.directory, "installed.json"), "utf8"));
+  assert.deepEqual(await readdir(f.temporary), []);
+});
+
+test("raw 回退分片校验失败立即停止，不下载后续分片或执行安装", async t => {
   const f = await fixture(t, { multipart: true });
   await writeFile(path.join(f.files, f.parts[0]), "tampered");
-  const result = f.run();
+  const result = f.run({ API_FAILURE: "1" });
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /part-000.*SHA-256/);
   const downloads = await readFile(path.join(f.directory, "downloads.jsonl"), "utf8");
+  assert.ok(downloads.includes(`${rawFallback}/${f.parts[0]}`));
   assert.ok(!downloads.includes('part-001'));
   await f.assertNoInstall();
 });
