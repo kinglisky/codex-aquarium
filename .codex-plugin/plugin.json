@@ -1,6 +1,6 @@
 {
   "name": "codex-aquarium",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "把 Codex 活跃会话化作鱼群，与小动物一起逛 3D 海洋馆。 Turn active Codex sessions into fish in a 3D aquarium.",
   "author": { "name": "kinglisky" },
   "license": "MIT",
