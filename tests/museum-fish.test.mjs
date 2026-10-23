@@ -417,6 +417,41 @@ test('玩家和小动物站立时呼吸、看鱼与手臂自然变化，双脚�
   });
 });
 
+test('驻足前五秒即可看见转头、侧身和抬手看鱼，双脚保持原位', async t => {
+  const models = [...Object.values(PLAYER_MODELS), ...['isabelle', 'raymond', 'audie'].map(id => COMPANION_MODELS[id])];
+  for (const definition of models) await t.test(definition.name, async () => {
+    const visitor = createMuseumVisitor(await loadModel(definition.model));
+    visitor.group.updateMatrixWorld(true);
+    const head = visitor.group.getObjectByName('Head');
+    const spine = visitor.group.getObjectByName('Spine_2');
+    const wrists = ['L', 'R'].map(side => visitor.group.getObjectByName(`Wrist_${side}`));
+    const feet = ['L', 'R'].map(side => visitor.group.getObjectByName(`Leg_1_${side}`));
+    const headRest = head.quaternion.clone();
+    const spineRest = spine.quaternion.clone();
+    const wristRest = wrists.map(bone => bone.getWorldPosition(new THREE.Vector3()));
+    const feetRest = feet.map(bone => bone.getWorldPosition(new THREE.Vector3()));
+    let headMotion = 0;
+    let bodyMotion = 0;
+    let handMotion = 0;
+    for (let frame = 0; frame < 300; frame++) {
+      visitor.animate(frame / 60, 0, 1 / 60);
+      visitor.group.updateMatrixWorld(true);
+      headMotion = Math.max(headMotion, head.quaternion.angleTo(headRest));
+      bodyMotion = Math.max(bodyMotion, spine.quaternion.angleTo(spineRest));
+      wrists.forEach((bone, index) => {
+        handMotion = Math.max(handMotion, bone.getWorldPosition(new THREE.Vector3()).distanceTo(wristRest[index]));
+      });
+      feet.forEach((bone, index) => {
+        assert.ok(bone.getWorldPosition(new THREE.Vector3()).distanceTo(feetRest[index]) < .015, '呼吸时脚底保持稳定，不滑步');
+      });
+    }
+    assert.ok(headMotion > .1, '自然抬头转头，在正常观察时间内可以辨认');
+    assert.ok(bodyMotion > .025, '上身轻微改变重心');
+    assert.ok(handMotion > .06, '手臂的微动作实际移动手部，而非只修改不可见骨骼');
+    visitor.dispose();
+  });
+});
+
 test('角色站立和行走切换平滑，周期性抬手不会发生姿态跳变', async t => {
   for (const definition of [...Object.values(PLAYER_MODELS), ...Object.values(COMPANION_MODELS)]) await t.test(definition.name, async () => {
     const visitor = createMuseumVisitor(await loadModel(definition.model));

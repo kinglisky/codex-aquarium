@@ -7,8 +7,8 @@ const JOINT_KINDS = {
 } as const;
 
 function gestureAt(time: number) {
-  const phase = time % 23;
-  return THREE.MathUtils.smoothstep(phase, 7, 8.8) * (1 - THREE.MathUtils.smoothstep(phase, 10.5, 12.8));
+  const phase = time % 18;
+  return THREE.MathUtils.smoothstep(phase, 2.5, 4.2) * (1 - THREE.MathUtils.smoothstep(phase, 5.5, 7.5));
 }
 
 export function createMuseumVisitor(template: THREE.Group) {
@@ -59,20 +59,21 @@ export function createMuseumVisitor(template: THREE.Group) {
       idle = THREE.MathUtils.damp(idle, walking ? 0 : 1, 5, delta);
       running = THREE.MathUtils.damp(running, THREE.MathUtils.clamp(speed / 4, 0, 1), 10, delta);
       const breath = Math.sin(time * 1.65) * idle;
-      group.scale.set(1, 1 + breath * .0025, 1 + breath * .002);
+      const watching = gestureAt(time + 2) * idle;
+      group.scale.set(1, 1 + breath * .0035, 1 + breath * .0025);
       group.rotation.x = -running * .035;
       for (const joint of joints) {
         const { kind, side } = joint;
-        const gesture = gestureAt(time + (side > 0 ? 0 : 10)) * idle;
+        const gesture = gestureAt(time + (side > 0 ? 0 : 9)) * idle;
         const sway = Math.sin(time * .7 + side * 1.3) * idle;
         switch (kind) {
-          case 'head': target.set((Math.sin(time * .31) * .025 - gesture * .035) * idle, Math.sin(time * .23) * .07 * idle, 0); break;
-          case 'spine': target.set(breath * .007 - running * .055, Math.sin(time * .29) * .008 * idle, Math.sin(time * .43) * .012 * idle + step * running * .012); break;
+          case 'head': target.set(Math.sin(time * .43) * .045 * idle - watching * .05, (Math.sin(time * .31) * .14 + Math.sin(time * .73) * .035) * idle, Math.sin(time * .47) * .018 * idle); break;
+          case 'spine': target.set(breath * .012 - watching * .035 - running * .055, Math.sin(time * .37) * .02 * idle, Math.sin(time * .49) * .025 * idle + step * running * .012); break;
           case 'leg': target.set(step * (.28 + running * .07) * side, 0, 0); break;
           case 'knee': target.set(-Math.max(0, -step * side) * running * .22, 0, 0); break;
-          case 'arm': target.set(-step * (.2 + running * .12) * side + sway * .045 + gesture * .38, 0, side * (Math.sin(time * .53) * .025 * idle + gesture * .15)); break;
-          case 'forearm': target.set(sway * .025 + gesture * .22 + running * .2, 0, 0); break;
-          case 'wrist': target.set(sway * .035, Math.sin(time * .9 + side) * .04 * idle, side * gesture * Math.sin(time * 2.3) * .08); break;
+          case 'arm': target.set(-step * (.2 + running * .12) * side + sway * .075 + gesture * .42, 0, side * (Math.sin(time * .53) * .04 * idle + gesture * .12)); break;
+          case 'forearm': target.set(.05 * idle + sway * .04 + gesture * .28 + running * .2, 0, 0); break;
+          case 'wrist': target.set(sway * .055, (Math.sin(time * .9 + side) * .06 + gesture * .08) * idle, side * gesture * Math.sin(time * 1.7) * .07); break;
         }
         joint.angles.set(
           THREE.MathUtils.damp(joint.angles.x, target.x, 12, delta),
